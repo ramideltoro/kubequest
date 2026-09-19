@@ -28,6 +28,8 @@ import { tags } from "@lezer/highlight";
 import { missions, type Mission } from "../content/missions";
 import { api, useIdentity } from "./lib";
 import { KIcon } from "./simulations";
+import { Coach } from "./Coach";
+import { Resources } from "./Resources";
 function LiveTerminal({ sessionId }: { sessionId: string }) {
   const el = useRef<HTMLDivElement>(null);
   const [state, setState] = useState("Connecting…"),
@@ -204,16 +206,12 @@ export function MissionPage({ id }: { id: string }) {
     [hint, setHint] = useState(0),
     [result, setResult] = useState<any>(null),
     [resources, setResources] = useState<any[]>([]),
-    [question, setQuestion] = useState(""),
-    [answer, setAnswer] = useState(""),
-    [tutoring, setTutoring] = useState(false),
     [clock, setClock] = useState(Date.now()),
     [output, setOutput] = useState(""),
     [coaching, setCoaching] = useState(false);
   useEffect(() => {
     setHint(0);
     setResult(null);
-    setAnswer("");
     setError("");
   }, [id]);
   useEffect(() => {
@@ -698,51 +696,17 @@ export function MissionPage({ id }: { id: string }) {
                   <p>{m.why}</p>
                 </details>
                 {me.user && ready && (
-                  <div className="tutor">
-                    <h3>Talk it through</h3>
-                    <p className="small muted">
-                      Local AI coach · suggestions may be imperfect · grading
-                      uses deterministic checks.
-                    </p>
-                    <form
-                      onSubmit={async (e) => {
-                        e.preventDefault();
-                        setTutoring(true);
-                        try {
-                          const j = await api("/api/private/tutor", {
-                            sessionId: session.id,
-                            question,
-                          });
-                          setAnswer(j.answer);
-                        } catch (e: any) {
-                          setAnswer(e.message);
-                        } finally {
-                          setTutoring(false);
-                        }
-                      }}
-                    >
-                      <input
-                        aria-label="Question for the tutor"
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        maxLength={1500}
-                        placeholder="Why is this Pod running but not ready?"
-                      />
-                      <button
-                        className="button primary"
-                        disabled={tutoring || !question.trim()}
-                      >
-                        <Send size={16} />
-                        {tutoring ? "Thinking…" : "Ask"}
-                      </button>
-                    </form>
-                    {answer && <p className="tutor-answer">{answer}</p>}
-                  </div>
+                  <Coach
+                    key={session.id}
+                    sessionId={session.id}
+                    hint={m.hints[0]}
+                  />
                 )}
               </section>
             )}
         </div>
       </div>
+      {assistance && <Resources section="ckad" />}
     </main>
   );
 }

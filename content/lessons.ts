@@ -1,4 +1,5 @@
 export type Lesson = {
+  activity?: string;
   id: string;
   title: string;
   subtitle: string;
@@ -431,3 +432,179 @@ export const lessons: Lesson[] = [
     docs: "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
   },
 ];
+
+lessons.push(
+  {
+    id: "namespaces-and-labels",
+    title: "Give everything a clear home",
+    subtitle: "Namespaces organize resources; labels help you find them.",
+    icon: "ns",
+    activity: "namespaces",
+    minutes: 6,
+    problem:
+      "Little Notes has a practice copy and a production copy. You want to inspect one without confusing it with the other.",
+    learn: [
+      "Use a namespace to narrow your view.",
+      "Explain the difference between grouping resources and protecting them.",
+    ],
+    paragraphs: [
+      "A namespace is a named scope for many Kubernetes objects. You can have a Deployment called little-notes in the practice namespace and another with the same name in production. Some resources, such as nodes, belong to the whole cluster instead.",
+      "A label is a key and value attached to an object, such as app=little-notes. A selector finds objects with matching labels. Labels do not create a hierarchy or a security boundary. They help Services, controllers, and people identify related resources.",
+      "Always check the cluster and namespace before making a change. A command aimed at the wrong place can affect a working app. In the terminal, specifying a namespace explicitly makes that choice visible. A filtered view can also hide objects that still exist elsewhere.",
+      "A namespace alone does not block network traffic or decide who may change resources. Teams combine it with authorization, resource quotas, and network policies. Think of organization and protection as different jobs that need to be configured deliberately.",
+    ],
+    try: "Switch between practice and production. Filter by app label. Remove the practice notes Pod, then confirm production remains visible.",
+    why: "A narrow view helps you act on the intended objects. Access rules provide protection; the namespace name alone does not.",
+    analogy:
+      "Folders help organize documents, but naming one private does not give it a lock. Namespaces also need explicit controls.",
+    terms: [
+      ["Namespace", "A named scope for many cluster resources."],
+      ["Label", "A key and value used to identify or group objects."],
+      ["Selector", "A rule that finds objects with matching labels."],
+    ],
+    code: "kubectl get pods -n practice -l app=little-notes\n# Check the namespace and selector before changing anything.",
+    question:
+      "Does a namespace automatically block all traffic from other namespaces?",
+    answers: [
+      "Yes, every namespace is an isolated network.",
+      "No. Traffic restrictions require configured network controls.",
+      "Only if its name contains private.",
+    ],
+    correct: 1,
+    explanation:
+      "Namespaces organize objects. Network policies and the cluster’s networking implementation control allowed traffic.",
+    docs: "https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/",
+  },
+  {
+    id: "resource-budgets",
+    title: "Leave enough room to run",
+    subtitle: "Requests help placement; limits put boundaries on use.",
+    icon: "node",
+    activity: "resources",
+    minutes: 8,
+    problem:
+      "A new Pod stays Pending even though you asked Kubernetes to run it. Another starts, then is killed when it uses too much memory.",
+    learn: [
+      "Distinguish resource requests from limits.",
+      "Tell a placement problem from a memory-limit problem.",
+    ],
+    paragraphs: [
+      "A resource request tells the scheduler how much CPU or memory to account for when placing a Pod. The scheduler needs a node with enough available requested capacity. A request is not a promise that extra capacity can appear whenever an app grows.",
+      "A limit sets an upper boundary for a container’s use. CPU and memory behave differently. A CPU limit can throttle work, making it slower. If a container tries to use more memory than its limit, it can be terminated with an out-of-memory reason, often shown as OOMKilled.",
+      "A memory request larger than the available capacity can leave a Pod Pending. That is different from a running container exceeding its limit. Look at scheduling events for the first problem and container status or memory observations for the second. MiB is a unit of memory; you do not need to convert it to learn the relationship here.",
+      "Choose values based on observed workload needs and leave room for change. Setting tiny values just to make a warning disappear can create instability. Setting very large requests can stop other work fitting. Kubernetes manages finite resources; it does not fix leaks in application code.",
+    ],
+    try: "Make the request too large for the node. Then make it fit but set a limit below the app’s use. Finally find values that let the app run.",
+    why: "Placement and runtime enforcement answer different questions: is there room to schedule, and how much may the container use?",
+    analogy:
+      "Reserving seats and setting a room’s safety capacity are different decisions. CPU and memory also need their own, distinct rules.",
+    terms: [
+      [
+        "Request",
+        "Resource capacity accounted for when scheduling a workload.",
+      ],
+      ["Limit", "An upper boundary applied to container resource use."],
+      ["Pending", "A Pod has not yet reached its running state."],
+      [
+        "OOMKilled",
+        "A process was killed because of an out-of-memory condition.",
+      ],
+    ],
+    code: "resources:\n  requests:\n    memory: 256Mi\n    cpu: 100m\n  limits:\n    memory: 512Mi\n    cpu: 500m",
+    question:
+      "A Pod cannot fit its memory request on any node. What is a likely result?",
+    answers: [
+      "It stays Pending with a scheduling explanation.",
+      "Kubernetes creates physical memory.",
+      "It automatically ignores every request.",
+    ],
+    correct: 0,
+    explanation:
+      "The scheduler needs a suitable node. Inspect its events and capacity before adjusting requests or adding resources.",
+    docs: "https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/",
+  },
+  {
+    id: "jobs-that-finish",
+    title: "Some work should finish",
+    subtitle: "Use Jobs for tasks and Deployments for ongoing services.",
+    icon: "job",
+    activity: "jobs",
+    minutes: 6,
+    problem:
+      "Little Notes needs a one-time export. You do not want the export program to keep starting forever after it succeeds.",
+    learn: [
+      "Choose a Job for work with a completion point.",
+      "Understand retries and scheduled work without assuming exactly-once execution.",
+    ],
+    paragraphs: [
+      "A web server normally keeps running and waits for more requests. A report export does a task and exits. A Deployment fits many ongoing application services. A Job manages Pods that work toward a successful completion target.",
+      "If a Job’s Pod fails, Kubernetes can retry within configured limits. A successful task is allowed to stay finished. The application should communicate failure through an unsuccessful exit status, not simply print an error and pretend the work succeeded.",
+      "A CronJob creates Jobs according to a schedule, such as a nightly report. Schedules and retries are not a guarantee that a business action happens exactly once. Write tasks so repeated attempts are safe, and decide what should happen if a previous run is still active.",
+      "Task output also needs a home. A completed Pod is not a backup system. Save useful results to appropriate persistent storage or an external service, and set a cleanup policy for old completed work. The runtime object and the valuable data have different lifetimes.",
+    ],
+    try: "Run the export as a Job and observe completion. Compare a Deployment, then fail an attempt and retry the Job.",
+    why: "The workload type should match the job: maintain a service, complete a task, or start tasks on a schedule.",
+    analogy:
+      "A shop stays open; a delivery has a finish line. You would not use the same rule to keep both continuously active.",
+    terms: [
+      ["Job", "A workload that runs tasks toward successful completion."],
+      ["CronJob", "An object that creates Jobs on a schedule."],
+      ["Retry", "Another attempt after a failure."],
+    ],
+    code: "kubectl get jobs\nkubectl get cronjobs\n# A Job can complete successfully rather than keep serving traffic.",
+    question: "Which workload fits a single report export that should finish?",
+    answers: [
+      "A Service, because it stores reports.",
+      "A Deployment that restarts the completed export forever.",
+      "A Job with suitable retry and output-storage settings.",
+    ],
+    correct: 2,
+    explanation:
+      "A Job describes completion-oriented work. It still needs a safe retry strategy and somewhere durable to store useful output.",
+    docs: "https://kubernetes.io/docs/concepts/workloads/controllers/job/",
+  },
+  {
+    id: "observe-and-debug",
+    title: "Read the clues, then make a change",
+    subtitle: "A small investigation is better than a random restart.",
+    icon: "pod",
+    activity: "debug",
+    minutes: 7,
+    problem:
+      "Little Notes says Running, but visitors receive errors. Decide what evidence would distinguish a routing issue from an app configuration issue.",
+    learn: [
+      "Use status, events, logs, and a real request together.",
+      "Reject a superficial fix that only hides the warning.",
+    ],
+    paragraphs: [
+      "Start with the symptom: what request failed, in which namespace, and after which change? Check the current workload state. A Pod marked Running has started its containers; that alone does not mean the app can serve useful responses or reach its dependencies.",
+      "Events can explain scheduling or startup problems. Container logs can explain application behavior. Readiness tells you whether a Pod should receive traffic according to its configured check. Request results show what a client actually experiences. Each piece has a limited view.",
+      "Form a hypothesis that fits the evidence. If the logs say the database port is wrong, adding replicas gives you more copies with the same error. Removing the readiness probe may hide a warning while sending traffic to a broken app. Fix the underlying setting and test the request again.",
+      "Change one relevant thing at a time, keep sensitive data out of shared logs, and use a rollback when that is the safest recovery. Kubernetes gives you tools for observation and control. Understanding what those tools prove is a skill you can carry into the CKAD missions.",
+    ],
+    try: "Inspect the three evidence cards. Try a superficial repair and see why the request still fails. Apply the repair supported by the logs, then verify it.",
+    why: "A useful repair changes the failing behavior, not merely the status you are watching.",
+    analogy:
+      "Covering a warning light does not repair a car. Removing a probe can hide evidence without restoring the application.",
+    terms: [
+      [
+        "Event",
+        "A cluster record explaining something that happened to a resource.",
+      ],
+      ["Log", "An application or system record of an event."],
+      ["Verification", "Checking that the intended behavior now works."],
+    ],
+    code: "kubectl get pods -n quest\nkubectl describe pod <pod> -n quest\nkubectl logs <pod> -n quest\n# Compare these clues with the request a visitor is making.",
+    question:
+      "Removing a failing readiness check makes the Pod look ready, but requests still fail. Is the incident fixed?",
+    answers: [
+      "Yes, the green label is the only goal.",
+      "No. Verify and repair the actual failing request path.",
+      "Yes, because probes cause every application error.",
+    ],
+    correct: 1,
+    explanation:
+      "The probe was exposing a symptom. A real fix restores useful application behavior and an appropriate health signal.",
+    docs: "https://kubernetes.io/docs/tasks/debug/debug-application/",
+  },
+);

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Settings2, X, ArrowUpRight } from "lucide-react";
 import { lessons } from "../content/lessons";
+import { foundations } from "../content/foundations";
 import { missions } from "../content/missions";
 
 export const repository = "https://github.com/ramideltoro/kubequest";
@@ -41,6 +42,12 @@ export function SiteFooter() {
     };
   }, [menu]);
   const items = [
+    ...foundations.map((lesson) => ({
+      title: lesson.title,
+      description: lesson.subtitle,
+      kind: "Before Kubernetes",
+      url: "/foundations/" + lesson.id,
+    })),
     ...lessons.map((lesson) => ({
       title: lesson.title,
       description: lesson.subtitle,
@@ -88,6 +95,7 @@ export function SiteFooter() {
               </button>
             </nav>
             <nav className="footer-nav" aria-label="Footer navigation">
+              <Link to="/foundations">Foundations</Link>
               <Link to="/basics">Basics</Link>
               <Link to="/ckad">CKAD</Link>
               <Link to="/about">About</Link>
@@ -203,9 +211,18 @@ export function Readme() {
       </div>
       <div className="readme-facts">
         <section>
+          <h2>Before Kubernetes</h2>
+          <p>
+            Sixteen chapters introduce applications, servers, HTTP, networks,
+            Git, CI/CD, storage, and containers. Try each idea safely in the
+            browser, starting with no software engineering background.
+          </p>
+          <Link to="/foundations">Begin with the foundations</Link>
+        </section>
+        <section>
           <h2>Kubernetes Basics</h2>
           <p>
-            Ten short visual lessons follow Little Notes, a small example
+            Fourteen short visual lessons follow Little Notes, a small example
             application. Explore clickable diagrams, change replicas, simulate
             failures, and check your understanding. No account, terminal, or
             cluster required.

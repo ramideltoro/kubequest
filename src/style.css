@@ -3038,3 +3038,323 @@ pre {
     grid-template-columns: 1fr;
   }
 }
+
+/* Learning foundations and hands-on workbenches. */
+.three-paths {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.three-paths .path-card {
+  padding: 30px;
+  min-width: 0;
+}
+.three-paths .path-card h3 {
+  font-size: clamp(26px, 2.4vw, 35px);
+}
+.path-card.foundation {
+  background: var(--raised);
+  border-color: var(--line);
+}
+.path-bridge {
+  margin: 16px 0;
+  color: var(--muted);
+}
+.path-bridge a {
+  color: var(--amber);
+}
+.topic-icon {
+  flex-shrink: 0;
+  color: var(--amber);
+}
+.learning-resources {
+  margin: 48px 0 24px;
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+.learning-resources h2 {
+  font-size: 28px;
+  margin: 8px 0 14px;
+}
+.learning-resources > p {
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 215px), 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.resource-card {
+  display: block;
+  text-decoration: none;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.resource-card:hover {
+  border-color: var(--amber);
+}
+.resource-card small,
+.resource-card p {
+  color: var(--muted);
+}
+.resource-card h3 {
+  font-size: 19px;
+  line-height: 1.4;
+  margin: 10px 0;
+}
+.resource-card h3 svg {
+  display: inline;
+  vertical-align: middle;
+}
+.resource-card p {
+  font-size: 14px;
+}
+.resource-card > span {
+  display: block;
+  color: var(--amber);
+  font-size: 12px;
+  margin-top: 15px;
+}
+.path-progress {
+  margin-bottom: 45px;
+}
+.path-progress .progress-summary > div {
+  width: 100%;
+}
+.playground {
+  margin: 22px 0;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  min-width: 0;
+}
+.playground-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.playground-heading p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.playground label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.playground input:not([type="checkbox"]):not([type="range"]),
+.playground select {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--canvas);
+  color: var(--ink);
+  padding: 10px;
+}
+.playground input[type="range"] {
+  accent-color: var(--amber);
+  max-width: 100%;
+}
+.playground .check-control {
+  flex-direction: row;
+  align-items: center;
+  max-width: 100%;
+}
+.playground input[type="checkbox"] {
+  accent-color: var(--amber);
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.experiment-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+  margin: 20px 0;
+}
+.experiment-controls .button {
+  white-space: normal;
+  text-align: left;
+}
+.experiment-controls label {
+  flex: 1 1 150px;
+}
+.experiment-controls button[aria-pressed="true"] {
+  border-color: var(--amber);
+  background: var(--raised);
+}
+.flow-diagram,
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.flow-diagram.compact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.flow-diagram button,
+.flow-label,
+.fact-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--canvas);
+  color: var(--ink);
+  text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.flow-diagram button span,
+.fact-grid span,
+.flow-label span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.flow-diagram .selected,
+.pipeline-diagram .selected {
+  border-color: var(--amber);
+  box-shadow: inset 0 0 0 1px var(--amber);
+}
+.diagram-detail {
+  padding: 12px 16px;
+  border-left: 3px solid var(--amber);
+  background: var(--raised);
+  font-size: 14px;
+}
+.experiment-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 16px;
+  background: var(--raised);
+  border-radius: 8px;
+  font-size: 14px;
+}
+.experiment-result svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--amber);
+}
+.experiment-result.good svg {
+  color: var(--success);
+}
+.commit-list {
+  font-size: 14px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.pipeline-diagram {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.pipeline-diagram > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--canvas);
+}
+.pipeline-diagram span,
+.pipeline-diagram small {
+  color: var(--amber);
+  font-size: 12px;
+}
+.capacity-bar {
+  height: 24px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.capacity-bar span {
+  display: block;
+  height: 100%;
+  background: var(--amber);
+}
+.coach-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 12px 0;
+}
+.coach-prompts button {
+  font-size: 12px;
+  text-align: left;
+  text-decoration: underline;
+}
+.coach-status {
+  margin: 12px 0;
+  color: var(--muted);
+  min-height: 24px;
+}
+.tutor-answer {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.tutor-answer > strong {
+  color: var(--amber);
+}
+.tutor details {
+  margin-top: 18px;
+}
+@media (max-width: 1100px) {
+  .three-paths {
+    grid-template-columns: 1fr;
+  }
+  .three-paths .path-card {
+    padding: 30px;
+  }
+}
+@media (max-width: 640px) {
+  .playground {
+    padding: 16px;
+  }
+  .flow-diagram.compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pipeline-diagram {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .experiment-controls {
+    align-items: stretch;
+  }
+  .experiment-controls .button {
+    flex: 1 1 150px;
+  }
+  .tutor form {
+    flex-wrap: wrap;
+  }
+  .tutor input {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+.three-paths .path-card > img {
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+}
+.three-paths .path-label {
+  padding-right: 36px;
+}

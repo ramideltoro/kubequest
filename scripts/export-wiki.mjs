@@ -26,6 +26,20 @@ async function content(file) {
 }
 const { lessons } = await content("content/lessons.ts"),
   { missions } = await content("content/missions.ts");
+let hasFoundations = false;
+try {
+  execFileSync(
+    "git",
+    ["cat-file", "-e", revision + ":content/foundations.ts"],
+    { stdio: "ignore" },
+  );
+  hasFoundations = true;
+} catch {
+  /* Historical releases predate this path. */
+}
+const foundations = hasFoundations
+  ? (await content("content/foundations.ts")).foundations
+  : [];
 const routes = [];
 for (const file of ["server/index.ts", "server/auth.ts"]) {
   const syntax = ts.createSourceFile(
@@ -100,6 +114,12 @@ const snapshot = {
   }).trim(),
   routes,
   dependencies,
+  foundations: foundations.map((l) => ({
+    id: l.id,
+    title: l.title,
+    minutes: l.minutes,
+    objectives: l.learn,
+  })),
   lessons: lessons.map((l) => ({
     id: l.id,
     title: l.title,
@@ -118,5 +138,5 @@ const target = process.env.WIKI_EXPORT_PATH || ".wiki-update/current.json";
 fs.mkdirSync(path.dirname(target), { recursive: true });
 fs.writeFileSync(target, JSON.stringify(snapshot, null, 2) + "\n");
 console.log(
-  `Exported ${lessons.length} lessons, ${missions.length} missions and ${routes.length} routes from ${revision}.`,
+  `Exported ${foundations.length} foundation chapters, ${lessons.length} Kubernetes lessons, ${missions.length} missions and ${routes.length} routes from ${revision}.`,
 );

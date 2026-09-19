@@ -2,6 +2,8 @@ import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { lessons as basics } from "../content/lessons.ts";
+import { foundations } from "../content/foundations.ts";
 const browser = await chromium.launch(
   process.env.BROWSER_PATH ? { executablePath: process.env.BROWSER_PATH } : {},
 );
@@ -15,24 +17,16 @@ const origin = process.env.ORIGIN || "http://127.0.0.1:4340";
 const errors = [];
 page.on("pageerror", (error) => errors.push(error.message));
 const lessons = [
-  ["apps-and-servers", 1],
-  ["containers", 2],
-  ["why-kubernetes", 1],
-  ["meet-the-cluster", 0],
-  ["first-pod", 1],
-  ["keep-it-running", 1],
-  ["find-the-app", 2],
-  ["settings-and-storage", 1],
-  ["safe-updates", 1],
-  ["bring-it-together", 1],
+  ...foundations.map((l) => ["/foundations/" + l.id, l.correct]),
+  ...basics.map((l) => ["/basics/" + l.id, l.correct]),
 ];
 try {
   for (const [id, answer] of lessons) {
-    await page.goto(origin + "/basics/" + id);
+    await page.goto(origin + id);
     await page.getByRole("tab", { name: "2 Try it yourself" }).click();
     await page
       .getByRole("region", { name: "Interactive browser simulation" })
-      .getByRole("button")
+      .locator('button:not([aria-label="Reset simulation"])')
       .first()
       .click();
     await page.getByRole("tab", { name: "3 Check your understanding" }).click();
@@ -56,13 +50,16 @@ try {
     await page.evaluate(
       () => JSON.parse(localStorage.getItem("kubequest-progress")).length,
     ),
-    10,
+    30,
   );
   for (const width of [390, 768, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     for (const path of [
       "/",
+      "/foundations",
+      "/foundations/cicd-pipelines",
       "/basics",
+      "/basics/resource-budgets",
       "/basics/keep-it-running",
       "/ckad",
       "/ckad/lost-in-routing",
@@ -156,7 +153,7 @@ try {
   });
   assert.deepEqual(errors, []);
   console.log(
-    "PASS 10 beginner lessons, saved progress, 27 responsive/accessibility checks, footer search and keyboard controls, privacy route, anonymous protection, dark theme.",
+    "PASS 30 beginner lessons, saved progress, 36 responsive/accessibility checks, footer search and keyboard controls, privacy route, anonymous protection, dark theme.",
   );
 } finally {
   await browser.close();

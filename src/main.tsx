@@ -29,6 +29,9 @@ import {
   LogOut,
 } from "lucide-react";
 import { lessons } from "../content/lessons";
+import { foundations } from "../content/foundations";
+import { TopicIcon, Playground } from "./Playgrounds";
+import { Resources } from "./Resources";
 import { missions, domains } from "../content/missions";
 import { KIcon, Simulation } from "./simulations";
 const MissionPage = lazy(() =>
@@ -84,6 +87,7 @@ function App() {
           {menu ? <X /> : <Menu />}
         </button>
         <nav className={menu ? "open" : ""} aria-label="Main navigation">
+          <NavLink to="/foundations">Before Kubernetes</NavLink>
           <NavLink to="/basics">Kubernetes Basics</NavLink>
           <NavLink to="/ckad">
             CKAD Practice <span className="tiny-tag">PILOT</span>
@@ -128,6 +132,11 @@ function App() {
       <div id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/foundations" element={<Basics track="foundations" />} />
+          <Route
+            path="/foundations/:id"
+            element={<Lesson track="foundations" />}
+          />
           <Route path="/basics" element={<Basics />} />
           <Route path="/basics/:id" element={<Lesson />} />
           <Route path="/ckad" element={<CKAD />} />
@@ -168,10 +177,10 @@ function Home() {
           </h1>
           <p>
             See how Kubernetes works. Make something break. Figure out why. From
-            your first Pod to your next CKAD challenge.
+            how a website reaches a server to your next CKAD challenge.
           </p>
           <div className="hero-actions">
-            <Link className="button primary large" to="/basics">
+            <Link className="button primary large" to="/foundations">
               Start from the beginning <ArrowRight size={18} />
             </Link>
             <Link className="text-link" to="/ckad">
@@ -204,7 +213,7 @@ function Home() {
         <div className="section-heading">
           <div>
             <span className="eyebrow">PICK YOUR STARTING POINT</span>
-            <h2>Two paths. Same curiosity.</h2>
+            <h2>Three steps. One connected story.</h2>
           </div>
           <p>
             No assumed expertise.
@@ -212,11 +221,33 @@ function Home() {
             No mandatory detours.
           </p>
         </div>
-        <div className="path-grid">
+        <div className="path-grid three-paths">
+          <Link to="/foundations" className="path-card foundation">
+            <span className="path-label">
+              <Compass size={18} /> BEGIN BEFORE KUBERNETES
+            </span>
+            <h3>
+              How does an app
+              <br />
+              <span className="serif">reach the world?</span>
+            </h3>
+            <p>
+              Start with servers, requests, networks, Git, and delivery
+              pipelines. No coding background needed. Make the pieces work
+              together.
+            </p>
+            <div className="path-meta">
+              <span>{foundations.length} hands-on chapters</span>
+              <span>Start from zero</span>
+            </div>
+            <div className="path-cta">
+              Explore Before Kubernetes <ArrowRight size={21} />
+            </div>
+          </Link>
           <Link to="/basics" className="path-card beginner">
             <span className="path-label">
               <BookOpen size={18} />
-              START HERE
+              BUILD ON THE FOUNDATIONS
             </span>
             <h3>
               Kubernetes,
@@ -228,7 +259,7 @@ function Home() {
               see what changes, and build a mental model that sticks.
             </p>
             <div className="path-meta">
-              <span>10 visual lessons</span>
+              <span>{lessons.length} visual lessons</span>
               <span>No experience needed</span>
             </div>
             <div className="path-cta">
@@ -358,28 +389,54 @@ function HeroDiagram() {
     </div>
   );
 }
-function Basics() {
-  const done = completedLessons();
+function Basics({ track = "basics" }: { track?: "basics" | "foundations" }) {
+  const collection = track === "foundations" ? foundations : lessons;
+  const isFoundation = track === "foundations";
+  const done = completedLessons().filter((id) =>
+    collection.some((l) => l.id === id),
+  );
   return (
     <main className="page catalog">
       <div className="catalog-top">
         <div>
-          <span className="eyebrow green">THE BEGINNER PATH</span>
+          <span className="eyebrow green">
+            {isFoundation
+              ? "BEFORE KUBERNETES · START FROM ZERO"
+              : "KUBERNETES BASICS · THE NEXT STEP"}
+          </span>
           <h1>
-            Start with curiosity.
-            <br />
-            We’ll bring the Kubernetes.
+            {isFoundation ? (
+              <>
+                First, understand
+                <br />
+                the world an app lives in.
+              </>
+            ) : (
+              <>
+                Start with curiosity.
+                <br />
+                Build understanding.
+              </>
+            )}
           </h1>
           <p className="lede">
-            No containers, command lines, or cloud experience required.
-            <br />
-            Follow Little Notes from one app to a small, resilient system.
+            {isFoundation
+              ? "A website, a server, a network, a delivery pipeline. Learn how they fit together, one small experiment at a time."
+              : "Follow Little Notes from one app to a small, resilient system. Plain language, optional commands, and space to experiment."}
           </p>
+          {!isFoundation && (
+            <p className="path-bridge">
+              New to servers, Git, or networking?{" "}
+              <Link to="/foundations">Start with Before Kubernetes.</Link>
+            </p>
+          )}
           <Link
             className="button primary"
             to={
-              "/basics/" +
-              (lessons.find((l) => !done.includes(l.id)) || lessons[0]).id
+              "/" +
+              track +
+              "/" +
+              (collection.find((l) => !done.includes(l.id)) || collection[0]).id
             }
           >
             {done.length ? "Continue learning" : "Begin lesson one"}{" "}
@@ -387,18 +444,28 @@ function Basics() {
           </Link>
         </div>
         <div className="catalog-summary">
-          <KIcon name="kubernetes" size={72} />
-          <strong>10 lessons</strong>
-          <span>About 75 minutes, at your pace</span>
+          <TopicIcon
+            name={isFoundation ? "ui-server" : "kubernetes"}
+            size={72}
+          />
+          <strong>{collection.length} lessons</strong>
+          <span>
+            About {collection.reduce((n, l) => n + l.minutes, 0)} minutes, at
+            your pace
+          </span>
           <div className="progress-track">
-            <i style={{ width: (done.length / 10) * 100 + "%" }} />
+            <i
+              style={{ width: (done.length / collection.length) * 100 + "%" }}
+            />
           </div>
-          <small>{done.length} of 10 completed on this device</small>
+          <small>
+            {done.length} of {collection.length} completed on this device
+          </small>
         </div>
       </div>
       <div className="lesson-list">
-        {lessons.map((l, i) => (
-          <Link className="lesson-row" to={"/basics/" + l.id} key={l.id}>
+        {collection.map((l, i) => (
+          <Link className="lesson-row" to={"/" + track + "/" + l.id} key={l.id}>
             <span
               className={
                 "lesson-number " + (done.includes(l.id) ? "complete" : "")
@@ -410,7 +477,7 @@ function Basics() {
                 String(i + 1).padStart(2, "0")
               )}
             </span>
-            <KIcon name={l.icon} size={42} />
+            <TopicIcon name={l.icon} size={42} />
             <div>
               <h3>{l.title}</h3>
               <p>{l.subtitle}</p>
@@ -423,6 +490,7 @@ function Basics() {
           </Link>
         ))}
       </div>
+      <Resources section={track} />
       <p className="privacy-note">
         Progress stays in this browser unless you are signed in as the owner.
         Clearing browser storage clears anonymous progress.
@@ -430,10 +498,14 @@ function Basics() {
     </main>
   );
 }
-function Lesson() {
+function Lesson({ track = "basics" }: { track?: "basics" | "foundations" }) {
+  const collection = track === "foundations" ? foundations : lessons;
+  const path = "/" + track;
+  const trackTitle =
+    track === "foundations" ? "Before Kubernetes" : "Kubernetes Basics";
   const { id } = useParams();
-  const index = lessons.findIndex((l) => l.id === id),
-    l = lessons[index],
+  const index = collection.findIndex((l) => l.id === id),
+    l = collection[index],
     me = useIdentity();
   const [tab, setTab] = useState("learn"),
     [answer, setAnswer] = useState<number | null>(null),
@@ -445,11 +517,12 @@ function Lesson() {
     setExplored(false);
     document.title = (l?.title || "Lesson") + " — KubeQuest";
   }, [id]);
+  const completedCount = collection.filter((x) => done.includes(x.id)).length;
   if (!l)
     return (
       <main className="page">
         <h1>Lesson not found</h1>
-        <Link to="/basics">All lessons</Link>
+        <Link to={path}>All lessons</Link>
       </main>
     );
   const complete = async () => {
@@ -460,22 +533,26 @@ function Lesson() {
   return (
     <main className="learning-layout">
       <aside className="lesson-sidebar">
-        <Link className="back" to="/basics">
+        <Link className="back" to={path}>
           <ArrowLeft size={15} />
-          Kubernetes Basics
+          {trackTitle}
         </Link>
         <div className="sidebar-progress">
           <span>Your learning path</span>
-          <b>{done.length}/10</b>
+          <b>
+            {completedCount}/{collection.length}
+          </b>
         </div>
         <div className="progress-track">
-          <i style={{ width: done.length * 10 + "%" }} />
+          <i
+            style={{ width: (completedCount / collection.length) * 100 + "%" }}
+          />
         </div>
         <nav aria-label="Lesson navigation">
-          {lessons.map((x, i) => (
+          {collection.map((x, i) => (
             <Link
               key={x.id}
-              to={"/basics/" + x.id}
+              to={path + "/" + x.id}
               className={id === x.id ? "current" : ""}
             >
               <span>
@@ -500,7 +577,7 @@ function Lesson() {
       <article className="lesson-content">
         <div className="lesson-topline">
           <span className="eyebrow">
-            LESSON {String(index + 1).padStart(2, "0")} OF 10
+            LESSON {String(index + 1).padStart(2, "0")} OF {collection.length}
           </span>
           <span>
             <Clock size={14} />
@@ -585,7 +662,7 @@ function Lesson() {
                     <p>{p}</p>
                     {i === 1 && (
                       <div className="concept-strip">
-                        <KIcon name={l.icon} size={65} />
+                        <TopicIcon name={l.icon} size={65} />
                         <div>
                           <span className="eyebrow">THE IDEA TO KEEP</span>
                           <p>{l.why}</p>
@@ -609,9 +686,7 @@ function Lesson() {
                 ))}
               </dl>
               <details className="deeper">
-                <summary>
-                  Go deeper: what this looks like in commands or YAML
-                </summary>
+                <summary>Go deeper: an example or command (optional)</summary>
                 <pre>{l.code}</pre>
                 <a
                   className="text-link"
@@ -619,7 +694,7 @@ function Lesson() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Read the official documentation <ExternalLink size={14} />
+                  Read the source guide <ExternalLink size={14} />
                 </a>
               </details>
               <button className="button primary" onClick={() => setTab("try")}>
@@ -633,11 +708,19 @@ function Lesson() {
                 <span className="eyebrow">YOUR EXPERIMENT</span>
                 <p>{l.try}</p>
               </div>
-              <Simulation
-                key={id}
-                index={index}
-                onExplore={() => setExplored(true)}
-              />
+              {l.activity ? (
+                <Playground
+                  key={id}
+                  activity={l.activity}
+                  onExplore={() => setExplored(true)}
+                />
+              ) : (
+                <Simulation
+                  key={id}
+                  index={index}
+                  onExplore={() => setExplored(true)}
+                />
+              )}
               <div className="analogy">
                 <h3>What to notice</h3>
                 <p>{l.why}</p>
@@ -722,19 +805,25 @@ function Lesson() {
               {done.includes(l.id) && (
                 <div className="next-lesson">
                   <h3>
-                    {index === 9
-                      ? "Your first Kubernetes story is complete."
+                    {index === collection.length - 1
+                      ? "You completed this learning path."
                       : "Ready for the next idea?"}
                   </h3>
                   <Link
                     className="text-link"
                     to={
-                      index === 9 ? "/ckad" : "/basics/" + lessons[index + 1].id
+                      index === collection.length - 1
+                        ? track === "foundations"
+                          ? "/basics"
+                          : "/ckad"
+                        : path + "/" + collection[index + 1].id
                     }
                   >
-                    {index === 9
-                      ? "Explore a real-cluster walkthrough"
-                      : lessons[index + 1].title}
+                    {index === collection.length - 1
+                      ? track === "foundations"
+                        ? "Continue to Kubernetes Basics"
+                        : "Explore a real-cluster walkthrough"
+                      : collection[index + 1].title}
                     <ArrowRight size={17} />
                   </Link>
                 </div>
@@ -742,6 +831,7 @@ function Lesson() {
             </section>
           )}
         </div>
+        <Resources section={track} topic={l.id} />
       </article>
     </main>
   );
@@ -837,6 +927,7 @@ function CKAD() {
           ))}
         </div>
       </section>
+      <Resources section="ckad" />
     </main>
   );
 }
@@ -911,36 +1002,57 @@ function Progress() {
     <main className="page catalog">
       <span className="eyebrow">ONE IDEA AT A TIME</span>
       <h1>Your progress</h1>
-      <div className="progress-summary">
-        <KIcon name="kubernetes" size={58} />
-        <div>
-          <h2>{done.length} of 10 lessons completed</h2>
-          <p>
-            Understanding grows with practice. Pick up wherever you left off.
-          </p>
-          <div className="progress-track">
-            <i style={{ width: done.length * 10 + "%" }} />
-          </div>
-        </div>
-      </div>
-      <div className="lesson-list">
-        {lessons.map((l, i) => (
-          <Link className="lesson-row" key={l.id} to={"/basics/" + l.id}>
-            <span
-              className={
-                "lesson-number " + (done.includes(l.id) ? "complete" : "")
-              }
-            >
-              {done.includes(l.id) ? <Check size={18} /> : i + 1}
-            </span>
-            <div>
-              <h3>{l.title}</h3>
-              <p>{done.includes(l.id) ? "Completed" : "Ready when you are"}</p>
+      {[
+        {
+          title: "Before Kubernetes",
+          path: "/foundations",
+          items: foundations,
+        },
+        { title: "Kubernetes Basics", path: "/basics", items: lessons },
+      ].map((track) => {
+        const count = track.items.filter((l) => done.includes(l.id)).length;
+        return (
+          <section key={track.path} className="path-progress">
+            <div className="progress-summary">
+              <div>
+                <h2>{track.title}</h2>
+                <p>
+                  {count} of {track.items.length} lessons completed
+                </p>
+                <div className="progress-track">
+                  <i
+                    style={{ width: (count / track.items.length) * 100 + "%" }}
+                  />
+                </div>
+              </div>
             </div>
-            <ArrowRight size={17} />
-          </Link>
-        ))}
-      </div>
+            <div className="lesson-list">
+              {track.items.map((l, i) => (
+                <Link
+                  className="lesson-row"
+                  key={l.id}
+                  to={track.path + "/" + l.id}
+                >
+                  <span
+                    className={
+                      "lesson-number " + (done.includes(l.id) ? "complete" : "")
+                    }
+                  >
+                    {done.includes(l.id) ? <Check size={18} /> : i + 1}
+                  </span>
+                  <div>
+                    <h3>{l.title}</h3>
+                    <p>
+                      {done.includes(l.id) ? "Completed" : "Ready when you are"}
+                    </p>
+                  </div>
+                  <ArrowRight size={17} />
+                </Link>
+              ))}
+            </div>
+          </section>
+        );
+      })}
       <h2 className="history-title">Practice history</h2>
       {!me.user ? (
         <p>

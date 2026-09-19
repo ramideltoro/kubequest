@@ -6,7 +6,8 @@
 
 Learn Kubernetes by seeing what happens, trying a change, and understanding why it worked. KubeQuest follows one example application, Little Notes, from a first browser request to a recoverable Kubernetes workload.
 
-- **Kubernetes Basics:** ten public, short visual lessons with clickable diagrams, simulations, prediction exercises, plain-language explanations and optional deeper commands. No signup, terminal or cluster required. Progress stays in the browser.
+- **Before Kubernetes:** sixteen public chapters explain apps, client/server requests, HTTP/HTTPS, DNS, ports, server processes, deployment, Git, builds, CI/CD, configuration, data, containers, traffic, debugging and orchestration through browser experiments. [Start here](https://kubequest.ramideltoro.com/foundations).
+- **Kubernetes Basics:** fourteen public, short visual lessons with clickable diagrams, simulations, prediction exercises, plain-language explanations and optional deeper commands. No signup, terminal or cluster required. Progress stays in the browser.
 - **CKAD Practice:** eight original incident missions with real Kubernetes, a browser terminal, YAML editor, live resource diagrams, progressive hints, authored behavioral grading and explained solutions. Guided, independent and timed modes are available to the authorized owner.
 - **Public walkthroughs:** captioned recordings and transcripts show the actual exercises. Live labs, private progress and the optional local AI tutor require verified owner Google sign-in.
 - **Dark amber interface:** official Kubernetes/CNCF artwork, readable labels, mobile layouts, reduced-motion support and a compact NutsNews-style footer with local search.
@@ -28,7 +29,7 @@ This is an independent CKAD **pilot**, not complete exam coverage or an official
 
 TypeScript, React/Vite, Fastify and SQLite run on the existing AI server behind Cloudflare Tunnel. Private labs use one disposable KVM guest capped at 4 vCPUs and 8 GiB RAM, with K3s `v1.35.8+k3s1`, preloaded images, ingress, storage and network-policy support. The guest cannot initiate connections to private infrastructure or the internet. Resets recreate the overlay; 30 minutes of inactivity expires a session.
 
-The optional existing Ollama `qwen2.5:7b` tutor receives bounded reviewed content and sanitized evidence. It cannot run commands or determine grades. Authored help remains available when inference fails. No additional paid service is required.
+The optional existing Ollama `qwen2.5:7b` tutor receives bounded reviewed content and sanitized evidence. It cannot run commands or determine grades. Answers stream as they are generated, can be cancelled, and have a bounded timeout. Compact resource context and 15-minute model retention reduce waiting. Authored help remains available when inference fails. No additional paid service is required.
 
 ## Local development
 

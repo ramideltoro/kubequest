@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { setupObjects, evaluate } from "../server/scenarios.ts";
 import { missions } from "../content/missions.ts";
 import { lessons } from "../content/lessons.ts";
+import { foundations } from "../content/foundations.ts";
 test("Every mission starts broken and has complete authored content", () => {
   for (const m of missions) {
     assert.equal(
@@ -65,13 +66,14 @@ test("Security task cannot pass with zero resource values or root runtime identi
     !evaluate("least-privilege", o, { uid: "1000" }).every((c) => c.passed),
   );
 });
-test("All ten lessons have independent exercises, accessible labels, correct-answer explanations, and official references", () => {
-  assert.equal(lessons.length, 10);
-  assert.equal(new Set(lessons.map((l) => l.id)).size, 10);
-  for (const l of lessons) {
+test("All thirty lessons have independent exercises, accessible labels, correct-answer explanations, and official references", () => {
+  assert.equal(lessons.length, 14);
+  assert.equal(foundations.length, 16);
+  assert.equal(new Set([...foundations, ...lessons].map((l) => l.id)).size, 30);
+  for (const l of [...foundations, ...lessons]) {
     assert.ok(l.correct >= 0 && l.correct < l.answers.length);
     assert.ok(l.paragraphs.join("").length > 700);
     assert.ok(l.try.length > 30);
-    assert.ok(l.docs.startsWith("https://kubernetes.io/"));
+    assert.ok(l.docs.startsWith("https://"));
   }
 });
