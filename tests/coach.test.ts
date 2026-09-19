@@ -127,7 +127,11 @@ test("One inference at a time; cancellation releases the slot and aborts model w
   coach.cancel();
   await next;
 });
-test("A stalled model times out to authored help; missing evidence does not stall inference", async () => {
+test("A stalled model times out to authored help; missing evidence does not stall inference", async (t) => {
+  // A real fetch owns a socket. Keep that lifetime in this socket-free mock too:
+  // AbortSignal.timeout deliberately does not keep Node 22 running by itself.
+  const connectionLifetime = setInterval(() => {}, 100);
+  t.after(() => clearInterval(connectionLifetime));
   const coach = new Coach(
     (async (_url: unknown, options: RequestInit) =>
       new Promise<Response>((_resolve, reject) =>
