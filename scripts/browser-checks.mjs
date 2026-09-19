@@ -70,8 +70,6 @@ try {
       "/readme",
       "/about",
       "/progress",
-      "/wiki",
-      "/wiki/Architecture",
     ]) {
       await page.goto(origin + path);
       await page.locator("h1").first().waitFor();
@@ -121,6 +119,21 @@ try {
   await page.getByRole("link", { name: "Privacy", exact: true }).click();
   await page.locator("#privacy").waitFor();
   assert.equal(new URL(page.url()).hash, "#privacy");
+  const wikiLink = page
+    .getByRole("navigation", { name: "Footer navigation", exact: true })
+    .getByRole("link", { name: "Wiki", exact: true });
+  assert.equal(
+    await wikiLink.getAttribute("href"),
+    "https://ramideltoro.github.io/kubequest-wiki",
+  );
+  const oldWiki = await page.request.get(origin + "/wiki/Architecture", {
+    maxRedirects: 0,
+  });
+  assert.equal(oldWiki.status(), 308);
+  assert.equal(
+    oldWiki.headers().location,
+    "https://ramideltoro.github.io/kubequest-wiki/Architecture/",
+  );
   const response = await page.request.get(origin + "/api/private/session");
   assert.equal(response.status(), 401);
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -143,7 +156,7 @@ try {
   });
   assert.deepEqual(errors, []);
   console.log(
-    "PASS 10 beginner lessons, saved progress, 33 responsive/accessibility checks, footer search and keyboard controls, privacy route, anonymous protection, dark theme.",
+    "PASS 10 beginner lessons, saved progress, 27 responsive/accessibility checks, footer search and keyboard controls, privacy route, anonymous protection, dark theme.",
   );
 } finally {
   await browser.close();

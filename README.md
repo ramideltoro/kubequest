@@ -19,10 +19,10 @@ This is an independent CKAD **pilot**, not complete exam coverage or an official
 | --- | --- |
 | Live portal | [kubequest.ramideltoro.com](https://kubequest.ramideltoro.com) |
 | Public Readme | [Project overview](https://kubequest.ramideltoro.com/readme) |
-| Detailed wiki | [Architecture, operations and learning documentation](https://kubequest.ramideltoro.com/wiki) |
-| UML library | [16 diagrams covering all 14 UML categories](https://kubequest.ramideltoro.com/wiki/UML-diagrams) |
+| Detailed wiki | [Architecture, operations and learning documentation](https://ramideltoro.github.io/kubequest-wiki) |
+| UML library | [16 diagrams covering all 14 UML categories](https://ramideltoro.github.io/kubequest-wiki/UML-diagrams) |
 | CI/CD | [GitHub Actions](https://github.com/ramideltoro/kubequest/actions) |
-| Wiki source | [Versioned Markdown and editable PlantUML](docs/wiki/Home.md) |
+| Wiki source | [Versioned Markdown and editable PlantUML](https://github.com/ramideltoro/kubequest-wiki/blob/main/pages/Home.md) |
 
 ## Architecture
 
@@ -51,15 +51,15 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-The backend must be running before browser checks. `BROWSER_PATH` can select an existing Chromium executable. UML rendering uses a checksum-verified PlantUML jar and Java 21+ via `npm run docs:render`.
+The backend must be running before browser checks. `BROWSER_PATH` can select an existing Chromium executable. UML rendering is maintained in the separate wiki repository using a checksum-verified PlantUML jar and Java 21+.
 
 ## Delivery
 
 Pull requests run tests, security/dependency checks, documentation validation, build, browser interactions and automated accessibility checks on GitHub-hosted runners. Successful `main` builds produce an immutable artifact and deploy over the existing Cloudflare SSH route using a dedicated restricted key.
 
-Deployment refuses to restart an active lab, backs up SQLite, atomically switches releases and verifies the exact commit. Failed local health checks restore the previous release. A separate manual workflow rolls back to an installed commit. The wiki is built and deployed with the portal.
+Deployment refuses to restart an active lab, backs up SQLite, atomically switches releases and verifies the exact commit. Failed local health checks restore the previous release. A separate manual workflow rolls back to an installed commit. The authored wiki lives in [kubequest-wiki](https://github.com/ramideltoro/kubequest-wiki) and is hosted on GitHub Pages. Every deployment and rollback exports current code-derived documentation, triggers wiki publishing, and waits for the hosted wiki to match the live application commit. Changes affecting written guides require a reviewed wiki commit in `wiki-review.json`, enforced by CI.
 
-See [CI/CD](docs/wiki/CI-CD.md), [operations/recovery](docs/wiki/Operations.md), [content authoring](docs/wiki/Content-authoring.md) and [validation](docs/wiki/Validation.md).
+See [CI/CD](https://github.com/ramideltoro/kubequest-wiki/blob/main/pages/CI-CD.md), [operations/recovery](https://github.com/ramideltoro/kubequest-wiki/blob/main/pages/Operations.md), [content authoring](https://github.com/ramideltoro/kubequest-wiki/blob/main/pages/Content-authoring.md) and [validation](https://github.com/ramideltoro/kubequest-wiki/blob/main/pages/Validation.md).
 
 ## Artwork and ownership
 

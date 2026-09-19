@@ -15,7 +15,7 @@ jobs:
   rollback:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment:
       name: production
       url: https://kubequest.ramideltoro.com
@@ -23,6 +23,16 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.22.1
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Export the historical release reference
+        env:
+          WIKI_SOURCE_REVISION: ${{ inputs.revision }}
+        run: npm run docs:export
       - name: Activate an installed release and verify
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -34,4 +44,10 @@ jobs:
       - name: Public verification
         env:
           EXPECTED_REVISION: ${{ inputs.revision }}
+          ALLOW_LEGACY_WIKI: "true"
         run: node scripts/public-smoke.mjs
+      - name: Update wiki for the rolled-back release
+        env:
+          WIKI_DEPLOY_KEY: ${{ secrets.WIKI_DEPLOY_KEY }}
+          WIKI_KNOWN_HOSTS: ${{ secrets.WIKI_KNOWN_HOSTS }}
+        run: node scripts/publish-wiki.mjs

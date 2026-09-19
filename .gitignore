@@ -16,3 +16,7 @@ release.tar.gz
 release.tar.gz.sha256
 .tools/
 public/wiki-assets/
+
+.wiki-check/
+.wiki-update/
+.wiki-publish/

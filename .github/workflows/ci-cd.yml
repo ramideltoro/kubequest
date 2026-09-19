@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22.22.1
@@ -27,6 +28,9 @@ jobs:
       - run: npm audit --audit-level=high
       - run: npm test
       - run: npm run docs:check
+        env:
+          WIKI_BASE_REVISION: ${{ github.event.pull_request.base.sha || github.event.before }}
+      - run: npm run docs:export
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - name: Anonymous learning, accessibility and mobile checks
@@ -45,6 +49,15 @@ jobs:
       - name: Package the verified commit
         if: github.event_name != 'pull_request'
         run: node scripts/package-release.mjs
+      - name: Release documentation snapshot
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: wiki-update
+          path: .wiki-update/current.json
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: error
       - name: Immutable release artifact
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -60,7 +73,7 @@ jobs:
     needs: verify
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     concurrency:
       group: kubequest-production
       cancel-in-progress: false
@@ -86,6 +99,15 @@ jobs:
         env:
           EXPECTED_REVISION: ${{ github.sha }}
         run: node scripts/public-smoke.mjs
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: wiki-update
+          path: .wiki-update
+      - name: Update and verify the hosted wiki
+        env:
+          WIKI_DEPLOY_KEY: ${{ secrets.WIKI_DEPLOY_KEY }}
+          WIKI_KNOWN_HOSTS: ${{ secrets.WIKI_KNOWN_HOSTS }}
+        run: node scripts/publish-wiki.mjs
       - name: Deployment links
         run: |
-          printf '### KubeQuest deployed\n\n[Portal](https://kubequest.ramideltoro.com) · [Readme](https://kubequest.ramideltoro.com/readme) · [Wiki](https://kubequest.ramideltoro.com/wiki)\n\nCommit: `%s`\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          printf '### KubeQuest deployed\n\n[Portal](https://kubequest.ramideltoro.com) · [Readme](https://kubequest.ramideltoro.com/readme) · [Wiki](https://ramideltoro.github.io/kubequest-wiki/)\n\nCommit: `%s`\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"

@@ -112,12 +112,9 @@ export async function buildApp(
   };
   app.post("/api/private/session/start", async (req, reply) => {
     if (maintenance())
-      return reply
-        .code(503)
-        .header("Retry-After", "30")
-        .send({
-          error: "A portal update is in progress. Please retry shortly.",
-        });
+      return reply.code(503).header("Retry-After", "30").send({
+        error: "A portal update is in progress. Please retry shortly.",
+      });
     const b = req.body as any;
     const m = missions.find((x) => x.id === b?.missionId);
     if (!m || !["guided", "independent", "timed"].includes(b.mode))
@@ -134,12 +131,9 @@ export async function buildApp(
   });
   app.post("/api/private/session/reset", async (req, reply) => {
     if (maintenance())
-      return reply
-        .code(503)
-        .header("Retry-After", "30")
-        .send({
-          error: "A portal update is in progress. Please retry shortly.",
-        });
+      return reply.code(503).header("Retry-After", "30").send({
+        error: "A portal update is in progress. Please retry shortly.",
+      });
     if (!lab.session || lab.session.id !== (req.body as any)?.sessionId)
       return reply.code(409).send({ error: "The lab changed." });
     return {
@@ -433,6 +427,26 @@ export async function buildApp(
       req.routeOptions.url,
       error.message?.slice(0, 160),
     );
+  });
+  const wikiOrigin = "https://ramideltoro.github.io/kubequest-wiki";
+  app.get("/wiki", async (_req, reply) =>
+    reply.redirect(wikiOrigin + "/", 308),
+  );
+  app.get("/wiki/*", async (req, reply) => {
+    const chapter = (req.params as { "*": string })["*"].replace(/\/$/, "");
+    return reply.redirect(
+      wikiOrigin +
+        (/^[A-Za-z-]+$/.test(chapter) && chapter !== "Home"
+          ? "/" + chapter + "/"
+          : "/"),
+      308,
+    );
+  });
+  app.get("/wiki-assets/*", async (req, reply) => {
+    const name = (req.params as { "*": string })["*"];
+    if (!/^[a-z-]+\.(svg|puml)$/.test(name))
+      return reply.code(404).send({ error: "Diagram not found." });
+    return reply.redirect(wikiOrigin + "/diagrams/" + name, 308);
   });
   await app.register(serveStatic, {
     root: resolve(root, "dist"),

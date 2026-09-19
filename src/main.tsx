@@ -31,7 +31,6 @@ import {
 import { lessons } from "../content/lessons";
 import { missions, domains } from "../content/missions";
 import { KIcon, Simulation } from "./simulations";
-const Wiki = lazy(() => import("./Wiki"));
 const MissionPage = lazy(() =>
   import("./Lab").then((m) => ({ default: m.MissionPage })),
 );
@@ -137,20 +136,6 @@ function App() {
           <Route path="/progress" element={<Progress />} />
           <Route path="/about" element={<About />} />
           <Route path="/readme" element={<Readme />} />
-          <Route
-            path="/wiki/:page?"
-            element={
-              <Suspense
-                fallback={
-                  <main className="page">
-                    <p>Loading the wiki…</p>
-                  </main>
-                }
-              >
-                <Wiki />
-              </Suspense>
-            }
-          />
           <Route
             path="*"
             element={

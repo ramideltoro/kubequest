@@ -11,9 +11,8 @@
     "demo:render": "tsx scripts/render-demos.mjs",
     "test:live": "tsx tests/live-labs.ts",
     "test:browser": "node scripts/browser-checks.mjs",
-    "prebuild": "node scripts/wiki-assets.mjs",
-    "docs:check": "node scripts/check-docs.mjs",
-    "docs:render": "node scripts/render-uml.mjs"
+    "docs:check": "node scripts/check-wiki.mjs",
+    "docs:export": "node scripts/export-wiki.mjs"
   },
   "dependencies": {
     "@codemirror/lang-yaml": "^6.1.2",
@@ -31,9 +30,7 @@
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.9.0",
-    "remark-gfm": "^4.0.1",
     "ssh2": "^1.17.0",
     "tsx": "^4.20.0",
     "yaml": "^2.8.0"

@@ -5,7 +5,7 @@ import { lessons } from "../content/lessons";
 import { missions } from "../content/missions";
 
 export const repository = "https://github.com/ramideltoro/kubequest";
-export const wiki = "https://kubequest.ramideltoro.com/wiki";
+export const wiki = "https://ramideltoro.github.io/kubequest-wiki";
 
 export function SiteFooter() {
   const [query, setQuery] = useState("");
