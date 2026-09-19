@@ -47,3 +47,7 @@ The deployed API passed authenticated start, single-session enforcement, actual 
 The local `qwen2.5:7b` tutor returned an actual response in 29 seconds, including model loading. During a 60-second sample alongside the existing services, the Qwen process reached approximately 4.8 GiB resident memory, the VM approximately 2 GiB, and total host memory use approximately 8.5 GiB of 58.8 GiB. More than 50 GiB remained available in the sample. Existing Ollama, NutsNews AI, fantasy Qwen, and observability services stayed active. These are deployment observations, not a sustained-load benchmark; only one lab and one tutoring request are permitted.
 
 An online SQLite backup was restored to a separate file. Its integrity check passed and attempts/progress record counts matched the live database. The daily systemd timer keeps fourteen local snapshots. Production recovery instructions retain the original database before a restore.
+
+### Public release
+
+The final release is installed at `/opt/kubequest/releases/20260919-02`, with the service and daily backup timer enabled. The public HTTPS health check succeeds through Cloudflare, and anonymous private API access returns HTTP 401. Google sign-in was completed in the browser using the allowed owner account and returned to the authorized CKAD workspace. All ten anonymous lesson flows and all eighteen responsive checks were repeated successfully on the public hostname.
