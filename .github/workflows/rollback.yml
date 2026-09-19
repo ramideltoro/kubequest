@@ -1,0 +1,37 @@
+name: Roll back production
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Full 40-character SHA of a release already installed on the server
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: kubequest-production
+  cancel-in-progress: false
+jobs:
+  rollback:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://kubequest.ramideltoro.com
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Activate an installed release and verify
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          ROLLBACK_REVISION: ${{ inputs.revision }}
+        run: bash scripts/deploy-ci.sh rollback "$ROLLBACK_REVISION"
+      - name: Public verification
+        env:
+          EXPECTED_REVISION: ${{ inputs.revision }}
+        run: node scripts/public-smoke.mjs

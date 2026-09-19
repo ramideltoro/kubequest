@@ -31,6 +31,7 @@ import {
 import { lessons } from "../content/lessons";
 import { missions, domains } from "../content/missions";
 import { KIcon, Simulation } from "./simulations";
+const Wiki = lazy(() => import("./Wiki"));
 const MissionPage = lazy(() =>
   import("./Lab").then((m) => ({ default: m.MissionPage })),
 );
@@ -43,6 +44,7 @@ import {
   useIdentity,
 } from "./lib";
 import "./style.css";
+import { SiteFooter, Readme } from "./SiteFooter";
 function App() {
   const [me, setMe] = useState<Me>({
       user: null,
@@ -58,8 +60,12 @@ function App() {
   }, []);
   useEffect(() => {
     setMenu(false);
-    window.scrollTo(0, 0);
-  }, [loc.pathname]);
+    if (loc.hash)
+      requestAnimationFrame(() =>
+        document.getElementById(loc.hash.slice(1))?.scrollIntoView(),
+      );
+    else window.scrollTo(0, 0);
+  }, [loc.pathname, loc.hash]);
   return (
     <Identity.Provider value={me}>
       <a className="skip-link" href="#main-content">
@@ -130,6 +136,21 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/progress" element={<Progress />} />
           <Route path="/about" element={<About />} />
+          <Route path="/readme" element={<Readme />} />
+          <Route
+            path="/wiki/:page?"
+            element={
+              <Suspense
+                fallback={
+                  <main className="page">
+                    <p>Loading the wiki…</p>
+                  </main>
+                }
+              >
+                <Wiki />
+              </Suspense>
+            }
+          />
           <Route
             path="*"
             element={
@@ -143,14 +164,7 @@ function App() {
           />
         </Routes>
       </div>
-      <footer>
-        <Link to="/" className="wordmark">
-          kube<span>quest</span>.
-        </Link>
-        <p>Learn it. Break it. Understand it.</p>
-        <Link to="/about">About & artwork credits</Link>
-        <span>Independent learning project · Not affiliated with CNCF</span>
-      </footer>
+      <SiteFooter />
     </Identity.Provider>
   );
 }
@@ -997,7 +1011,7 @@ function About() {
         identifies the technologies being taught and does not imply endorsement.
       </p>
       <a href="/icons/sources.json">Asset sources and checksums</a>
-      <h2>What happens to your data?</h2>
+      <h2 id="privacy">What happens to your data?</h2>
       <p>
         Anonymous lesson progress stays in your browser’s local storage. Google
         sign-in is restricted to the owner; private lesson completion and

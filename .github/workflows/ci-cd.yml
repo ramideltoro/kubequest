@@ -1,0 +1,91 @@
+name: CI and production deployment
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kubequest-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    name: Tests, build, browser and documentation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22.22.1
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm audit --audit-level=high
+      - run: npm test
+      - run: npm run docs:check
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Anonymous learning, accessibility and mobile checks
+        run: |
+          npm start > /tmp/kubequest-test.log 2>&1 &
+          for attempt in $(seq 1 30); do curl -fsS http://127.0.0.1:4340/healthz && break || sleep 1; done
+          npm run test:browser
+      - name: Browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-evidence
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Package the verified commit
+        if: github.event_name != 'pull_request'
+        run: node scripts/package-release.mjs
+      - name: Immutable release artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: production-release
+          path: |
+            release.tar.gz
+            release.tar.gz.sha256
+          retention-days: 14
+          if-no-files-found: error
+  deploy:
+    name: Deploy and verify production
+    needs: verify
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: kubequest-production
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://kubequest.ramideltoro.com
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: production-release
+      - run: sha256sum --check release.tar.gz.sha256
+      - name: Deploy through the existing Cloudflare Tunnel
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+          TUNNEL_SERVICE_TOKEN_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          TUNNEL_SERVICE_TOKEN_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: bash scripts/deploy-ci.sh deploy "$GITHUB_SHA"
+      - name: Verify the public release
+        env:
+          EXPECTED_REVISION: ${{ github.sha }}
+        run: node scripts/public-smoke.mjs
+      - name: Deployment links
+        run: |
+          printf '### KubeQuest deployed\n\n[Portal](https://kubequest.ramideltoro.com) · [Readme](https://kubequest.ramideltoro.com/readme) · [Wiki](https://kubequest.ramideltoro.com/wiki)\n\nCommit: `%s`\n' "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"

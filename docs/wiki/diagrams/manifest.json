@@ -1,0 +1,102 @@
+{
+  "plantuml": "1.2026.8",
+  "jarSha256": "5e1ecfa8ecd32c90b03bbf3b1eb6f020943f98ab0fcf4032be31a0002ee2c462",
+  "diagrams": [
+    {
+      "source": "activity.puml",
+      "sourceSha256": "b93c72f1f8b229c4dbfe25139be0f319aafb9988b02454a4d74e9e1ee8fea112",
+      "svg": "activity.svg",
+      "svgSha256": "782bfc1c7994eeb72651bc9c88ad2ed65e2bde5d39ffdad71746ad96870f00f8"
+    },
+    {
+      "source": "class.puml",
+      "sourceSha256": "25bf2ee69f32856454882c33e1e4f44d145154a05ae89a69aac8bc32f19df873",
+      "svg": "class.svg",
+      "svgSha256": "74e94d543817640aab350ff091340cc9bea5b17fb4c38394279ac84ca29c46a1"
+    },
+    {
+      "source": "communication.puml",
+      "sourceSha256": "31fdd15c440d0c2e5fa6db5e99b17f83bbfcd3a68889478941b84f4f6376e01c",
+      "svg": "communication.svg",
+      "svgSha256": "2e9f1ce4f94fa06d7304d7b387469ff91b0d9794a358baf328fb2429c9b36abc"
+    },
+    {
+      "source": "component.puml",
+      "sourceSha256": "1b538a1df64e2cc12ea57c4a7960dd4d34a92c1cebd8c43bb0bb019dcd032d2d",
+      "svg": "component.svg",
+      "svgSha256": "99c8d0db880e061f42f12b0ef60a1fe977d780754d95d099c86496bf9e915cd3"
+    },
+    {
+      "source": "composite-structure.puml",
+      "sourceSha256": "ffad81a3f71e1854364c4d798cd6e7d7d25e435f882a290275c7e74b05df8d66",
+      "svg": "composite-structure.svg",
+      "svgSha256": "135d0184773907e1d07ce84ef49dccf65158f9550dd905345687fb0daec298bc"
+    },
+    {
+      "source": "deployment.puml",
+      "sourceSha256": "a378881dfb1d112dad82090e65b9df0876974f5fa2cb9570d99186bf621a7160",
+      "svg": "deployment.svg",
+      "svgSha256": "f907b58315c4c319b8116aa2f2ae767c5c1b89c2d48fd38e501f73dbfff2f8cf"
+    },
+    {
+      "source": "interaction-overview.puml",
+      "sourceSha256": "e9e479a9e7ba9ff52c765ebe3b4c660ebb805d5fc180f3a1a7d5477218b40ab2",
+      "svg": "interaction-overview.svg",
+      "svgSha256": "bfba611407d84c32ef5ec73dd4030f4b698b1408c38aaaab51a913872a504e39"
+    },
+    {
+      "source": "object.puml",
+      "sourceSha256": "b41cfd31c6f658575d72a456c21f7547fd811ac82aa36a609a92b7b50d678856",
+      "svg": "object.svg",
+      "svgSha256": "ec644b1cd17289666493e0ef38a3ce3e07f91e1e241a3807b014794fbc487537"
+    },
+    {
+      "source": "package.puml",
+      "sourceSha256": "95ee279e8a7f1540365cb7a3e5ce7685b3f9013fa2812ea805c5585191bf688a",
+      "svg": "package.svg",
+      "svgSha256": "22d2b09e532fd9b169b40f8044e1b569a11434f0f3572a0a47265dd7c69e22e1"
+    },
+    {
+      "source": "profile.puml",
+      "sourceSha256": "df9272323d4a3093f66bc74b0c76cd7ac003630040e00e163c0938c7c2e08640",
+      "svg": "profile.svg",
+      "svgSha256": "d9a001548ef900e958760635843d92d39a456a3cbb8b7000a486a54b1024b75c"
+    },
+    {
+      "source": "sequence-auth.puml",
+      "sourceSha256": "d355843b54a2dfdc72f80bf9269698e9931c6ac028b774aaa5362d148a374c91",
+      "svg": "sequence-auth.svg",
+      "svgSha256": "6bb8b5a8931dde4b8fd73cc5628d56b4a3277afb47261a5bb2c51e0a55d287af"
+    },
+    {
+      "source": "sequence-deploy.puml",
+      "sourceSha256": "6dba18873b71006fea6965f7429f19dd872737efa20efb5866b43ea2344a490b",
+      "svg": "sequence-deploy.svg",
+      "svgSha256": "27abc4a5c65b396fc6f0c631aa31a2cb3525b5904947c8d35819b05961ced7ac"
+    },
+    {
+      "source": "sequence-lab.puml",
+      "sourceSha256": "269c5358eb7d58aeef8515a5b628f73230b9a3fb3fcbfbf800466f8b44546cfb",
+      "svg": "sequence-lab.svg",
+      "svgSha256": "5599b409afe904830246dfb202f7fc564b3621cd576821c2448c0dd4baf6443a"
+    },
+    {
+      "source": "state-machine.puml",
+      "sourceSha256": "e430d6e6bd2ef8aa2e318635c090e54b7d2eb52cebe37cef112c83d809e7c507",
+      "svg": "state-machine.svg",
+      "svgSha256": "3ac6a2c98c2dc8d4809cd75984e4a8b3069d3ab7adbea22780eb600e5e0cb044"
+    },
+    {
+      "source": "timing.puml",
+      "sourceSha256": "0510418311eebfd23c5d63659b39f044014525e07e70d7a04476633dfc525162",
+      "svg": "timing.svg",
+      "svgSha256": "c796f445da26eaa9ab966a3f6ea0c69f03f4e9df1f8bf88a233c9b24e0f2052c"
+    },
+    {
+      "source": "use-case.puml",
+      "sourceSha256": "25be8f73191ec7fecfd983c26dc89c34e7a181880fb747fccd5ee78265ca9ae6",
+      "svg": "use-case.svg",
+      "svgSha256": "b257beb705cbbe591f325f640c44aec6e66f54721b6247eb70a36241581ed15e"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+@startuml
+!pragma layout smetana
+skinparam backgroundColor #17130D
+skinparam defaultFontName SansSerif
+skinparam defaultFontSize 14
+skinparam defaultFontColor #F4ECDF
+skinparam shadowing false
+skinparam ArrowColor #F3BD62
+skinparam LineColor #F3BD62
+skinparam BorderColor #F3BD62
+skinparam defaultBackgroundColor #2D2417
+skinparam classBackgroundColor #2D2417
+skinparam classBorderColor #F3BD62
+skinparam classFontColor #F4ECDF
+skinparam componentBackgroundColor #2D2417
+skinparam componentBorderColor #F3BD62
+skinparam componentFontColor #F4ECDF
+skinparam nodeBackgroundColor #2D2417
+skinparam nodeBorderColor #F3BD62
+skinparam nodeFontColor #F4ECDF
+skinparam packageBackgroundColor #2D2417
+skinparam packageBorderColor #F3BD62
+skinparam packageFontColor #F4ECDF
+skinparam rectangleBackgroundColor #2D2417
+skinparam rectangleBorderColor #F3BD62
+skinparam rectangleFontColor #F4ECDF
+skinparam databaseBackgroundColor #2D2417
+skinparam databaseBorderColor #F3BD62
+skinparam databaseFontColor #F4ECDF
+skinparam cloudBackgroundColor #2D2417
+skinparam cloudBorderColor #F3BD62
+skinparam cloudFontColor #F4ECDF
+skinparam artifactBackgroundColor #2D2417
+skinparam artifactBorderColor #F3BD62
+skinparam artifactFontColor #F4ECDF
+skinparam objectBackgroundColor #2D2417
+skinparam objectBorderColor #F3BD62
+skinparam objectFontColor #F4ECDF
+skinparam stateBackgroundColor #2D2417
+skinparam stateBorderColor #F3BD62
+skinparam stateFontColor #F4ECDF
+skinparam activityBackgroundColor #2D2417
+skinparam activityBorderColor #F3BD62
+skinparam activityFontColor #F4ECDF
+skinparam actorBackgroundColor #2D2417
+skinparam actorBorderColor #F3BD62
+skinparam actorFontColor #F4ECDF
+skinparam usecaseBackgroundColor #2D2417
+skinparam usecaseBorderColor #F3BD62
+skinparam usecaseFontColor #F4ECDF
+skinparam interfaceBackgroundColor #2D2417
+skinparam interfaceBorderColor #F3BD62
+skinparam interfaceFontColor #F4ECDF
+skinparam participantBackgroundColor #2D2417
+skinparam participantBorderColor #F3BD62
+skinparam participantFontColor #F4ECDF
+skinparam classAttributeIconSize 0
+skinparam NoteBackgroundColor #3B2E1A
+skinparam NoteBorderColor #BB9658
+skinparam NoteFontColor #F4ECDF
+skinparam sequenceLifeLineBorderColor #BB9658
+skinparam sequenceLifeLineBackgroundColor #221C13
+skinparam sequenceGroupBackgroundColor #221C13
+skinparam sequenceGroupHeaderFontColor #F4ECDF
+skinparam sequenceGroupBodyBackgroundColor #221C13
+skinparam sequenceDividerBackgroundColor #2D2417
+skinparam sequenceDividerFontColor #F4ECDF
+skinparam activityDiamondBackgroundColor #3B2E1A
+skinparam activityStartColor #F3BD62
+skinparam activityEndColor #F3BD62
+title KubeQuest - runtime components
+package "Browser" {
+ component "React router and lessons" as UI
+ component "Simulation controls" as Sim
+ component "Terminal and YAML editor" as Editor
+ component "Wiki renderer" as Wiki
+}
+package "Portal service" {
+ component "Fastify routes" as API
+ component "Google OAuth / session verification" as Auth
+ component "Lab controller" as Lab
+ component "Authored validators" as Grade
+ component "Tutor guard and evidence sanitizer" as Tutor
+ database "SQLite" as DB
+}
+component "Google Identity" as Google
+node "Disposable KVM guest" {
+ component "K3s and quest namespace" as K3s
+}
+component "Existing Ollama / qwen2.5:7b" as Ollama
+UI --> API : HTTPS
+UI --> Sim : local state
+UI --> Wiki : bundled Markdown
+Editor --> API : API and WebSocket
+API --> Auth
+Auth --> Google : OAuth / JWKS
+API --> Lab
+API --> DB
+Lab --> K3s : pinned SSH
+Grade --> Lab : configuration and behavior
+API --> Grade
+API --> Tutor
+Tutor --> Ollama : bounded local request
+@enduml

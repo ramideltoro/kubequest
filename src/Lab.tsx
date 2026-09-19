@@ -23,6 +23,8 @@ import { FitAddon } from "@xterm/addon-fit";
 import "@xterm/xterm/css/xterm.css";
 import { EditorView, basicSetup } from "codemirror";
 import { yaml } from "@codemirror/lang-yaml";
+import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { tags } from "@lezer/highlight";
 import { missions, type Mission } from "../content/missions";
 import { api, useIdentity } from "./lib";
 import { KIcon } from "./simulations";
@@ -36,9 +38,9 @@ function LiveTerminal({ sessionId }: { sessionId: string }) {
       fontFamily: '"SFMono-Regular",Consolas,monospace',
       fontSize: 13,
       theme: {
-        background: "#111b2c",
-        foreground: "#dce6f4",
-        cursor: "#b9edc0",
+        background: "#17130d",
+        foreground: "#f4ecdf",
+        cursor: "#f3bd62",
       },
       cursorBlink: true,
       scrollback: 2000,
@@ -106,7 +108,39 @@ function YamlEditor({
     if (!el.current) return;
     view.current = new EditorView({
       doc: initial,
-      extensions: [basicSetup, yaml(), EditorView.lineWrapping],
+      extensions: [
+        basicSetup,
+        yaml(),
+        EditorView.lineWrapping,
+        EditorView.theme(
+          {
+            "&": { color: "#f4ecdf", backgroundColor: "#17130d" },
+            ".cm-content": { caretColor: "#f3bd62" },
+            ".cm-cursor": { borderLeftColor: "#f3bd62" },
+            ".cm-gutters": {
+              color: "#bbaf9a",
+              backgroundColor: "#221c13",
+              border: "none",
+            },
+            ".cm-activeLine, .cm-activeLineGutter": {
+              backgroundColor: "#2d2417",
+            },
+            "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
+              backgroundColor: "#51402a",
+            },
+          },
+          { dark: true },
+        ),
+        syntaxHighlighting(
+          HighlightStyle.define([
+            { tag: [tags.propertyName, tags.keyword], color: "#f3bd62" },
+            { tag: [tags.string, tags.special(tags.string)], color: "#9ac995" },
+            { tag: [tags.number, tags.bool, tags.null], color: "#f0a68d" },
+            { tag: tags.comment, color: "#bbaf9a" },
+            { tag: [tags.punctuation, tags.meta], color: "#d9c9b2" },
+          ]),
+        ),
+      ],
       parent: el.current,
     });
     return () => view.current?.destroy();

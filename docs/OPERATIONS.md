@@ -1,5 +1,7 @@
 # KubeQuest operations
 
+> Current release documentation: [KubeQuest wiki](https://kubequest.ramideltoro.com/wiki). The notes below include the original pilot qualification and manual bootstrap; routine releases now use the [GitHub CI/CD pipeline](https://kubequest.ramideltoro.com/wiki/CI-CD).
+
 ## Deployment architecture
 
 The public hostname `kubequest.ramideltoro.com` routes through the existing Cloudflare Tunnel to `127.0.0.1:4340` on the local AI server. The TypeScript/Fastify service serves the compiled React application, checks Google identity, stores progress in SQLite, and manages one disposable QEMU/KVM guest.

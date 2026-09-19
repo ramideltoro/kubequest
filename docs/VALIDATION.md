@@ -1,5 +1,7 @@
 # Pilot verification — 19 September 2026
 
+> Current release documentation: [KubeQuest wiki](https://kubequest.ramideltoro.com/wiki). The notes below include the original pilot qualification and manual bootstrap; routine releases now use the [GitHub CI/CD pipeline](https://kubequest.ramideltoro.com/wiki/CI-CD).
+
 This release is a pilot with eight original missions, not complete CKAD exam coverage. The Linux Foundation's [CKAD page](https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/) and [candidate instructions](https://docs.linuxfoundation.org/tc-docs/certification/tips-cka-and-ckad) were checked on this date and list Kubernetes 1.35. The lab pins K3s `v1.35.8+k3s1`. Future exam changes require a reviewed image/content update.
 
 ## Automated and browser checks

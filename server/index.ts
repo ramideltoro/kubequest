@@ -3,7 +3,7 @@ import cookie from "@fastify/cookie";
 import websocket from "@fastify/websocket";
 import serveStatic from "@fastify/static";
 import { DatabaseSync } from "node:sqlite";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createAuth } from "./auth.ts";
@@ -15,6 +15,11 @@ export async function buildApp(
   env: NodeJS.ProcessEnv = process.env,
   lab = new Lab(),
 ) {
+  const revision = existsSync(root + "/RELEASE.json")
+    ? JSON.parse(readFileSync(root + "/RELEASE.json", "utf8")).revision
+    : "development";
+  const maintenance = () =>
+    existsSync(env.DEPLOYMENT_MARKER || "/run/kubequest-deploy/maintenance");
   const app = Fastify({
     logger: false,
     bodyLimit: 70000,
@@ -73,6 +78,7 @@ export async function buildApp(
   app.get("/healthz", async () => ({
     status: "ok",
     application: "KubeQuest",
+    revision,
     authentication: auth.configured ? "google" : "not-configured",
     labReady: lab.available,
     kubernetes: "1.35.8+k3s1",
@@ -105,6 +111,13 @@ export async function buildApp(
     return true;
   };
   app.post("/api/private/session/start", async (req, reply) => {
+    if (maintenance())
+      return reply
+        .code(503)
+        .header("Retry-After", "30")
+        .send({
+          error: "A portal update is in progress. Please retry shortly.",
+        });
     const b = req.body as any;
     const m = missions.find((x) => x.id === b?.missionId);
     if (!m || !["guided", "independent", "timed"].includes(b.mode))
@@ -120,6 +133,13 @@ export async function buildApp(
     return { ok: true };
   });
   app.post("/api/private/session/reset", async (req, reply) => {
+    if (maintenance())
+      return reply
+        .code(503)
+        .header("Retry-After", "30")
+        .send({
+          error: "A portal update is in progress. Please retry shortly.",
+        });
     if (!lab.session || lab.session.id !== (req.body as any)?.sessionId)
       return reply.code(409).send({ error: "The lab changed." });
     return {
@@ -403,13 +423,11 @@ export async function buildApp(
     const known = error.message?.match(
       /already active|operation|lab changed|not installed|No active|Wait for/,
     );
-    reply
-      .code(known ? 409 : 500)
-      .send({
-        error: known
-          ? error.message
-          : "This operation could not finish. Check the lab state and try again.",
-      });
+    reply.code(known ? 409 : 500).send({
+      error: known
+        ? error.message
+        : "This operation could not finish. Check the lab state and try again.",
+    });
     console.error(
       "request_failed",
       req.routeOptions.url,
