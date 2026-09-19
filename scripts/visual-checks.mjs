@@ -72,6 +72,20 @@ try {
           await diagram.locator(".story-insight p").innerText(),
           visuals[id].contrast.summary,
         );
+        for (const [index, part] of Object.entries(
+          visuals[id].contrast.parts || {},
+        )) {
+          if (part.label)
+            assert.equal(
+              await nodes.nth(Number(index)).locator("strong").innerText(),
+              part.label,
+            );
+          if (part.note)
+            assert.equal(
+              await nodes.nth(Number(index)).locator("small").innerText(),
+              part.note,
+            );
+        }
         assert.equal(
           await diagram.locator(".wire-blocked").count(),
           visuals[id].contrast.blocked?.length ?? 0,

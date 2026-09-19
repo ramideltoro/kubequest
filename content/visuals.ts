@@ -17,6 +17,7 @@ export type Visual = {
     summary: string;
     focus: number[];
     blocked?: number[];
+    parts?: Record<number, Partial<Pick<VisualNode, "label" | "note">>>;
   };
 };
 const n = (
@@ -171,6 +172,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "request"), e(1, 2, "deliver"), e(2, 3, "response")],
     contrast: {
+      parts: {
+        "0": { label: "GET /missing", note: "Ask for an unknown path" },
+        "3": { label: "404 response", note: "That path was not found" },
+      },
       label: "An unknown path",
       summary:
         "GET /missing can reach the server over a secure connection and still return 404. Connection security and the application’s result are separate ideas.",
@@ -199,6 +204,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "lookup"), e(1, 2, "returns"), e(0, 3, "connects")],
     contrast: {
+      parts: { "2": { note: "Points to the wrong host" } },
       label: "Point to the wrong address",
       summary:
         "The server may be healthy while the name points somewhere else. Correcting the DNS record fixes the lookup; cached answers can take time to refresh.",
@@ -228,6 +234,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "connect"), e(1, 2, "allowed"), e(2, 3, "port 443")],
     contrast: {
+      parts: { "1": { note: "Blocks TCP 443" } },
       label: "Block the connection",
       summary:
         "A running application can still be unreachable when a network rule blocks its port. Check the route, the rule, and the listener separately.",
@@ -262,6 +269,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "load"), e(1, 2, "start"), e(3, 2, "request")],
     contrast: {
+      parts: { "2": { note: "Stopped · not listening" } },
       label: "Stop the process",
       summary:
         "The files are still on disk, but nobody is answering requests. A service manager can restart a process; it cannot repair a bug in the code.",
@@ -301,6 +309,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "prepare"), e(1, 2, "start"), e(2, 3, "verify")],
     contrast: {
+      parts: { "3": { note: "Health check failed" } },
       label: "A release fails its check",
       summary:
         "A failed check means the deployment is not finished. Investigate the evidence and restore a known working version when needed.",
@@ -340,6 +349,11 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "commit"), e(1, 2, "push"), e(2, 3, "deploy")],
     contrast: {
+      parts: {
+        "1": { note: "Saved only on this computer" },
+        "2": { note: "New commit not here yet" },
+        "3": { note: "Unchanged live release" },
+      },
       label: "Keep a change local",
       summary:
         "A local commit gives you a checkpoint. Until you push it, the shared repository does not have it—and production has not changed.",
@@ -379,6 +393,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "check"), e(1, 2, "if passing"), e(2, 3, "release")],
     contrast: {
+      parts: {
+        "1": { note: "Failed · release blocked" },
+        "2": { note: "New artifact not published" },
+      },
       label: "Fail a test",
       summary:
         "This pipeline stops before publishing a new artifact. Fix the behavior or the test’s mistaken expectation, then run the checks again.",
@@ -405,7 +423,7 @@ export const visuals: Record<string, Visual> = {
       ),
       n(
         "ui-package",
-        "Approved artifact",
+        "Verified artifact",
         "One tested release",
         "Keep the exact tested package. Some delivery pipelines require a person to approve deployment.",
       ),
@@ -418,6 +436,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "trigger"), e(1, 2, "checks pass"), e(2, 3, "approval")],
     contrast: {
+      parts: {
+        "2": { label: "Verified artifact", note: "Waiting for approval" },
+        "3": { note: "Previous release stays live" },
+      },
       label: "Hold at a gate",
       summary:
         "If checks fail or approval is missing, the new artifact does not move forward. The previous live release keeps serving visitors.",
@@ -496,6 +518,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "save"), e(1, 2, "back up"), e(2, 3, "restore")],
     contrast: {
+      parts: {
+        "0": { note: "Cleared by the restart" },
+        "1": { note: "Saved disk data remains" },
+      },
       label: "Restart the app",
       summary:
         "A restart clears working memory but should not erase properly saved disk data. A backup is needed for other failures, such as accidental deletion or disk loss.",
@@ -568,6 +594,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "request"), e(1, 2, "route"), e(1, 3, "route")],
     contrast: {
+      parts: { "3": { note: "Not ready · skipped" } },
       label: "One copy is not ready",
       summary:
         "The router should skip copy B while it cannot serve requests. Copy A takes the remaining traffic, so total capacity is lower.",
@@ -757,6 +784,7 @@ export const visuals: Record<string, Visual> = {
       e(3, 2, "check again"),
     ],
     contrast: {
+      parts: { "3": { note: "Pending · no suitable node" } },
       label: "No room for the replacement",
       summary:
         "The request stays unfulfilled if no node has suitable capacity. Kubernetes can keep trying, but it cannot create physical memory by itself.",
@@ -831,6 +859,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "hosts"), e(1, 2, "contains"), e(1, 3, "defines")],
     contrast: {
+      parts: { "1": { note: "Deleted · no replacement" } },
       label: "Delete a standalone Pod",
       summary:
         "A standalone Pod has no Deployment maintaining it. Deleting it does not automatically create a replacement Pod.",
@@ -856,6 +885,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "specify"), e(1, 2, "maintains"), e(1, 3, "maintains")],
     contrast: {
+      parts: { "3": { note: "Missing · replacement needed" } },
       label: "One Pod disappears",
       summary:
         "The workload controller requests a replacement for the missing Pod. The replacement has a new identity and must become ready before serving normal traffic.",
@@ -876,6 +906,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "request"), e(1, 2, "matches"), e(1, 3, "matches")],
     contrast: {
+      parts: { "1": { note: "Selector does not match" } },
       label: "The selector no longer matches",
       summary:
         "Healthy Pods are not enough. A Service with the wrong selector has no matching app endpoints, so this request cannot reach either copy.",
@@ -929,6 +960,11 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(1, 2, "check"), e(2, 3, "ready"), e(0, 3, "old capacity")],
     contrast: {
+      parts: {
+        "1": { note: "Not ready for traffic" },
+        "2": { note: "Readiness check failing" },
+        "3": { note: "Routes to old ready Pods" },
+      },
       label: "New version is not ready",
       summary:
         "The new copy should not receive normal Service traffic yet. Keeping old capacity depends on the rollout settings and enough available resources.",
@@ -954,6 +990,7 @@ export const visuals: Record<string, Visual> = {
       e(0, 3, "maintains"),
     ],
     contrast: {
+      parts: { "3": { note: "Unavailable · skipped" } },
       label: "Lose one copy",
       summary:
         "The Service skips an unavailable endpoint while the Deployment works toward a replacement. These are two different responsibilities cooperating.",
@@ -1017,6 +1054,9 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "placement"), e(1, 2, "schedule"), e(3, 2, "bounds use")],
     contrast: {
+      parts: {
+        "2": { label: "Pending Pod", note: "Waiting for a suitable node" },
+      },
       label: "Too large to place",
       summary:
         "A Pod whose request cannot fit stays Pending. Lowering a request only helps if it honestly reflects the workload’s needs, or the cluster needs more capacity.",
@@ -1108,6 +1148,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "HTTP"), e(1, 2, "selector"), e(1, 3, "selector")],
     contrast: {
+      parts: { "1": { note: "Selects the old app label" } },
       label: "Broken starting state",
       summary:
         "The Service selector still names the old app label. The Pods can be healthy while the Service has no matching endpoints. Inspect the labels and selector before changing them.",
@@ -1143,6 +1184,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "checks"), e(1, 2, "ready?"), e(1, 3, "alive?")],
     contrast: {
+      parts: {
+        "2": { note: "Wrong path or port" },
+        "3": { note: "Wrong path or port" },
+      },
       label: "Broken starting state",
       summary:
         "The probes point to the wrong path or port. Compare the configured checks with the app’s real HTTP response; do not confuse Running with Ready.",
@@ -1182,6 +1227,10 @@ export const visuals: Record<string, Visual> = {
       e(1, 3, "start + check"),
     ],
     contrast: {
+      parts: {
+        "1": { note: "Required reference missing" },
+        "3": { label: "Waiting app", note: "Not ready yet" },
+      },
       label: "Broken starting state",
       summary:
         "A missing or mismatched reference prevents the workload from reading what it needs. Changing a ConfigMap does not rewrite environment variables inside an already running process.",
@@ -1206,6 +1255,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "retain"), e(0, 2, "new version"), e(2, 3, "start")],
     contrast: {
+      parts: {
+        "2": { note: "Unavailable image tag" },
+        "3": { note: "Cannot start this image" },
+      },
       label: "Broken starting state",
       summary:
         "The image tag is unavailable and the strategy permits all copies to be unavailable. Restore a valid image and preserve healthy capacity while replacements start.",
@@ -1240,6 +1293,7 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "write"), e(1, 2, "read"), e(3, 2, "HTTP")],
     contrast: {
+      parts: { "0": { note: "Shared mount is missing" } },
       label: "Broken starting state",
       summary:
         "The init container writes somewhere the app does not share. A file in one container’s private writable layer does not appear in the other container.",
@@ -1264,6 +1318,10 @@ export const visuals: Record<string, Visual> = {
     ],
     edges: [e(0, 1, "run"), e(1, 2, "write"), e(2, 3, "read")],
     contrast: {
+      parts: {
+        "1": { note: "Writes to temporary storage" },
+        "3": { note: "Report missing here" },
+      },
       label: "Broken starting state",
       summary:
         "The writer uses temporary storage instead of the reports claim. The reader cannot find the report on its own mounted volume, even if the Job says Complete.",
@@ -1325,8 +1383,13 @@ export const visuals: Record<string, Visual> = {
       ),
       pod("Notes Pods", "Receive allowed traffic"),
     ],
-    edges: [e(0, 1, "host route"), e(1, 3, "endpoints"), e(2, 3, "enforces")],
+    edges: [e(0, 1, "host route"), e(1, 3, "traffic"), e(2, 3, "enforces")],
     contrast: {
+      parts: {
+        "0": { note: "Wrong Service backend" },
+        "2": { note: "Allows nobody" },
+        "3": { note: "Incoming traffic blocked" },
+      },
       label: "Broken starting state",
       summary:
         "The destination policy allows nobody, and the Ingress points at the wrong backend. Permit the intended frontend and controller traffic while proving the unrelated caller remains blocked.",

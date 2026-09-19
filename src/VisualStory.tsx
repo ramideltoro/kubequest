@@ -112,7 +112,10 @@ function Story({ visual, id }: { visual: Visual; id: string }) {
           [82.5, 274],
           [17.5, 274],
         ];
-  const node = selected === null ? null : visual.nodes[selected];
+  const parts = visual.nodes.map((part, index) =>
+    changed ? { ...part, ...visual.contrast?.parts?.[index] } : part,
+  );
+  const node = selected === null ? null : parts[selected];
   return (
     <figure
       className="visual-story"
@@ -184,7 +187,7 @@ function Story({ visual, id }: { visual: Visual; id: string }) {
             </span>
           );
         })}
-        {visual.nodes.map((part, i) => (
+        {parts.map((part, i) => (
           <button
             key={i}
             className={`story-node ${selected === i ? "is-selected" : ""} ${changed && visual.contrast?.focus.includes(i) ? "is-highlighted" : ""}`}
@@ -214,11 +217,11 @@ function Story({ visual, id }: { visual: Visual; id: string }) {
                 : ""
             }
           >
-            <b>{visual.nodes[edge.from].label}</b>
+            <b>{parts[edge.from].label}</b>
             <ArrowRight size={13} />
             {edge.label}
             <ArrowRight size={13} />
-            <b>{visual.nodes[edge.to].label}</b>
+            <b>{parts[edge.to].label}</b>
             {changed && visual.contrast?.blocked?.includes(i)
               ? " · blocked"
               : ""}
@@ -290,11 +293,11 @@ function Story({ visual, id }: { visual: Visual; id: string }) {
                   : ""
               }
             >
-              <strong>{visual.nodes[edge.from].label}</strong>
+              <strong>{parts[edge.from].label}</strong>
               <ArrowRight size={14} />
               <span>{edge.label}</span>
               <ArrowRight size={14} />
-              <strong>{visual.nodes[edge.to].label}</strong>
+              <strong>{parts[edge.to].label}</strong>
               {changed && visual.contrast?.blocked?.includes(i) && (
                 <em>Blocked in this example</em>
               )}

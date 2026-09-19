@@ -1,4 +1,4 @@
 {
-  "revision": "3acf46f6432b189f1ba10e663795ffff69e1b79a",
-  "summary": "Documented 45 topic-specific interactive diagrams, labeled connections and comparisons, responsive text alternatives, progress and curriculum charts, timed/independent assistance boundaries, official-artwork validation and release-synchronized diagram inventory. Updated component and content-model UML."
+  "revision": "2b114cfa58f4a2d6e5df9dd2927cee0fc85c5245",
+  "summary": "Documented comparison-state label and status changes so HTTP errors, missing or unready Pods, blocked traffic and stalled delivery agree with their visual explanations and text equivalents."
 }

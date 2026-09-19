@@ -53,6 +53,10 @@ test("Every lesson and mission has a connected, readable visual explanation", ()
       assert.notEqual(edge.from, edge.to, `${id}: unexplained self-connection`);
       assert.ok(edge.label, `${id}: unlabeled connection`);
     }
+    for (const [index, change] of Object.entries(visual.contrast?.parts ?? {})) {
+      assert.ok(visual.nodes[Number(index)], `${id}: invalid comparison part`);
+      assert.ok(change.label || change.note, `${id}: empty comparison part`);
+    }
     for (const index of visual.contrast?.blocked ?? [])
       assert.ok(visual.edges[index], `${id}: invalid blocked relationship`);
     for (const index of visual.contrast?.focus ?? [])
