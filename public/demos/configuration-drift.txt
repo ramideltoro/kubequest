@@ -1,0 +1,61 @@
+The missing piece of configuration
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   0/2     2            0           10s
+
+NAME                         READY   STATUS                       RESTARTS   AGE
+pod/intruder                 1/1     Running                      0          9s
+pod/notes-57d94c48fc-7nsdt   0/1     CreateContainerConfigError   0          9s
+pod/notes-57d94c48fc-t4rpz   0/1     CreateContainerConfigError   0          9s
+pod/probe                    1/1     Running                      0          9s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.31.104   <none>        80/TCP    10s
+
+
+Apply the repair
+$ kubectl set env deployment/notes -n quest GREETING- DB_PASSWORD-
+kubectl patch deployment notes -n quest --type=strategic -p '{"spec":{"template":{"spec":{"containers":[{"name":"web","env":[{"name":"GREETING","valueFrom":{"configMapKeyRef":{"name":"notes-settings","key":"greeting"}}},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"name":"notes-credentials","key":"password"}}}]}]}}}}'
+kubectl rollout status deployment/notes -n quest
+deployment.apps/notes env updated
+deployment.apps/notes patched
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+deployment "notes" successfully rolled out
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           16s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          15s
+pod/notes-664cbbf45c-gzjvk   1/1     Running   0          4s
+pod/notes-664cbbf45c-v5glr   1/1     Running   0          6s
+pod/probe                    1/1     Running   0          15s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.31.104   <none>        80/TCP    16s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS ConfigMap reference — Use GREETING from notes-settings/greeting.
+PASS Secret reference — Use DB_PASSWORD from notes-credentials/password; no literal credential.
+PASS Two ready replicas — New containers must start successfully.
+PASS Configured greeting served — HTTP response must contain the configured greeting.
+
+Why the repair works
+The workload consumes configuration by object name and key. Correcting those references keeps the image reusable and avoids embedding credentials in the Pod template. Existing environment variables refresh when new containers start.

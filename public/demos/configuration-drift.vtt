@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the broken application. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Apply the repair. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Verify the result. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Run behavioral checks. All four checks pass against real cluster state.
+
+00:00:32.000 --> 00:00:40.000
+The workload consumes configuration by object name and key. Correcting those references keeps the image reusable and avoids embedding credentials in the Pod template. Existing environment variables refresh when new containers start.

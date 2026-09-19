@@ -1,0 +1,97 @@
+Running is not ready
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   0/2     2            0           11s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          11s
+pod/notes-6798458d75-4nj85   0/1     Running   0          11s
+pod/notes-6798458d75-8qf2w   0/1     Running   0          11s
+pod/probe                    1/1     Running   0          11s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.200.93   <none>        80/TCP    11s
+
+
+Inspect the failing probe
+$ kubectl describe deployment notes -n quest
+Name:                   notes
+Namespace:              quest
+CreationTimestamp:      Sat, 19 Sep 2026 04:23:25 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=little-notes
+Replicas:               2 desired | 2 updated | 2 total | 0 available | 2 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=little-notes
+  Containers:
+   web:
+    Image:         nginx:1.27-alpine
+    Port:          80/TCP
+    Host Port:     0/TCP
+    Readiness:     http-get http://:80/ready delay=1s timeout=1s period=2s #success=1 #failure=3
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      False   MinimumReplicasUnavailable
+  Progressing    True    ReplicaSetUpdated
+OldReplicaSets:  <none>
+NewReplicaSet:   notes-6798458d75 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  12s   deployment-controller  Scaled up replica set notes-6798458d75 from 0 to 2
+
+
+Apply the repair
+$ kubectl patch deployment notes -n quest --type=strategic -p '{"spec":{"template":{"spec":{"containers":[{"name":"web","readinessProbe":{"httpGet":{"path":"/","port":80}},"livenessProbe":{"httpGet":{"path":"/","port":80},"initialDelaySeconds":5}}]}}}}'
+kubectl rollout status deployment/notes -n quest
+deployment.apps/notes patched
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+deployment "notes" successfully rolled out
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           17s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          17s
+pod/notes-74765fdc55-cnkp8   1/1     Running   0          5s
+pod/notes-74765fdc55-vnsjv   1/1     Running   0          4s
+pod/probe                    1/1     Running   0          17s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.200.93   <none>        80/TCP    17s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Two ready replicas — The rollout must become ready.
+PASS Readiness probe — HTTP / on port 80.
+PASS Liveness probe — HTTP / on port 80.
+PASS HTTP request succeeds — An actual request must return HTTP 200.
+
+Why the repair works
+The readiness probe requested a nonexistent path. Kubernetes correctly withheld traffic from those Pods. Liveness is a separate check: it requests a restart when a running container is unhealthy.

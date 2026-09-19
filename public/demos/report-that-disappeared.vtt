@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the broken application. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Apply the repair. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Apply the repair · continued. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Verify the result. Commands and output shown here were captured from the actual lab.
+
+00:00:32.000 --> 00:00:40.000
+Run behavioral checks. All four checks pass against real cluster state.
+
+00:00:40.000 --> 00:00:48.000
+The original Job wrote to emptyDir, whose lifecycle belongs to the Pod. Both the Job and reader must mount the same PVC. This single-node exercise verifies Pod-independent storage, not multi-node storage availability.

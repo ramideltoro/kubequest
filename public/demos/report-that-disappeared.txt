@@ -1,0 +1,60 @@
+The report that disappeared
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                     READY   STATUS      RESTARTS   AGE
+pod/daily-report-27dmt   0/1     Completed   0          10s
+pod/intruder             1/1     Running     0          10s
+pod/probe                1/1     Running     0          10s
+pod/report-reader        1/1     Running     0          10s
+
+
+Apply the repair
+$ kubectl delete job daily-report -n quest
+cat <<'YAML' | kubectl apply -f -
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: daily-report
+  namespace: quest
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: report
+          image: busybox:1.37
+          command: [sh, -c, "echo DAILY_REPORT > /data/report.txt"]
+          volumeMounts: [{name: data, mountPath: /data}]
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: reports}
+YAML
+kubectl wait --for=condition=complete job/daily-report -n quest --timeout=60s
+kubectl exec report-reader -n quest -- cat /data/report.txt
+job.batch "daily-report" deleted from quest namespace
+job.batch/daily-report created
+job.batch/daily-report condition met
+DAILY_REPORT
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                     READY   STATUS      RESTARTS   AGE
+pod/daily-report-c8n8c   0/1     Completed   0          4s
+pod/intruder             1/1     Running     0          14s
+pod/probe                1/1     Running     0          14s
+pod/report-reader        1/1     Running     0          14s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS PVC is Bound — Use the existing reports claim.
+PASS Job mounts the PVC — Mount reports at /data.
+PASS Job completed — Job must finish successfully.
+PASS Report persists for another Pod — Read the report from report-reader, not the Job log.
+
+Why the repair works
+The original Job wrote to emptyDir, whose lifecycle belongs to the Pod. Both the Job and reader must mount the same PVC. This single-node exercise verifies Pod-independent storage, not multi-node storage availability.

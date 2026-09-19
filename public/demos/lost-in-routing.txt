@@ -1,0 +1,75 @@
+The case of the missing endpoints
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           9s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          9s
+pod/notes-757ff84f84-m7dv9   1/1     Running   0          9s
+pod/notes-757ff84f84-nc4ph   1/1     Running   0          9s
+pod/probe                    1/1     Running   0          9s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.127.224   <none>        80/TCP    9s
+
+
+Apply the repair
+$ kubectl patch service notes -n quest --type merge -p '{"spec":{"selector":{"app":"little-notes"}}}'
+kubectl get endpointslices -n quest
+kubectl exec -n quest probe -- wget -qO- http://notes
+service/notes patched
+NAME          ADDRESSTYPE   PORTS   ENDPOINTS               AGE
+notes-5b4tt   IPv4          80      10.42.0.18,10.42.0.20   10s
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           13s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          13s
+pod/notes-757ff84f84-m7dv9   1/1     Running   0          13s
+pod/notes-757ff84f84-nc4ph   1/1     Running   0          13s
+pod/probe                    1/1     Running   0          13s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.127.224   <none>        80/TCP    13s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Two ready application replicas — Keep two ready Pods labeled app=little-notes.
+PASS Service selects the application — Match app=little-notes.
+PASS Service port mapping — Expose 80 and route to the web port.
+PASS HTTP request succeeds — An actual request must return HTTP 200.
+
+Why the repair works
+The Service selector used the old app name. A selector follows exact label values, so healthy Pods were never candidates. Changing the selector restores routing without restarting the workload.

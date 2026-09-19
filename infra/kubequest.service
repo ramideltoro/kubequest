@@ -1,0 +1,27 @@
+[Unit]
+Description=KubeQuest learning portal and disposable lab controller
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+User=kubequest
+Group=kubequest
+SupplementaryGroups=kvm
+WorkingDirectory=/opt/kubequest/current
+EnvironmentFile=/etc/kubequest/runtime.env
+ExecStart=/usr/bin/node --import tsx server/index.ts
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/kubequest
+MemoryMax=12G
+CPUQuota=500%
+TasksMax=512
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,102 @@
+[
+  {
+    "name": "kubernetes",
+    "url": "https://raw.githubusercontent.com/cncf/artwork/main/projects/kubernetes/icon/color/kubernetes-icon-color.svg",
+    "sha256": "ff5427cfeeff39e82834ab1b4fe3ed61fc08596225a17eed56adc04f7cc1f712"
+  },
+  {
+    "name": "helm",
+    "url": "https://raw.githubusercontent.com/cncf/artwork/main/projects/helm/icon/color/helm-icon-color.svg",
+    "sha256": "ad04fbc7841a55023ad7806aa133a86ebd0aab21c2179be97f9048617138e7b1"
+  },
+  {
+    "name": "pod",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/pod.svg",
+    "sha256": "7a2b279b73542984d7eddd59b8731f9cc4cb264be3cb303eeb7eadc196fcdd32"
+  },
+  {
+    "name": "deploy",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/deploy.svg",
+    "sha256": "cf576665ea0fe11cc7f2ab04f2af10177883c30ee5492042bea58dd810ac659b"
+  },
+  {
+    "name": "svc",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/svc.svg",
+    "sha256": "2218180b926fcbda45963c5304a45f7ab80433dcd4a47a01e5bf935fc15a6775"
+  },
+  {
+    "name": "cm",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/cm.svg",
+    "sha256": "816790a5e250a9f51146a9286905dd407ba22db78a8391d422cb25f88c3a1873"
+  },
+  {
+    "name": "secret",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/secret.svg",
+    "sha256": "3a5d7ea80748279b7e3177ea4ba037e30347834b43431b4ad34778cf87f8aa40"
+  },
+  {
+    "name": "pv",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/pv.svg",
+    "sha256": "e67218d130ac845758a65ba3ce8e60310f59a07ae7921f6a4f695a08db099242"
+  },
+  {
+    "name": "pvc",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/pvc.svg",
+    "sha256": "da7d6d99f4ff2954cfdee838e572075db4875327ec8c617264faf2d177eda8b6"
+  },
+  {
+    "name": "job",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/job.svg",
+    "sha256": "3ed0865f659dc88166b5a678b932d0ef104898725079c763447166c485d3054a"
+  },
+  {
+    "name": "cronjob",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/cronjob.svg",
+    "sha256": "a9067794b45400514b590f17ea25eed575c50f763c8423d6b9db0ff2179abe4d"
+  },
+  {
+    "name": "netpol",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/netpol.svg",
+    "sha256": "5353c7c4afe104ca6b52ec870f9271b13d6b0747fe6aa7c145b0bf2c8e5bcd19"
+  },
+  {
+    "name": "ing",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/ing.svg",
+    "sha256": "b5c7fe24b7a9b6e31f8317a1e41a04c45579b3566941c61b8dc76e728e9bf89a"
+  },
+  {
+    "name": "sa",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/sa.svg",
+    "sha256": "2f331e4e66f73e3f57e0d422369a8f8561cc49f8010c63205ce720a9f3bbeac8"
+  },
+  {
+    "name": "ns",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/ns.svg",
+    "sha256": "63752ca5e0c20413f42bec9cf481a726b56ee0ad8e5d89038482cff250f9db35"
+  },
+  {
+    "name": "vol",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/vol.svg",
+    "sha256": "a134225f9ac1ac191ee59207984d74707b16a2e812742f54b1ca127cf5a7af42"
+  },
+  {
+    "name": "node",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/infrastructure_components/labeled/node.svg",
+    "sha256": "1479301d2ce76fb308ab9f736cc420d26bc1f3d1846436bca18f09fda008fa64"
+  },
+  {
+    "name": "control-plane",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/infrastructure_components/labeled/control-plane.svg",
+    "sha256": "953e38e6cf7220f52858f7d5e1a75f7b7fbeb8edc895dfecc947bba34404e3f6"
+  },
+  {
+    "name": "user",
+    "url": "https://raw.githubusercontent.com/kubernetes/community/main/icons/svg/resources/labeled/user.svg",
+    "sha256": "191349f5d3b3276b54261a1d21f97b8ff8591ca43d4ef69a268ba05548b65692"
+  },
+  {
+    "name": "google-g",
+    "url": "https://developers.google.com/static/identity/images/g-logo.png",
+    "sha256": "d1ce9c2af0b10a7333abc99bc706f9a6a199e5b65bf3e3009624f076b8638e6a"
+  }
+]

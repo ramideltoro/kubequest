@@ -1,0 +1,56 @@
+Rescue a stalled release
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   0/2     2            0           10s
+
+NAME                         READY   STATUS         RESTARTS   AGE
+pod/intruder                 1/1     Running        0          9s
+pod/notes-55df54cc8d-gr9wt   0/1     ErrImagePull   0          9s
+pod/notes-55df54cc8d-scvnd   0/1     ErrImagePull   0          9s
+pod/probe                    1/1     Running        0          9s
+
+NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.64.64   <none>        80/TCP    10s
+
+
+Apply the repair
+$ kubectl set image deployment/notes web=nginx:1.27-alpine -n quest
+kubectl patch deployment notes -n quest --type merge -p '{"spec":{"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":0,"maxSurge":1}}}}'
+kubectl rollout status deployment/notes -n quest
+deployment.apps/notes image updated
+deployment.apps/notes patched
+Waiting for deployment "notes" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "notes" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "notes" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "notes" rollout to finish: 1 of 2 updated replicas are available...
+deployment "notes" successfully rolled out
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           19s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          18s
+pod/notes-757ff84f84-b6b72   1/1     Running   0          8s
+pod/notes-757ff84f84-jbvwm   1/1     Running   0          8s
+pod/probe                    1/1     Running   0          18s
+
+NAME            TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.64.64   <none>        80/TCP    19s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Correct release image — Use the preloaded nginx:1.27-alpine image.
+PASS Two ready replicas — Wait for the replacement rollout.
+PASS Safe rolling strategy — maxUnavailable 0; maxSurge 1.
+PASS HTTP request succeeds — An actual request must return HTTP 200.
+
+Why the repair works
+A valid image lets the new Pods start. maxUnavailable: 0 retains healthy capacity while maxSurge: 1 permits an extra Pod during the change. This requires enough spare resources and correct readiness checks.

@@ -1,0 +1,60 @@
+A broken handoff
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   0/2     2            0           9s
+
+NAME                        READY   STATUS       RESTARTS     AGE
+pod/intruder                1/1     Running      0            9s
+pod/notes-8b4ff9b75-dp4h9   0/1     Init:Error   1 (8s ago)   9s
+pod/notes-8b4ff9b75-tc4gh   0/1     Init:Error   1 (8s ago)   9s
+pod/probe                   1/1     Running      0            9s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.134.179   <none>        80/TCP    9s
+
+
+Apply the repair
+$ kubectl patch deployment notes -n quest --type=strategic -p '{"spec":{"template":{"spec":{"initContainers":[{"name":"prepare","volumeMounts":[{"name":"shared","mountPath":"/work"}]}]}}}}'
+kubectl rollout status deployment/notes -n quest
+kubectl exec -n quest probe -- wget -qO- http://notes
+deployment.apps/notes patched
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes" rollout to finish: 1 old replicas are pending termination...
+deployment "notes" successfully rolled out
+WELCOME_TO_LITTLE_NOTES
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           17s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          17s
+pod/notes-6498567dc9-b7c7q   1/1     Running   0          6s
+pod/notes-6498567dc9-zbg2x   1/1     Running   0          8s
+pod/probe                    1/1     Running   0          17s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.134.179   <none>        80/TCP    18s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Init container completes — Keep the init-container pattern and complete the rollout.
+PASS Init mounts shared emptyDir — Mount an emptyDir at /work.
+PASS Web uses the same volume — Serve the shared directory.
+PASS Generated page served — Verify content through the Service.
+
+Why the repair works
+The init container completes before application containers start. An emptyDir shared by both containers carries the generated file across that boundary. It remains temporary storage tied to this Pod.

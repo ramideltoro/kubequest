@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the broken application. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Inspect the failing probe. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Apply the repair. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Verify the result. Commands and output shown here were captured from the actual lab.
+
+00:00:32.000 --> 00:00:40.000
+Run behavioral checks. All four checks pass against real cluster state.
+
+00:00:40.000 --> 00:00:48.000
+The readiness probe requested a nonexistent path. Kubernetes correctly withheld traffic from those Pods. Liveness is a separate check: it requests a restart when a running container is unhealthy.

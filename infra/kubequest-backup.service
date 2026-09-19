@@ -1,0 +1,8 @@
+[Unit]
+Description=Back up KubeQuest learning progress
+[Service]
+Type=oneshot
+User=kubequest
+Group=kubequest
+ExecStart=/usr/bin/node /opt/kubequest/current/infra/backup.mjs
+UMask=0077

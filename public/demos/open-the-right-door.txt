@@ -1,0 +1,91 @@
+Open the right door
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           13s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          12s
+pod/notes-757ff84f84-lz7tq   1/1     Running   0          12s
+pod/notes-757ff84f84-tr79j   1/1     Running   0          12s
+pod/probe                    1/1     Running   0          12s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.143.146   <none>        80/TCP    13s
+
+
+Apply the repair
+$ cat <<'YAML' | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notes-ingress
+  namespace: quest
+spec:
+  podSelector:
+    matchLabels: {app: little-notes}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {role: frontend}
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: kube-system}
+      ports: [{protocol: TCP, port: 80}]
+YAML
+kubectl patch ingress notes -n quest --type=json -p '[{"op":"replace","path":"/spec/rules/0/http/paths/0/backend/service/name","value":"notes"}]'
+kubectl exec probe -n quest -- wget -qO- -T 3 http://notes
+networkpolicy.networking.k8s.io/notes-ingress configured
+ingress.networking.k8s.io/notes patched
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes   2/2     2            2           17s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/intruder                 1/1     Running   0          16s
+pod/notes-757ff84f84-lz7tq   1/1     Running   0          16s
+pod/notes-757ff84f84-tr79j   1/1     Running   0          16s
+pod/probe                    1/1     Running   0          16s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/notes   ClusterIP   10.43.143.146   <none>        80/TCP    17s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Ingress isolation configured — Apply an ingress policy to the notes Pods.
+PASS Frontend allowed; intruder blocked — Test from two real Pods; a broken Service alone must not pass.
+PASS Correct Ingress route — Route notes.quest.test to notes:80.
+PASS Ingress responds — Send a Host-header request to the ingress controller.
+
+Why the repair works
+The policy makes the destination Pods ingress-isolated and permits specific sources. The Service still routes requests, while Ingress adds an HTTP host rule. A real connectivity test catches policies that look plausible but do not enforce the intended access.

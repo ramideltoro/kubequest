@@ -1,0 +1,45 @@
+A smaller set of privileges
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the broken application
+$ kubectl get deployments,pods,services -n quest
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes-worker   1/1     1            1           11s
+
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/intruder                       1/1     Running   0          11s
+pod/notes-worker-56cdc4679-7vfpq   1/1     Running   0          11s
+pod/probe                          1/1     Running   0          11s
+
+
+Apply the repair
+$ kubectl patch deployment notes-worker -n quest --type=strategic -p '{"spec":{"template":{"spec":{"automountServiceAccountToken":false,"containers":[{"name":"worker","securityContext":{"runAsUser":1000,"runAsNonRoot":true,"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]}},"resources":{"requests":{"cpu":"50m","memory":"32Mi"},"limits":{"cpu":"200m","memory":"64Mi"}}}]}}}}'
+kubectl rollout status deployment/notes-worker -n quest
+deployment.apps/notes-worker patched
+Waiting for deployment "notes-worker" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "notes-worker" rollout to finish: 1 old replicas are pending termination...
+deployment "notes-worker" successfully rolled out
+
+
+Verify the result
+$ kubectl get deployments,pods,services -n quest
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/notes-worker   1/1     1            1           15s
+
+NAME                                READY   STATUS        RESTARTS   AGE
+pod/intruder                        1/1     Running       0          15s
+pod/notes-worker-56cdc4679-7vfpq    1/1     Terminating   0          15s
+pod/notes-worker-8659cb6f69-28hnv   1/1     Running       0          4s
+pod/probe                           1/1     Running       0          15s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Non-root without escalation — Set all three identity/escalation controls.
+PASS Capabilities and token removed — Drop ALL; disable automatic API token mounting.
+PASS Bounded CPU and memory — Set positive requests and limits, with requests ≤ limits.
+PASS Worker runs as UID 1000 — Verify the running process identity and availability.
+
+Why the repair works
+These controls address different risks: identity, privilege escalation, kernel capabilities, API credentials, and resource consumption. A non-root UID alone does not provide all of them.

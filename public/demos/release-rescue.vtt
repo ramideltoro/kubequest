@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the broken application. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Apply the repair. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Verify the result. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Run behavioral checks. All four checks pass against real cluster state.
+
+00:00:32.000 --> 00:00:40.000
+A valid image lets the new Pods start. maxUnavailable: 0 retains healthy capacity while maxSurge: 1 permits an extra Pod during the change. This requires enough spare resources and correct readiness checks.
