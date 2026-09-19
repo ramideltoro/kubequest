@@ -10,7 +10,7 @@
     "test": "tsx --test tests/*.test.ts",
     "demo:render": "tsx scripts/render-demos.mjs",
     "test:live": "tsx tests/live-labs.ts",
-    "test:browser": "node scripts/browser-checks.mjs && node scripts/learning-checks.mjs",
+    "test:browser": "node scripts/browser-checks.mjs && node scripts/learning-checks.mjs && node scripts/visual-checks.mjs",
     "docs:check": "node scripts/check-wiki.mjs",
     "docs:export": "node scripts/export-wiki.mjs"
   },

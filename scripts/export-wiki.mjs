@@ -40,6 +40,33 @@ try {
 const foundations = hasFoundations
   ? (await content("content/foundations.ts")).foundations
   : [];
+let visualLibrary = {};
+try {
+  execFileSync("git", ["cat-file", "-e", revision + ":content/visuals.ts"], {
+    stdio: "ignore",
+  });
+  visualLibrary = (await content("content/visuals.ts")).visuals;
+} catch (error) {
+  // Only a missing historical file is optional; malformed new content must fail export.
+  if (error.status !== 128 && error.status !== 1) throw error;
+}
+const overviewPaths = {
+  "path-foundations": "/foundations",
+  "path-basics": "/basics",
+  "path-ckad": "/ckad",
+  "site-journey": "/",
+  "site-access": "/signin",
+  "site-hosting": "/readme",
+  "site-privacy": "/about#privacy",
+};
+const diagramPath = (id) =>
+  foundations.some((l) => l.id === id)
+    ? "/foundations/" + id
+    : lessons.some((l) => l.id === id)
+      ? "/basics/" + id
+      : missions.some((m) => m.id === id)
+        ? "/ckad/" + id
+        : overviewPaths[id] || "/";
 const routes = [];
 for (const file of ["server/index.ts", "server/auth.ts"]) {
   const syntax = ts.createSourceFile(
@@ -112,6 +139,14 @@ const snapshot = {
   summary: execFileSync("git", ["show", "-s", "--format=%s", revision], {
     encoding: "utf8",
   }).trim(),
+  visuals: Object.entries(visualLibrary).map(([id, v]) => ({
+    id,
+    title: v.title,
+    path: diagramPath(id),
+    parts: v.nodes.map((n) => n.label),
+    connections: v.edges.length,
+    comparison: v.contrast?.label || null,
+  })),
   routes,
   dependencies,
   foundations: foundations.map((l) => ({
@@ -138,5 +173,5 @@ const target = process.env.WIKI_EXPORT_PATH || ".wiki-update/current.json";
 fs.mkdirSync(path.dirname(target), { recursive: true });
 fs.writeFileSync(target, JSON.stringify(snapshot, null, 2) + "\n");
 console.log(
-  `Exported ${foundations.length} foundation chapters, ${lessons.length} Kubernetes lessons, ${missions.length} missions and ${routes.length} routes from ${revision}.`,
+  `Exported ${foundations.length} foundation chapters, ${lessons.length} Kubernetes lessons, ${missions.length} missions, ${Object.keys(visualLibrary).length} diagrams and ${routes.length} routes from ${revision}.`,
 );

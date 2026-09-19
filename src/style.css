@@ -3358,3 +3358,521 @@ pre {
 .three-paths .path-label {
   padding-right: 36px;
 }
+
+/* Teaching diagrams: readable HTML nodes, vector connections, and a text equivalent. */
+.visual-story {
+  margin: 30px 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  container: teaching-diagram / inline-size;
+  text-align: left;
+}
+.story-heading {
+  padding: 26px 28px 20px;
+}
+.story-heading .eyebrow {
+  font-size: 10px;
+  color: var(--amber);
+  letter-spacing: 0.15em;
+}
+.story-heading h2 {
+  font-size: clamp(21px, 2.2vw, 28px);
+  line-height: 1.25;
+  margin: 9px 0 10px;
+}
+.story-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 78ch;
+  margin: 0;
+}
+.story-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 28px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+.story-tools > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.story-kind {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+.story-switch {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 24px 14px;
+}
+.story-switch button {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 7px;
+  padding: 9px 13px;
+  font-size: 12px;
+  text-align: left;
+  min-height: 40px;
+}
+.story-switch button[aria-pressed="true"] {
+  background: #3a2b16;
+  color: var(--amber);
+  border-color: var(--amber);
+}
+.story-canvas {
+  position: relative;
+  height: 340px;
+  background-color: #1b1710;
+  background-image: radial-gradient(#51402a88 0.8px, transparent 0.8px);
+  background-size: 16px 16px;
+  border-block: 1px solid var(--line);
+}
+.story-wires {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+}
+.story-wires > path {
+  fill: none;
+  stroke: var(--amber);
+  stroke-width: 1.8;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.8;
+}
+.story-wires > path.wire-blocked {
+  stroke: var(--danger);
+  stroke-dasharray: 5 5;
+}
+.wire-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 2px 7px;
+  background: #1b1710;
+  border: 1px solid var(--line);
+  color: var(--amber);
+  font-size: 11px;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+.is-blocked {
+  color: var(--danger);
+}
+.story-node {
+  position: absolute;
+  width: 24%;
+  min-height: 104px;
+  transform: translate(-50%, -50%);
+  padding: 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #736042;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #30281c, #211b13);
+  box-shadow: 0 5px 18px #0003;
+  color: var(--ink);
+  text-align: left;
+  z-index: 2;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.story-node > img,
+.story-node > svg {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.story-node > svg {
+  color: var(--amber);
+}
+.story-node > span:not(.node-number) {
+  min-width: 0;
+}
+.story-node strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+}
+.story-node small {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.node-number {
+  position: absolute;
+  top: 4px;
+  right: 7px;
+  font-size: 9px;
+  color: var(--muted);
+}
+.story-node:hover,
+.story-node.is-selected {
+  border-color: var(--amber);
+  box-shadow:
+    0 0 0 1px var(--amber),
+    0 6px 24px #0003;
+}
+.story-node.is-highlighted {
+  border-color: var(--amber);
+  background: #3a2b16;
+}
+.visual-story button:focus-visible,
+.visual-story summary:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
+.story-insight {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px 28px;
+  background: #2a2115;
+  min-height: 124px;
+}
+.insight-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--canvas);
+  color: var(--amber);
+}
+.story-insight strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.story-insight p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+}
+.story-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 28px 18px;
+  background: #2a2115;
+  font-size: 11px;
+  color: var(--muted);
+}
+.story-stepper button {
+  border: 0;
+  background: transparent;
+  color: var(--amber);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 12px;
+}
+.story-transcript {
+  border-top: 1px solid var(--line);
+  padding: 13px 28px;
+}
+.story-transcript summary {
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--muted);
+}
+.story-transcript ul,
+.story-mobile-links {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+}
+.story-transcript li,
+.story-mobile-links li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 7px 0;
+  font-size: 12px;
+}
+.story-transcript li svg,
+.story-mobile-links li svg {
+  flex-shrink: 0;
+}
+.story-transcript li strong {
+  font-weight: 500;
+}
+.story-transcript li em {
+  font-style: normal;
+  font-size: 11px;
+}
+.story-transcript p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 10px 0 0;
+}
+.story-footnote {
+  font-size: 10px;
+  color: var(--muted);
+  padding: 10px 28px 15px;
+  margin: 0;
+}
+.story-mobile-links {
+  display: none;
+}
+.progress-visual {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 24px 0;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.progress-dial {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.progress-dial > span {
+  background: var(--surface);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.progress-dial strong {
+  font-size: 32px;
+  line-height: 1.15;
+  color: var(--amber);
+}
+.progress-dial small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.progress-visual h2 {
+  margin: 8px 0;
+  font-size: 25px;
+}
+.progress-visual p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.progress-tiles {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.progress-tiles > span {
+  height: 15px;
+  width: 15px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  display: grid;
+  place-items: center;
+}
+.progress-tiles > span.is-complete {
+  color: var(--canvas);
+  background: var(--amber);
+  border-color: var(--amber);
+}
+@container teaching-diagram (max-width: 620px) {
+  .story-heading {
+    padding: 22px 20px 18px;
+  }
+  .story-heading h2 {
+    font-size: 22px;
+  }
+  .story-tools {
+    padding: 12px 20px;
+  }
+  .story-switch {
+    padding: 0 20px 14px;
+  }
+  .story-canvas {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px;
+  }
+  .story-wires,
+  .wire-label {
+    display: none;
+  }
+  .story-node {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    transform: none;
+    width: 100%;
+    min-height: 140px;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    padding: 16px 10px;
+    gap: 9px;
+  }
+  .story-node strong {
+    font-size: 14px;
+  }
+  .story-node small {
+    font-size: 11px;
+  }
+  .story-mobile-links {
+    display: block;
+    padding: 12px 20px;
+    margin: 0;
+    border-bottom: 1px solid var(--line);
+    background: #1b1710;
+  }
+  .story-mobile-links li {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .story-mobile-links li svg {
+    vertical-align: middle;
+    margin: 0 5px;
+    color: var(--amber);
+  }
+  .story-mobile-links li.is-blocked {
+    color: var(--danger);
+  }
+  .story-mobile-links b {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .story-insight {
+    padding: 20px;
+    min-height: 140px;
+    gap: 10px;
+  }
+  .story-stepper {
+    padding: 0 20px 18px;
+  }
+  .story-transcript {
+    padding: 13px 20px;
+  }
+  .story-footnote {
+    padding: 10px 20px 15px;
+  }
+}
+@media (max-width: 520px) {
+  .progress-visual {
+    padding: 20px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .progress-dial {
+    width: 90px;
+    height: 90px;
+  }
+  .progress-dial > span {
+    width: 74px;
+    height: 74px;
+  }
+  .progress-visual h2 {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-node {
+    transition: none;
+  }
+}
+.curriculum-chart {
+  margin: 28px 0;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+}
+.curriculum-chart h3 {
+  margin: 10px 0;
+  font-size: 23px;
+}
+.curriculum-chart p {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 72ch;
+}
+.curriculum-axis {
+  margin: 24px 52px 12px 250px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--muted);
+}
+.curriculum-bar {
+  display: grid;
+  grid-template-columns: 234px 1fr 36px;
+  align-items: center;
+  gap: 16px;
+  margin: 17px 0;
+}
+.curriculum-bar > span {
+  font-size: 12px;
+}
+.curriculum-bar > strong {
+  font-size: 13px;
+  color: var(--amber);
+}
+.curriculum-bar > div {
+  height: 17px;
+  border-radius: 4px;
+  background: var(--canvas);
+  overflow: hidden;
+}
+.curriculum-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #9c6e2d, var(--amber));
+  border-radius: 4px;
+}
+@media (max-width: 700px) {
+  .curriculum-chart {
+    padding: 22px 20px;
+  }
+  .curriculum-axis {
+    margin: 24px 0 16px;
+  }
+  .curriculum-bar {
+    grid-template-columns: 1fr 36px;
+    gap: 7px 10px;
+  }
+  .curriculum-bar > span {
+    grid-column: 1 / -1;
+  }
+}

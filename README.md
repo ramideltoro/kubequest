@@ -10,6 +10,7 @@ Learn Kubernetes by seeing what happens, trying a change, and understanding why 
 - **Kubernetes Basics:** fourteen public, short visual lessons with clickable diagrams, simulations, prediction exercises, plain-language explanations and optional deeper commands. No signup, terminal or cluster required. Progress stays in the browser.
 - **CKAD Practice:** eight original incident missions with real Kubernetes, a browser terminal, YAML editor, live resource diagrams, progressive hints, authored behavioral grading and explained solutions. Guided, independent and timed modes are available to the authorized owner.
 - **Public walkthroughs:** captioned recordings and transcripts show the actual exercises. Live labs, private progress and the optional local AI tutor require verified owner Google sign-in.
+- **Visual explanations everywhere:** 45 reviewed diagrams cover all 30 lessons, eight missions, and the main overviews. Select a part, follow labeled arrows, or compare an example failure. Mobile layouts include readable connections and text alternatives. Progress and curriculum charts explain their actual measures.
 - **Dark amber interface:** official Kubernetes/CNCF artwork, readable labels, mobile layouts, reduced-motion support and a compact NutsNews-style footer with local search.
 
 This is an independent CKAD **pilot**, not complete exam coverage or an official exam simulator. Availability depends on the home server and internet connection.

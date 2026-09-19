@@ -1,4 +1,4 @@
 {
-  "revision": "ec6f7ac1a1476de3369e2918ce46431499cdea16",
-  "summary": "Added Before Kubernetes curriculum and course guidance; documented twenty new exercises, separate path progress, streamed local coaching, bounded inference, cancellation and updated architecture/UML."
+  "revision": "3acf46f6432b189f1ba10e663795ffff69e1b79a",
+  "summary": "Documented 45 topic-specific interactive diagrams, labeled connections and comparisons, responsive text alternatives, progress and curriculum charts, timed/independent assistance boundaries, official-artwork validation and release-synchronized diagram inventory. Updated component and content-model UML."
 }

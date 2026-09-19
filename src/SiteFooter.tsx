@@ -1,3 +1,4 @@
+import { VisualStory } from "./VisualStory";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Settings2, X, ArrowUpRight } from "lucide-react";
@@ -209,6 +210,7 @@ export function Readme() {
           Detailed wiki <ArrowUpRight size={16} />
         </a>
       </div>
+      <VisualStory id="site-journey" />
       <div className="readme-facts">
         <section>
           <h2>Before Kubernetes</h2>
@@ -247,6 +249,7 @@ export function Readme() {
         local tutor. Each session runs in a disposable Kubernetes VM. Reset
         starts fresh, and an idle session expires after 30 minutes.
       </p>
+      <VisualStory id="site-access" />
       <h2>Built on the home server</h2>
       <p>
         The portal uses React and TypeScript, a Fastify backend, SQLite, and K3s
@@ -254,6 +257,7 @@ export function Readme() {
         changes and deploys verified releases. Availability depends on the home
         server and its internet connection.
       </p>
+      <VisualStory id="site-hosting" />
       <h2>Made to be understandable</h2>
       <p>
         Browser simulations are labeled, deeper commands are optional, and

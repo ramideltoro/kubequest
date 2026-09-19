@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
 import {
+  FileText,
+  ShieldCheck,
+  LockKeyhole,
+  Gauge,
+  ArchiveRestore,
+  Box,
+  Terminal,
+  BookOpen,
+  CheckCircle2,
   Package,
   AppWindow,
   Monitor,
@@ -25,6 +34,15 @@ export function TopicIcon({
 }) {
   const Icon = (
     {
+      "ui-file": FileText,
+      "ui-shield": ShieldCheck,
+      "ui-lock": LockKeyhole,
+      "ui-gauge": Gauge,
+      "ui-backup": ArchiveRestore,
+      "ui-box": Box,
+      "ui-terminal": Terminal,
+      "ui-book": BookOpen,
+      "ui-check": CheckCircle2,
       "ui-package": Package,
       "ui-app": AppWindow,
       "ui-browser": Monitor,

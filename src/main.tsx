@@ -31,6 +31,7 @@ import {
 import { lessons } from "../content/lessons";
 import { foundations } from "../content/foundations";
 import { TopicIcon, Playground } from "./Playgrounds";
+import { VisualStory, ProgressVisual, CurriculumChart } from "./VisualStory";
 import { Resources } from "./Resources";
 import { missions, domains } from "../content/missions";
 import { KIcon, Simulation } from "./simulations";
@@ -221,6 +222,7 @@ function Home() {
             No mandatory detours.
           </p>
         </div>
+        <VisualStory id="site-journey" />
         <div className="path-grid three-paths">
           <Link to="/foundations" className="path-card foundation">
             <span className="path-label">
@@ -463,6 +465,7 @@ function Basics({ track = "basics" }: { track?: "basics" | "foundations" }) {
           </small>
         </div>
       </div>
+      <VisualStory id={isFoundation ? "path-foundations" : "path-basics"} />
       <div className="lesson-list">
         {collection.map((l, i) => (
           <Link className="lesson-row" to={"/" + track + "/" + l.id} key={l.id}>
@@ -647,6 +650,7 @@ function Lesson({ track = "basics" }: { track?: "basics" | "foundations" }) {
                 <span className="eyebrow">PICTURE THIS</span>
                 <p>{l.problem}</p>
               </div>
+              <VisualStory id={l.id} />
               <div className="learning-objectives">
                 <h3>By the end, you can…</h3>
                 {l.learn.map((t) => (
@@ -867,6 +871,7 @@ function CKAD() {
           </small>
         </div>
       </div>
+      <VisualStory id="path-ckad" />
       <div className="mission-grid">
         {missions.map((m, i) => (
           <Link key={m.id} to={"/ckad/" + m.id} className="mission-card">
@@ -909,6 +914,7 @@ function CKAD() {
           This pilot practices selected skills across all five domains. It is
           not a complete preparation course or a prediction of your exam score.
         </p>
+        <CurriculumChart domains={domains} />
         <div className="coverage-table">
           <div className="coverage-header">
             <span>Exam domain</span>
@@ -970,6 +976,7 @@ function SignIn() {
         <p className="small muted">
           Live access is currently limited to the site owner.
         </p>
+        <VisualStory id="site-access" />
         <div className="signin-divider" />
         <h3>Just here to learn?</h3>
         <p>
@@ -1013,19 +1020,11 @@ function Progress() {
         const count = track.items.filter((l) => done.includes(l.id)).length;
         return (
           <section key={track.path} className="path-progress">
-            <div className="progress-summary">
-              <div>
-                <h2>{track.title}</h2>
-                <p>
-                  {count} of {track.items.length} lessons completed
-                </p>
-                <div className="progress-track">
-                  <i
-                    style={{ width: (count / track.items.length) * 100 + "%" }}
-                  />
-                </div>
-              </div>
-            </div>
+            <ProgressVisual
+              count={count}
+              total={track.items.length}
+              title={track.title}
+            />
             <div className="lesson-list">
               {track.items.map((l, i) => (
                 <Link
@@ -1092,6 +1091,7 @@ function About() {
         Practice is a pilot set of original scenarios, not an official exam
         simulator or an exam-question collection.
       </p>
+      <VisualStory id="site-journey" />
       <h2>Real symbols for real concepts</h2>
       <p>
         Kubernetes resource symbols come from the{" "}
@@ -1117,6 +1117,7 @@ function About() {
         transcripts or tutor conversations. Lesson examples use practice-only
         credentials.
       </p>
+      <VisualStory id="site-privacy" />
       <h2>Lab limits</h2>
       <p>
         Live practice uses one disposable VM with a single-node Kubernetes
@@ -1125,6 +1126,7 @@ function About() {
         Public diagrams are explicitly labeled simulations, and walkthroughs are
         recordings from the real lab.
       </p>
+      <VisualStory id="site-hosting" />
       <h2>Learn from the source</h2>
       <p>
         <a href="https://kubernetes.io/docs/">Kubernetes documentation</a> ·{" "}

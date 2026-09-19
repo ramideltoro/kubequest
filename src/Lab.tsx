@@ -28,6 +28,7 @@ import { tags } from "@lezer/highlight";
 import { missions, type Mission } from "../content/missions";
 import { api, useIdentity } from "./lib";
 import { KIcon } from "./simulations";
+import { VisualStory } from "./VisualStory";
 import { Coach } from "./Coach";
 import { Resources } from "./Resources";
 function LiveTerminal({ sessionId }: { sessionId: string }) {
@@ -346,6 +347,10 @@ export function MissionPage({ id }: { id: string }) {
           )}
         </aside>
         <div className="mission-workspace">
+          {assistance &&
+            (!active || session.mode !== "independent" || coaching) && (
+              <VisualStory id={m.id} />
+            )}
           {!me.user ? (
             <>
               <div className="access-banner">
