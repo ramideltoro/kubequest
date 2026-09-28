@@ -120,8 +120,17 @@ try {
         !process.env.SKIP_MEDIA_CHECK &&
         (i % 15 === 0 || m.sourceKind === "curriculum")
       ) {
+        await page.locator("video").scrollIntoViewIfNeeded();
         await page.locator("video").evaluate(async (video) => {
-          await video.play();
+          await Promise.race([
+            video.play(),
+            new Promise((_, reject) =>
+              setTimeout(
+                () => reject(Error("Video playback did not start")),
+                10000,
+              ),
+            ),
+          ]);
         });
         await page.waitForFunction(
           () => document.querySelector("video").currentTime > 0.1,
@@ -141,6 +150,10 @@ try {
           m.id + " accessibility",
         );
       }
+      if ((i + 1) % 30 === 0 || i === missions.length - 1)
+        console.log(
+          `Verified ${i + 1}/${missions.length} converted pages at ${width}px`,
+        );
     }
   }
   await page.goto(origin + "/ckad/exercises/invalid");
