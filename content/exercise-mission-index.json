@@ -1,0 +1,1250 @@
+[
+  {
+    "id": "core-concepts-9fe4b7befc3e",
+    "title": "A home for the first Pod",
+    "tagline": "The team needs its workload separated by namespace.",
+    "domain": "Core concepts",
+    "namespace": "mynamespace",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-46382324b97f",
+    "title": "Declare the namespaced Pod",
+    "tagline": "The manifest should describe exactly what you intend to run.",
+    "domain": "Core concepts",
+    "namespace": "mynamespace",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-30a3e4723da4",
+    "title": "Read a container’s environment",
+    "tagline": "A short-lived container can reveal its environment without a long-running service.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-498eb2350d82",
+    "title": "Declare an environment inspection",
+    "tagline": "A short-lived container can reveal its environment without a long-running service.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-6859cb9f987c",
+    "title": "Preview a namespace",
+    "tagline": "Prepare a manifest without changing the cluster.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-b5617fdaea63",
+    "title": "Budget before admission",
+    "tagline": "Review a ResourceQuota before it can reject workloads.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-fb1d8a1a19d6",
+    "title": "Look beyond the current namespace",
+    "tagline": "One namespace does not show the whole cluster.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-c0a84a627e7f",
+    "title": "Declare a web port",
+    "tagline": "The container must be running before clients can use it.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-64c97433112f",
+    "title": "Change the running image",
+    "tagline": "A Pod image update replaces its container.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-f44e364f1cfd",
+    "title": "Reach a Pod by IP",
+    "tagline": "Test the server from another Pod.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-4513a7a2b0d9",
+    "title": "Inspect the desired object",
+    "tagline": "The YAML shows what Kubernetes has stored.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-89c8c63d629c",
+    "title": "Explain a waiting workload",
+    "tagline": "Events reveal why the container cannot start.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-e5a88a4a02dc",
+    "title": "Read application output",
+    "tagline": "Logs show what the process said.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-6c4359ff0c03",
+    "title": "Recover the previous logs",
+    "tagline": "A restart should not erase the first clue.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-7b9d88de80a8",
+    "title": "Open a shell in the container",
+    "tagline": "Inspect the container filesystem through exec.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-c7716ab3c79b",
+    "title": "Finish a one-shot Pod",
+    "tagline": "A successful process should stay completed.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-a3e184ead16d",
+    "title": "Run a disposable command",
+    "tagline": "Keep the result, remove the temporary workload.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "core-concepts-314d16e6bd4e",
+    "title": "Inject a container variable",
+    "tagline": "Configuration belongs in the container environment.",
+    "domain": "Core concepts",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "multi-container-pods-b17c25b2c8e7",
+    "title": "Choose the right container",
+    "tagline": "Two containers share a Pod, but exec needs a destination.",
+    "domain": "Multi-container Pods",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "multi-container-pods-189ad413452d",
+    "title": "Publish the init container’s page",
+    "tagline": "The web container must see what initialization wrote.",
+    "domain": "Multi-container Pods",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-37f7507a9fa2",
+    "title": "Label the web fleet",
+    "tagline": "Three workloads need one shared selector.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-bdfa22153e9c",
+    "title": "Inspect the fleet labels",
+    "tagline": "Names alone do not explain selection.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-595fd3f0a021",
+    "title": "Relabel one replica",
+    "tagline": "Only nginx2 belongs to the new version.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-15652f1dd3e8",
+    "title": "Make labels a report column",
+    "tagline": "The version should be visible at a glance.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-6d1e95383349",
+    "title": "Select the new version",
+    "tagline": "A focused query should exclude the old replicas.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-f3509c39a308",
+    "title": "Combine inclusion and exclusion",
+    "tagline": "The frontend must be left out of this query.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-57be32fa1342",
+    "title": "Label a set of versions",
+    "tagline": "Both versions belong to the web tier.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-2b45f7cefe0b",
+    "title": "Record ownership",
+    "tagline": "Ownership is descriptive metadata, not a traffic selector.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-507ce0884753",
+    "title": "Remove a stale label",
+    "tagline": "Old selectors should stop matching the fleet.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-90b5a5ea06c7",
+    "title": "Describe the fleet",
+    "tagline": "Add a human-readable note to each Pod.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-68e60bafef59",
+    "title": "Read an annotation",
+    "tagline": "Retrieve the note directly from metadata.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-5964954756c7",
+    "title": "Clear the annotation",
+    "tagline": "Remove only the note that is no longer needed.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-04b4dee77490",
+    "title": "Clean up the fleet",
+    "tagline": "The temporary workloads have finished their job.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-3f78ce59b4e5",
+    "title": "Schedule by a node label",
+    "tagline": "The workload needs the labeled node.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-0ccd9d47b8f9",
+    "title": "Choose the node directly",
+    "tagline": "Use the actual node name, not an assumed hostname.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-acbf8c02347c",
+    "title": "Tolerate the scheduling boundary",
+    "tagline": "A taint excludes workloads unless they tolerate it.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-248c76a858eb",
+    "title": "Combine selection with permission",
+    "tagline": "The workload must target and tolerate the same node.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-973f33289f82",
+    "title": "Declare the application Deployment",
+    "tagline": "Two replicas should be managed as one release.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-42f3676ecebd",
+    "title": "Read the Deployment manifest",
+    "tagline": "Follow the workload ownership chain.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-dac437fcac74",
+    "title": "Inspect the owned ReplicaSet",
+    "tagline": "Follow the workload ownership chain.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-a922504e884b",
+    "title": "Inspect a managed Pod",
+    "tagline": "Follow the workload ownership chain.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-7b48343af726",
+    "title": "Wait for a release",
+    "tagline": "Creation returns before rollout completion.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-985f76e6e2f9",
+    "title": "Release the next image",
+    "tagline": "A template change should reach both replicas.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-16ee42834b04",
+    "title": "Read the release history",
+    "tagline": "Inspect revisions and current availability.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-19963b26c7e8",
+    "title": "Undo the last release",
+    "tagline": "Restore the last working Pod template.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-9feccab0a17e",
+    "title": "Introduce a broken release",
+    "tagline": "Observe how an unavailable image stalls progress.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-5f9c9acd7a6a",
+    "title": "Diagnose the stalled rollout",
+    "tagline": "A desired image does not imply a running release.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-d34f2c9fd53f",
+    "title": "Return to a chosen revision",
+    "tagline": "Pick a known template from the history.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-f2f6f368987e",
+    "title": "Inspect one historical template",
+    "tagline": "Revision details explain exactly what ran.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-7e6e4d7574a7",
+    "title": "Scale the application",
+    "tagline": "Increase capacity without changing the image.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-f4c92bdbb014",
+    "title": "Define autoscaling bounds",
+    "tagline": "The HPA needs an explicit operating range.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-232feff34a3e",
+    "title": "Pause release reconciliation",
+    "tagline": "Queue a template change without rolling it out.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-b83f4b5782a6",
+    "title": "Change a paused template",
+    "tagline": "The desired image changes while running Pods stay on the old release.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-375f2201d654",
+    "title": "Resume the queued release",
+    "tagline": "Allow the new template to reach the cluster.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-bcb93c95624c",
+    "title": "Remove the scaling workload",
+    "tagline": "Clean up both the workload and its controller.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-5756e6dd2543",
+    "title": "Share traffic with a canary",
+    "tagline": "A shared selector includes three stable Pods and one canary.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-17e67c060d89",
+    "title": "Calculate with a Job",
+    "tagline": "The controller should track work through completion.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-4a8595435c50",
+    "title": "Collect the completed result",
+    "tagline": "Completion and output answer different questions.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-8342e4408766",
+    "title": "Run a staged task",
+    "tagline": "Observe output before and after a delay.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-4ac9e50b3065",
+    "title": "Follow the worker logs",
+    "tagline": "Stream both stages of the task.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-daa19a08679d",
+    "title": "Inspect work and its output",
+    "tagline": "Check status, events and logs together.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-d1ea21d3e064",
+    "title": "Remove completed work",
+    "tagline": "The Job is no longer needed.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-422b71cc3116",
+    "title": "Repeat the Job sequentially",
+    "tagline": "Five successful runs are required.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-30965b7fb4fe",
+    "title": "Run completions in parallel",
+    "tagline": "Five successful runs are required.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-3c827507142a",
+    "title": "Bound a Job’s running time",
+    "tagline": "A stuck worker must not run forever.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-b9a8beee7468",
+    "title": "Schedule a recurring task",
+    "tagline": "The controller should create a new Job each minute.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-326c7efa4cb4",
+    "title": "Keep the scheduled output",
+    "tagline": "Capture the result before cleaning up.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-ff45a0c70050",
+    "title": "Inspect a scheduled run",
+    "tagline": "Capture the result before cleaning up.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-0a4a1211a3b1",
+    "title": "Limit a missed start",
+    "tagline": "Late scheduling needs its own deadline.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-e3c31cdd1946",
+    "title": "Limit each scheduled run",
+    "tagline": "Runtime limits belong inside the Job template.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-f0fb2d09de1f",
+    "title": "Retain a small run history",
+    "tagline": "Successful and failed histories have separate limits.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "pod-design-7ebc6a86cb1f",
+    "title": "Run the schedule on demand",
+    "tagline": "Reuse the template without waiting for the next minute.",
+    "domain": "Pod design",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-c27d125de6f8",
+    "title": "Store two configuration values",
+    "tagline": "A reusable image needs external settings.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-b318ed070cdc",
+    "title": "Inspect configuration data",
+    "tagline": "Read values from the API, not from memory.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-6bb39c927302",
+    "title": "Load a configuration file",
+    "tagline": "File contents and environment entries are parsed differently.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-0b3877bf80d8",
+    "title": "Load environment-style settings",
+    "tagline": "File contents and environment entries are parsed differently.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-552fe2c83f71",
+    "title": "Choose the ConfigMap key",
+    "tagline": "File contents and environment entries are parsed differently.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-c167ab2b2c47",
+    "title": "Map one configuration key",
+    "tagline": "The environment name can differ from the stored key.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-0716914d43a8",
+    "title": "Import a group of settings",
+    "tagline": "Load each ConfigMap key as an environment variable.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-1f0362c12877",
+    "title": "Mount settings as files",
+    "tagline": "Each key should become a readable file.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-18ba5b39bc81",
+    "title": "Specify a process identity",
+    "tagline": "Review the security configuration without starting the workload.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-30413a9484f7",
+    "title": "Declare Linux capabilities",
+    "tagline": "Review the security configuration without starting the workload.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-80be07de3cde",
+    "title": "Reserve and limit resources",
+    "tagline": "Scheduling reservations differ from runtime ceilings.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-82621d7ef845",
+    "title": "Set namespace admission bounds",
+    "tagline": "Reject Pod memory budgets outside a declared range.",
+    "domain": "Configuration",
+    "namespace": "limitrange",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-23863970ab48",
+    "title": "Inspect namespace policy",
+    "tagline": "Describe shows the installed resource bounds.",
+    "domain": "Configuration",
+    "namespace": "limitrange",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-b2ff37e4abbf",
+    "title": "Fit within the allowed range",
+    "tagline": "The Pod needs a memory request that admission accepts.",
+    "domain": "Configuration",
+    "namespace": "limitrange",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-240625f4e44a",
+    "title": "Budget the namespace",
+    "tagline": "Quota totals apply across workloads.",
+    "domain": "Configuration",
+    "namespace": "one",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-d318edcc44b9",
+    "title": "Explain an admission rejection",
+    "tagline": "The workload asks for more than the namespace can reserve.",
+    "domain": "Configuration",
+    "namespace": "one",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-93c607239c96",
+    "title": "Admit a workload within quota",
+    "tagline": "All requested totals must fit.",
+    "domain": "Configuration",
+    "namespace": "one",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-facb0bc27a56",
+    "title": "Create a practice Secret",
+    "tagline": "Keep credentials out of the Pod template.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-800020510cb6",
+    "title": "Create a Secret from a file",
+    "tagline": "A filename becomes a data key.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-cbda172d940d",
+    "title": "Decode the practice value",
+    "tagline": "Read one key without confusing encoding with encryption.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-76840b9115ac",
+    "title": "Mount a Secret file",
+    "tagline": "The process reads the referenced value through a volume.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-5c1870eb99ab",
+    "title": "Switch Secret consumption style",
+    "tagline": "A replacement Pod can read the same key as an environment variable.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-efc409e4f8dd",
+    "title": "Scope a Secret to its consumer",
+    "tagline": "The credential belongs to the workload namespace.",
+    "domain": "Configuration",
+    "namespace": "secret-ops",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-29300ee8ebe5",
+    "title": "Deliver a Secret to the process",
+    "tagline": "The reference must resolve in the Pod namespace.",
+    "domain": "Configuration",
+    "namespace": "secret-ops",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-8f029585a7e8",
+    "title": "Declare an SSH-auth Secret",
+    "tagline": "The Secret type specifies a required key.",
+    "domain": "Configuration",
+    "namespace": "secret-ops",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-48e7cab49f7c",
+    "title": "Mount a typed Secret",
+    "tagline": "The consumer needs a read-only credential file.",
+    "domain": "Configuration",
+    "namespace": "secret-ops",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-3bc403c2d6b6",
+    "title": "Inventory workload identities",
+    "tagline": "Every namespace can have its own ServiceAccounts.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-b6a5c8dfd561",
+    "title": "Create a workload identity",
+    "tagline": "Give this application its own ServiceAccount.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-5829be3df80e",
+    "title": "Assign the workload identity",
+    "tagline": "The Pod must opt into its ServiceAccount.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "configuration-b1bad0cd91e1",
+    "title": "Request a short-lived API token",
+    "tagline": "Modern tokens come from the TokenRequest API.",
+    "domain": "Configuration",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-dfe4918a2044",
+    "title": "Declare a liveness check",
+    "tagline": "A probe should express the health behavior you intend.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-80cd6dcef6bc",
+    "title": "Tune probe timing",
+    "tagline": "A probe should express the health behavior you intend.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-533bdca201e2",
+    "title": "Gate traffic on HTTP readiness",
+    "tagline": "A running process is not necessarily ready for requests.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-cc9dcedee601",
+    "title": "Find failing health checks",
+    "tagline": "Events identify the workloads whose liveness checks fail.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-e3ecade1e2ea",
+    "title": "Read a changing log stream",
+    "tagline": "The process emits a new observation each second.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-bd666beda2cb",
+    "title": "Investigate a missing path",
+    "tagline": "A failed process leaves useful output behind.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-e9b29e7f92d6",
+    "title": "Investigate a missing executable",
+    "tagline": "A failed process leaves useful output behind.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "observability-81c0ce5fbdb0",
+    "title": "Read node resource usage",
+    "tagline": "Metrics show consumption rather than reservations.",
+    "domain": "Observability",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-7cd99a0ac81c",
+    "title": "Expose the web Pod",
+    "tagline": "A stable Service should select the workload.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-a9071e9af8b1",
+    "title": "Inspect Service endpoints",
+    "tagline": "Check both the virtual address and backing Pods.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-bda0945b807f",
+    "title": "Request the Service IP",
+    "tagline": "Test the virtual address from inside the cluster.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-3c8f38af34c6",
+    "title": "Reach a NodePort",
+    "tagline": "The node address and allocated port form the external endpoint.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-dbfc0999ebba",
+    "title": "Prepare a hostname service",
+    "tagline": "Three replicas will identify themselves in responses.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-7b4bb0108f61",
+    "title": "Contact each replica directly",
+    "tagline": "Prove every endpoint responds before adding a Service.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-4bf5b692c64c",
+    "title": "Map the application port",
+    "tagline": "Clients use 6262 while containers listen on 8080.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-e847f2f1491a",
+    "title": "Sample traffic across replicas",
+    "tagline": "Multiple requests can reach different backing Pods.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-a3056a84e7d8",
+    "title": "Restrict ingress to approved clients",
+    "tagline": "Successful requests alone do not prove isolation.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "services-networking-220b10897573",
+    "title": "Route an HTTP path",
+    "tagline": "The Ingress controller must know the host and backend.",
+    "domain": "Services and networking",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-f14ded9c4d31",
+    "title": "Share a file within one Pod",
+    "tagline": "The containers need a common volume.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-62c5b08b6401",
+    "title": "Offer a static volume",
+    "tagline": "Storage exists before a claim asks for it.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-6e4927ffaf92",
+    "title": "Bind a storage claim",
+    "tagline": "The request must match an available volume.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-9b5571617d59",
+    "title": "Write through the claim",
+    "tagline": "Mount the claim before creating the data.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-557b44434396",
+    "title": "Read the persisted file elsewhere",
+    "tagline": "A second Pod should see the volume’s data.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "state-persistence-d11d90dc5f93",
+    "title": "Copy a file out of the container",
+    "tagline": "kubectl cp transfers data through the API.",
+    "domain": "State persistence",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-e2c42ac9f9fa",
+    "title": "Scaffold a Helm chart",
+    "tagline": "Start with a standard chart directory.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-f0e0d766e5cc",
+    "title": "Install a chart with values",
+    "tagline": "A values file customizes the bundled application.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-549a8e435eba",
+    "title": "Find pending releases",
+    "tagline": "An unfinished installation can be hidden by the default list.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-49c8f3a48a65",
+    "title": "Uninstall the release",
+    "tagline": "Remove the resources Helm owns.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-1577f597a0bd",
+    "title": "Layer values for an upgrade",
+    "tagline": "Later values files take precedence.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-f6b7be3f958c",
+    "title": "Manage a chart repository",
+    "tagline": "An index connects chart names to downloadable packages.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-bbba15a6304b",
+    "title": "Download without installing",
+    "tagline": "Inspect a chart before it can create resources.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-f92cbe0a5a34",
+    "title": "Add a repository by name",
+    "tagline": "Use a reliable local mirror for repository practice.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-94840f9d566c",
+    "title": "Inspect chart defaults",
+    "tagline": "See configurable values before choosing overrides.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "helm-0b7d0c5d4101",
+    "title": "Override replicas during install",
+    "tagline": "A command-line value changes the rendered workload.",
+    "domain": "Helm",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "custom-resources-b854e760ce17",
+    "title": "Describe a custom API",
+    "tagline": "The schema defines the objects Kubernetes will accept.",
+    "domain": "Custom resources",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "custom-resources-6e678c4dd728",
+    "title": "Register the custom API",
+    "tagline": "The API server must establish the definition.",
+    "domain": "Custom resources",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "custom-resources-62a9622546dd",
+    "title": "Create an instance of the custom type",
+    "tagline": "Custom resources must satisfy the registered schema.",
+    "domain": "Custom resources",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "custom-resources-48e4ec121f3f",
+    "title": "Discover the resource aliases",
+    "tagline": "The same object can be listed through its short name.",
+    "domain": "Custom resources",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-d43ab80e8740",
+    "title": "Package a custom homepage",
+    "tagline": "The image should contain the page before it starts.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-1f9d206bd6b7",
+    "title": "Build and inspect image layers",
+    "tagline": "A build turns the Dockerfile into a reusable image.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-52068ec01497",
+    "title": "Run and test the image",
+    "tagline": "A running container must also serve the expected response.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-ac5001169e7a",
+    "title": "Inspect the container’s page",
+    "tagline": "exec reads the filesystem of the running instance.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-1f8a476cb71a",
+    "title": "Publish to the lab registry",
+    "tagline": "A registry tag identifies the destination repository.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-e3eb6e9b9907",
+    "title": "Create without starting",
+    "tagline": "A container can exist before its process runs.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-a8392159fb28",
+    "title": "Export a container filesystem",
+    "tagline": "An export is different from an image archive.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-6e1079117d58",
+    "title": "Pull the published image into Kubernetes",
+    "tagline": "The node runtime must reach the registry.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-43b95a3170bf",
+    "title": "Log in to the private fixture",
+    "tagline": "Use a local practice identity rather than real account credentials.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-b4f392c395d5",
+    "title": "Make image-pull credentials",
+    "tagline": "Kubernetes accepts registry credentials in a typed Secret.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-0442ba5ba29b",
+    "title": "Use a private registry Secret",
+    "tagline": "The image reference and pull credential must agree.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "container-images-5dbe478b1ac2",
+    "title": "Clean the container workspace",
+    "tagline": "Remove the lab’s containers and images when finished.",
+    "domain": "Container images (Podman)",
+    "namespace": "quest",
+    "sourceKind": "exercise"
+  },
+  {
+    "id": "kustomize-overlays",
+    "title": "One base, two environments",
+    "tagline": "Keep shared configuration in one base and change only the differences.",
+    "domain": "Application deployment",
+    "namespace": "quest",
+    "sourceKind": "curriculum"
+  },
+  {
+    "id": "rbac-boundaries",
+    "title": "Grant exactly the access needed",
+    "tagline": "Prove both the permissions granted and those withheld.",
+    "domain": "Environment, configuration and security",
+    "namespace": "kq-access",
+    "sourceKind": "curriculum"
+  },
+  {
+    "id": "startup-probe-budget",
+    "title": "Give a slow application time to start",
+    "tagline": "Protect initialization, then prove steady-state recovery.",
+    "domain": "Observability and maintenance",
+    "namespace": "kq-startup",
+    "sourceKind": "curriculum"
+  },
+  {
+    "id": "jsonpath-reports",
+    "title": "Turn cluster objects into a useful report",
+    "tagline": "Extract a stable report from structured objects.",
+    "domain": "Observability and maintenance",
+    "namespace": "kq-report",
+    "sourceKind": "curriculum"
+  }
+]

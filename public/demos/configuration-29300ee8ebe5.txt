@@ -1,0 +1,42 @@
+Deliver a Secret to the process
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: consumer
+  labels:
+    run: consumer
+  namespace: secret-ops
+spec:
+  containers:
+    - name: consumer
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      envFrom:
+        - secretRef:
+            name: ext-service-secret
+KUBEQUEST_YAML
+kubectl wait -n secret-ops --for=condition=Ready pod/consumer --timeout=90s
+kubectl exec -n secret-ops consumer -- printenv API_KEY > answer.txt
+cat answer.txt
+pod/consumer created
+pod/consumer condition met
+practice-api-key
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod references the Secret
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Secret supplies sensitive values by reference. Base64 encoding is not encryption; these labs use artificial practice values only. Never paste real credentials into recordings or saved answers.

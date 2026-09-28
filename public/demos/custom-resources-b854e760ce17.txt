@@ -1,0 +1,51 @@
+Describe a custom API
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'operator-crd.yaml' <<'KUBEQUEST_FILE'
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: operators.stable.example.com
+spec:
+  group: stable.example.com
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                email:
+                  type: string
+                name:
+                  type: string
+                age:
+                  type: integer
+  scope: Namespaced
+  names:
+    plural: operators
+    singular: operator
+    kind: Operator
+    shortNames:
+      - op
+KUBEQUEST_FILE
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The manifest defines the required names and schema
+PASS The CRD is not installed yet
+
+Why the repair works
+A CRD registers an API type and schema. Its instances are stored by Kubernetes, but the name Operator does not install an operator controller or reconcile application behavior.

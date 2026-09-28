@@ -1,0 +1,38 @@
+Use a private registry Secret
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'private-pod.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+  labels:
+    run: private-reg
+spec:
+  containers:
+    - name: private-reg
+      image: localhost:5001/simpleapp:latest
+      imagePullPolicy: Always
+  imagePullSecrets:
+    - name: mysecret
+KUBEQUEST_FILE
+kubectl apply -f private-pod.yaml
+kubectl wait -n quest --for=condition=Ready pod/private-reg --timeout=90s
+pod/private-reg created
+pod/private-reg condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod references the pull Secret
+PASS The Pod is Ready
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

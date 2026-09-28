@@ -1,0 +1,58 @@
+Read the persisted file elsewhere
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS    RESTARTS   AGE
+pod/writer   1/1     Running   0          10s
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: reader
+  labels:
+    run: reader
+spec:
+  containers:
+    - name: reader
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - -c
+        - sleep 3600
+      volumeMounts:
+        - name: data
+          mountPath: /etc/foo
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: mypvc
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/reader --timeout=90s
+kubectl exec reader -- cat /etc/foo/passwd > answer.txt
+cat answer.txt
+pod/reader created
+pod/reader condition met
+root:x:0:0:root:/root:/bin/sh
+daemon:x:1:1:daemon:/usr/sbin:/bin/false
+bin:x:2:2:bin:/bin:/bin/false
+sys:x:3:3:sys:/dev:/bin/false
+sync:x:4:100:sync:/bin:/bin/sync
+mail:x:8:8:mail:/var/spool/mail:/bin/false
+www-data:x:33:33:www-data:/var/www:/bin/false
+operator:x:37:37:Operator:/var:/bin/false
+nobody:x:65534:65534:nobody:/home:/bin/false
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The reader references the same claim
+PASS The saved evidence contains the requested result
+
+Why the repair works
+The claim binds a workload to a PersistentVolume. This single-node lab uses hostPath for practice; declaring ReadWriteMany does not make hostPath shared across machines or provide production-grade durability.

@@ -1,0 +1,40 @@
+Schedule a recurring task
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clock
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: clock
+              image: busybox:1.37
+              command:
+                - sh
+                - -c
+                - date; echo Hello from the Kubernetes cluster
+KUBEQUEST_YAML
+cronjob.batch/clock created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The minute schedule is configured
+PASS The task command is defined
+
+Why the repair works
+A CronJob creates Jobs on a schedule. Its jobTemplate describes each run, not a continuously running Pod.

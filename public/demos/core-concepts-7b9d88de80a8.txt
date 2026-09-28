@@ -1,0 +1,25 @@
+Open a shell in the container
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          3s
+
+
+Complete the task
+$ kubectl exec nginx -- sh -c 'id; ls /usr/share/nginx/html' > answer.txt
+cat answer.txt
+uid=0(root) gid=0(root) groups=0(root)
+50x.html
+index.html
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+exec starts a process inside the existing container. The shell runs in that container’s filesystem and process environment.

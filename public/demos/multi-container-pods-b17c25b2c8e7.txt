@@ -1,0 +1,58 @@
+Choose the right container
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: double
+  labels:
+    run: double
+spec:
+  containers:
+    - name: first
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command: &a1
+        - sh
+        - -c
+        - echo hello; sleep 3600
+    - name: second
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command: *a1
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/double --timeout=90s
+kubectl exec double -c second -- ls > answer.txt
+cat answer.txt
+pod/double created
+pod/double condition met
+bin
+dev
+etc
+home
+lib
+lib64
+proc
+root
+sys
+tmp
+usr
+var
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Both containers are defined
+PASS The second container can execute commands
+PASS The saved evidence contains the requested result
+
+Why the repair works
+The -c flag selects the container. Pod networking is shared, but each container still has its own root filesystem.

@@ -1,0 +1,44 @@
+Switch Secret consumption style
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          2s
+
+
+Complete the task
+$ kubectl delete pod nginx
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysecret2
+              key: username
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+pod "nginx" deleted from quest namespace
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The env reference is present
+PASS USERNAME contains the practice value
+
+Why the repair works
+A Secret supplies sensitive values by reference. Base64 encoding is not encryption; these labs use artificial practice values only. Never paste real credentials into recordings or saved answers.

@@ -1,0 +1,44 @@
+Tolerate the scheduling boundary
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+kubectl taint node "$NODE" tier=frontend:NoSchedule
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tolerant
+  labels:
+    run: tolerant
+spec:
+  containers:
+    - name: tolerant
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+  tolerations:
+    - key: tier
+      operator: Equal
+      value: frontend
+      effect: NoSchedule
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/tolerant --timeout=90s
+node/kubequest-lab tainted
+pod/tolerant created
+pod/tolerant condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod tolerates the taint
+PASS The node retains the taint
+PASS The Pod is Ready
+
+Why the repair works
+A toleration permits scheduling onto a tainted node; it does not force placement. NoSchedule does not evict Pods already running there.

@@ -1,0 +1,23 @@
+Read node resource usage
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl top nodes > answer.txt
+cat answer.txt
+NAME            CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+kubequest-lab   408m         10%      1386Mi          17%         
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Metrics-server supplies recent resource measurements. Requests and limits describe policy; top reports observed usage.

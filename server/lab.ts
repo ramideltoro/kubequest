@@ -1,6 +1,7 @@
 import { spawn, execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { readFileSync, existsSync, rmSync, mkdirSync } from "node:fs";
+import { exerciseLabs, exerciseScript } from "./exercise-scenarios.ts";
 import { Client } from "ssh2";
 import { randomUUID } from "node:crypto";
 import { setupYaml, evaluate, type KObject } from "./scenarios.ts";
@@ -19,6 +20,7 @@ export type Session = {
 };
 export class Lab {
   dir = process.env.LAB_DIR || "/var/lib/kubequest/lab";
+  sshPort = Number(process.env.LAB_SSH_PORT || 22240);
   session: Session | null = null;
   connections = new Set<Client>();
   busy = false;
@@ -58,7 +60,7 @@ export class Lab {
         .on("error", reject)
         .connect({
           host: "127.0.0.1",
-          port: 22240,
+          port: this.sshPort,
           username: user,
           privateKey: key,
           hostVerifier: (k: Buffer) => known.includes(k.toString("base64")),
@@ -173,7 +175,7 @@ export class Lab {
         "-drive",
         `file=${this.dir}/session.qcow2,if=virtio,format=qcow2`,
         "-netdev",
-        "user,id=n1,restrict=on,ipv6=off,hostfwd=tcp:127.0.0.1:22240-:22",
+        `user,id=n1,restrict=on,ipv6=off,hostfwd=tcp:127.0.0.1:${this.sshPort}-:22`,
         "-device",
         "virtio-net-pci,netdev=n1",
         "-display",
@@ -204,23 +206,35 @@ export class Lab {
         45000,
       );
       await this.command(
-        "kubectl apply -f -",
-        setupYaml(this.session!.missionId),
-        60000,
-      );
-      await this.command(
         'kubectl config set-context --current --namespace=quest >/dev/null; su - student -c "KUBECONFIG=/home/student/.kube/config kubectl config set-context --current --namespace=quest" >/dev/null',
       );
-      await this.command(
-        "kubectl wait -n quest --for=condition=Ready pod/probe pod/intruder --timeout=90s",
-        "",
-        100000,
-      );
+      const exercise = exerciseLabs[this.session!.missionId];
+      if (exercise) {
+        await this.command("test -f /opt/kubequest-fixtures/version");
+        await this.command(
+          "bash -s",
+          exerciseScript(
+            exercise.setup + "\nchown -R student:student /home/student",
+          ),
+          240000,
+        );
+      } else {
+        await this.command(
+          "kubectl apply -f -",
+          setupYaml(this.session!.missionId),
+          60000,
+        );
+        await this.command(
+          "kubectl wait -n quest --for=condition=Ready pod/probe pod/intruder --timeout=90s",
+          "",
+          100000,
+        );
+      }
       this.session!.status = "ready";
       this.session!.startedAt = Date.now();
       this.session!.deadline =
         this.session!.mode === "timed" ? Date.now() + minutes * 60000 : null;
-      this.session!.message = "Your lab is ready. Namespace: quest.";
+      this.session!.message = `Your lab is ready. Namespace: ${exercise?.namespace || "quest"}.`;
       this.touch();
     } catch (e) {
       if (this.session) {
@@ -250,9 +264,11 @@ export class Lab {
     return this.start(missionId, mode, minutes);
   }
   async items(): Promise<KObject[]> {
+    const namespace =
+      exerciseLabs[this.session?.missionId || ""]?.namespace || "quest";
     return JSON.parse(
       await this.command(
-        "kubectl get deployments,pods,services,endpointslices,configmaps,pvc,jobs,networkpolicies,ingresses -n quest -o json",
+        `kubectl get deployments,pods,services,endpointslices,configmaps,secrets,serviceaccounts,roles,rolebindings,resourcequotas,limitranges,pvc,jobs,cronjobs,hpa,networkpolicies,ingresses -n ${namespace} -o json`,
       ),
     ).items;
   }
@@ -261,6 +277,15 @@ export class Lab {
     return items
       .filter((x) =>
         [
+          "ConfigMap",
+          "Secret",
+          "ServiceAccount",
+          "Role",
+          "RoleBinding",
+          "ResourceQuota",
+          "LimitRange",
+          "CronJob",
+          "HorizontalPodAutoscaler",
           "Pod",
           "Deployment",
           "Service",
@@ -297,6 +322,28 @@ export class Lab {
   }
   async grade() {
     const id = this.session!.missionId;
+    const exercise = exerciseLabs[id];
+    if (exercise) {
+      const checks = [];
+      for (const check of exercise.checks) {
+        try {
+          await this.command("bash -s", exerciseScript(check.command), 20000);
+          checks.push({
+            label: check.label,
+            passed: true,
+            detail: "Verified against the live lab environment.",
+          });
+        } catch {
+          checks.push({
+            label: check.label,
+            passed: false,
+            detail:
+              "The expected result is not present yet. Inspect the task and try again.",
+          });
+        }
+      }
+      return checks;
+    }
     const evidence: Record<string, string> = {};
     const safe = async (k: string, cmd: string) => {
       try {

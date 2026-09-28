@@ -1,0 +1,29 @@
+Manage a chart repository
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ helm repo add practice http://127.0.0.1:8879
+helm repo update practice
+helm repo list > answer.txt
+cat answer.txt
+"practice" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "practice" chart repository
+Update Complete. ⎈Happy Helming!⎈
+NAME    	URL                  
+practice	http://127.0.0.1:8879
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The local repository is registered
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Helm renders a chart’s templates using merged values, then stores release state in the cluster. This lab uses a small bundled web chart and a local repository so it works without public internet access.

@@ -1,0 +1,75 @@
+Explain a waiting workload
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS              RESTARTS   AGE
+pod/nginx   0/1     ContainerCreating   0          1s
+
+
+Complete the task
+$ kubectl describe pod nginx > answer.txt
+cat answer.txt
+Name:             nginx
+Namespace:        quest
+Priority:         0
+Service Account:  default
+Node:             kubequest-lab/10.0.2.15
+Start Time:       Mon, 28 Sep 2026 20:26:40 +0000
+Labels:           run=nginx
+Annotations:      <none>
+Status:           Pending
+IP:               10.42.0.30
+IPs:
+  IP:  10.42.0.30
+Containers:
+  nginx:
+    Container ID:   
+    Image:          nginx:missing-release
+    Image ID:       
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ErrImagePull
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-l79g2 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-l79g2:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age   From               Message
+  ----     ------     ----  ----               -------
+  Normal   Scheduled  1s    default-scheduler  Successfully assigned quest/nginx to kubequest-lab
+  Normal   Pulling    2s    kubelet            spec.containers{nginx}: Pulling image "nginx:missing-release"
+  Warning  Failed     1s    kubelet            spec.containers{nginx}: Failed to pull image "nginx:missing-release": rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/library/nginx:missing-release": failed to resolve reference "docker.io/library/nginx:missing-release": docker.io/library/nginx:missing-release: not found
+  Warning  Failed     1s    kubelet            spec.containers{nginx}: Error: ErrImagePull
+  Normal   BackOff    1s    kubelet            spec.containers{nginx}: Back-off pulling image "nginx:missing-release"
+  Warning  Failed     1s    kubelet            spec.containers{nginx}: Error: ImagePullBackOff
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Describe combines specification, status and recent events. A nonexistent image is an image acquisition problem, not a readiness probe failure.

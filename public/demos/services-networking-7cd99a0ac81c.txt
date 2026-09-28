@@ -1,0 +1,50 @@
+Expose the web Pod
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 80
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    run: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+KUBEQUEST_YAML
+pod/nginx created
+pod/nginx condition met
+service/nginx created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Service has the correct selector
+PASS The Service returns an HTTP response
+
+Why the repair works
+A Service selects Pods by labels and maps a stable service port to a container endpoint. Verify actual traffic as well as the object fields; a Service with no usable endpoints cannot deliver requests.

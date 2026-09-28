@@ -1,0 +1,29 @@
+Follow the worker logs
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME              READY   STATUS              RESTARTS   AGE
+pod/hello-ptw57   0/1     ContainerCreating   0          1s
+
+NAME              STATUS    COMPLETIONS   DURATION   AGE
+job.batch/hello   Running   0/1           2s         2s
+
+
+Complete the task
+$ kubectl wait --for=condition=Ready pod -l job-name=hello --timeout=90s || true
+kubectl logs -f job/hello > answer.txt
+cat answer.txt
+pod/hello-ptw57 condition met
+hello
+world
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Following logs streams additional output until the container exits; the saved output lets you verify both stages.

@@ -1,0 +1,37 @@
+Bind a storage claim
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'pvc.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: normal
+  volumeName: myvolume
+  resources:
+    requests:
+      storage: 4Gi
+KUBEQUEST_FILE
+kubectl apply -f pvc.yaml
+kubectl wait --for=jsonpath='{.status.phase}'=Bound pvc/mypvc --timeout=60s
+persistentvolumeclaim/mypvc created
+persistentvolumeclaim/mypvc condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The claim bound to myvolume
+PASS The requested capacity is 4Gi
+
+Why the repair works
+The claim binds a workload to a PersistentVolume. This single-node lab uses hostPath for practice; declaring ReadWriteMany does not make hostPath shared across machines or provide production-grade durability.

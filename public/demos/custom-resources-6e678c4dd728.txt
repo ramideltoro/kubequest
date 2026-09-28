@@ -1,0 +1,22 @@
+Register the custom API
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f operator-crd.yaml
+kubectl wait --for=condition=Established crd/operators.stable.example.com --timeout=60s
+customresourcedefinition.apiextensions.k8s.io/operators.stable.example.com created
+customresourcedefinition.apiextensions.k8s.io/operators.stable.example.com condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The CRD is established
+
+Why the repair works
+A CRD registers an API type and schema. Its instances are stored by Kubernetes, but the name Operator does not install an operator controller or reconcile application behavior.

@@ -1,0 +1,20 @@
+Store two configuration values
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create configmap config --from-literal=foo=lala --from-literal=foo2=lolo
+configmap/config created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Both values are stored
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

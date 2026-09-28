@@ -1,0 +1,39 @@
+Declare the namespaced Pod
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create namespace mynamespace
+cat > 'pod.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+  namespace: mynamespace
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+KUBEQUEST_FILE
+kubectl apply -f pod.yaml
+kubectl wait -n mynamespace --for=condition=Ready pod/nginx --timeout=90s
+namespace/mynamespace created
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS nginx uses the provided nginx image
+PASS The Pod is Ready
+
+Why the repair works
+A namespace scopes names. The API stores the Pod specification, then the scheduler and kubelet turn that desired state into a running container. An accepted manifest alone does not prove readiness.

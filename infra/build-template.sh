@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 LAB=/var/lib/kubequest/lab
 cd "$LAB"
 test ! -e template.qcow2 || { echo 'Template already exists'; exit 0; }
@@ -38,7 +39,7 @@ printf 'instance-id: kubequest-template-v1\nlocal-hostname: kubequest-lab\n' > m
 cloud-localds seed.img user-data meta-data
 qemu-system-x86_64 -enable-kvm -cpu host -smp 4 -m 8192 -drive file=building.qcow2,if=virtio,format=qcow2 -drive file=seed.img,if=virtio,format=raw,readonly=on -netdev user,id=n1,hostfwd=tcp:127.0.0.1:22240-:22 -device virtio-net-pci,netdev=n1 -display none -serial file:build-serial.log -daemonize -pidfile build.pid
 SSH=(ssh -i "$LAB/id_ed25519" -p 22240 -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile="$LAB/known_hosts" -o ConnectTimeout=3 root@127.0.0.1)
-for i in $(seq 1 80); do "${SSH[@]}" true 2>/dev/null && break; sleep 3; done
+for i in $(seq 1 80); do "${SSH[@]}" -n true 2>/dev/null && break; sleep 3; done
 "${SSH[@]}" 'cloud-init status --wait' || true
 "${SSH[@]}" bash -s <<'GUEST'
 set -euo pipefail
@@ -63,6 +64,7 @@ printf 'KubeQuest lab. Run kubectl get pods -n quest to begin.\n' > /etc/motd
 k3s ctr images ls > /root/kubequest-images.txt
 sync
 GUEST
+"${SSH[@]}" bash -s < "$SCRIPT_DIR/provision-exercise-guest.sh"
 "${SSH[@]}" poweroff || true
 for i in $(seq 1 30); do kill -0 "$(cat build.pid)" 2>/dev/null || break; sleep 2; done
 # Flatten to an independent immutable base; session disks are disposable overlays.

@@ -4119,3 +4119,8 @@ pre {
 .curriculum-catalog > .deeper { margin-top: 2rem; }
 .curriculum-detail h3 { margin-block: 1.25rem 0.6rem; }
 .curriculum-detail details { margin-block: 1rem; }
+
+.mission-provenance, .lab-practice-record { margin-top: 2rem; overflow-wrap: anywhere; }
+.mission-provenance p, .lab-practice-record p { margin-block: .8rem; }
+.mission-provenance a { color: var(--accent); text-decoration: underline; }
+.lab-practice-record .button { padding: .6rem .8rem; font-size: .8rem; }

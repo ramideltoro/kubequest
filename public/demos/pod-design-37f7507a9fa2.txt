@@ -1,0 +1,61 @@
+Label the web fleet
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx1
+  labels:
+    app: v1
+spec:
+  containers:
+    - name: nginx1
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx2
+  labels:
+    app: v1
+spec:
+  containers:
+    - name: nginx2
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx3
+  labels:
+    app: v1
+spec:
+  containers:
+    - name: nginx3
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+KUBEQUEST_YAML
+pod/nginx1 created
+pod/nginx2 created
+pod/nginx3 created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Three named Pods carry app=v1
+PASS All fleet labels match
+
+Why the repair works
+Labels are selectable metadata. Exact-match and set-based selectors operate on their values; annotations store descriptive information and cannot substitute for selector labels.

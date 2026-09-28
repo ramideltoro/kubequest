@@ -1,0 +1,160 @@
+Inspect a managed Pod
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-cdxt6   1/1     Running   0          2s
+pod/nginx-84f7c9895d-plrch   1/1     Running   0          2s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           2s
+
+
+Complete the task
+$ kubectl get pod $(kubectl get pods -l app=nginx -o jsonpath='{.items[0].metadata.name}') -o yaml > answer.txt
+cat answer.txt
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2026-09-28T20:33:56Z"
+  generateName: nginx-84f7c9895d-
+  generation: 1
+  labels:
+    app: nginx
+    pod-template-hash: 84f7c9895d
+  name: nginx-84f7c9895d-cdxt6
+  namespace: quest
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: nginx-84f7c9895d
+    uid: 928f8dd3-188a-41a0-bdf7-a99a72b15bc6
+  resourceVersion: "3437"
+  uid: f61b23a6-16d1-4515-8777-d887187313b7
+spec:
+  containers:
+  - image: nginx:1.18.0
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-8cpg8
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: kubequest-lab
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-8cpg8
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:33:57Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:33:56Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:33:57Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:33:57Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:33:56Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://7835c544a02b93a30c76734acdd1e61b39867adc72353cfe43df73d89cb911c5
+    image: docker.io/library/nginx:1.18.0
+    imageID: sha256:c2c45d506085d300b72a6d4b10e3dce104228080a2cf095fc38333afe237e2be
+    lastState: {}
+    name: nginx
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-09-28T20:33:57Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-8cpg8
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 10.0.2.15
+  hostIPs:
+  - ip: 10.0.2.15
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.42.0.88
+  podIPs:
+  - ip: 10.42.0.88
+  qosClass: BestEffort
+  startTime: "2026-09-28T20:33:56Z"
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

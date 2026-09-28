@@ -1,0 +1,71 @@
+Diagnose the stalled rollout
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS              RESTARTS   AGE
+pod/nginx-5d789bdddf-8zqv5   1/1     Running             0          5s
+pod/nginx-5d789bdddf-vq5dk   1/1     Running             0          3s
+pod/nginx-cdfdf5c7f-4lw45    0/1     ContainerCreating   0          2s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     1            2           6s
+
+
+Complete the task
+$ {
+kubectl describe deployment nginx; kubectl get pods -l app=nginx
+} > answer.txt
+cat answer.txt
+Name:                   nginx
+Namespace:              quest
+CreationTimestamp:      Mon, 28 Sep 2026 20:51:48 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 3
+Selector:               app=nginx
+Replicas:               2 desired | 1 updated | 3 total | 2 available | 1 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=nginx
+  Containers:
+   nginx:
+    Image:         nginx:1.91
+    Port:          80/TCP
+    Host Port:     0/TCP
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    ReplicaSetUpdated
+OldReplicaSets:  nginx-84f7c9895d (0/0 replicas created), nginx-5d789bdddf (2/2 replicas created)
+NewReplicaSet:   nginx-cdfdf5c7f (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  7s    deployment-controller  Scaled up replica set nginx-84f7c9895d from 0 to 2
+  Normal  ScalingReplicaSet  6s    deployment-controller  Scaled up replica set nginx-5d789bdddf from 0 to 1
+  Normal  ScalingReplicaSet  4s    deployment-controller  Scaled down replica set nginx-84f7c9895d from 2 to 1
+  Normal  ScalingReplicaSet  4s    deployment-controller  Scaled up replica set nginx-5d789bdddf from 1 to 2
+  Normal  ScalingReplicaSet  3s    deployment-controller  Scaled down replica set nginx-84f7c9895d from 1 to 0
+  Normal  ScalingReplicaSet  3s    deployment-controller  Scaled up replica set nginx-cdfdf5c7f from 0 to 1
+NAME                     READY   STATUS         RESTARTS   AGE
+nginx-5d789bdddf-8zqv5   1/1     Running        0          6s
+nginx-5d789bdddf-vq5dk   1/1     Running        0          4s
+nginx-cdfdf5c7f-4lw45    0/1     ErrImagePull   0          3s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

@@ -90,8 +90,14 @@ function Connections({
     </svg>
   );
 }
-export function VisualStory({ id }: { id: string }) {
-  const visual = visuals[id];
+export function VisualStory({
+  id,
+  definition,
+}: {
+  id: string;
+  definition?: Visual;
+}) {
+  const visual = definition || visuals[id];
   return visual ? <Story key={id} visual={visual} id={id} /> : null;
 }
 function Story({ visual, id }: { visual: Visual; id: string }) {

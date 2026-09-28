@@ -1,0 +1,24 @@
+Choose the node directly
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ NODE=$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')
+kubectl run pinned --image=nginx:1.28 --dry-run=client -o json | jq --arg node "$NODE" '.spec.nodeName = $node' | kubectl apply -f -
+kubectl wait -n quest --for=condition=Ready pod/pinned --timeout=90s
+pod/pinned created
+pod/pinned condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod is bound to the practice node
+PASS The Pod is Ready
+
+Why the repair works
+nodeName directly binds a Pod to a named node and bypasses scheduler selection. Node names are environment-specific; discover the name instead of assuming node01.

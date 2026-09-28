@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Settings2, X, ArrowUpRight } from "lucide-react";
 import { lessons } from "../content/lessons";
 import { foundations } from "../content/foundations";
+import exerciseMissionIndex from "../content/exercise-mission-index.json";
 import curriculumIndex from "../content/ckad-curriculum-index.json";
 import exerciseIndex from "../content/ckad-index.json";
 import { missions } from "../content/missions";
@@ -70,8 +71,8 @@ export function SiteFooter() {
       url: "/ckad/" + mission.id,
     })),
     ...exerciseIndex.exercises.map((e) => ({
-      title: e.title,
-      description: e.section,
+      title: exerciseMissionIndex.find((m) => m.id === e.id)?.title || e.title,
+      description: e.section + " " + e.title,
       kind: "Community exercise",
       url: "/ckad/exercises/" + e.id,
     })),
@@ -260,9 +261,9 @@ export function Readme() {
           <Link to="/ckad">Explore the missions</Link>
           <p>
             {exerciseIndex.exercises.length} public community exercises cover{" "}
-            {exerciseIndex.topics.length} topics with solutions and local
-            progress. Practice in your own environment; these exercises are
-            self-guided and not graded.
+            {exerciseIndex.topics.length} topics with full mission pages,
+            diagrams, public solution videos, and local progress. Authorized
+            sign-in unlocks each real lab and its checks.
           </p>
           <Link to="/ckad/exercises">Browse the exercise library</Link>
         </section>

@@ -1,0 +1,69 @@
+Route an HTTP path
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          2s
+
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+service/nginx   ClusterIP   10.43.56.127   <none>        80/TCP    1s
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: notes.lab
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+KUBEQUEST_YAML
+sleep 3
+curl -fsS -H 'Host: notes.lab' http://127.0.0.1 > answer.txt
+cat answer.txt
+ingress.networking.k8s.io/web created
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The rule points at nginx
+PASS The controller routes the request
+
+Why the repair works
+An Ingress object requires a controller. This environment includes Traefik; the Host header selects notes.lab without changing DNS.

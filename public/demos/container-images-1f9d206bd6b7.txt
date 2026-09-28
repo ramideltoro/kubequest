@@ -1,0 +1,40 @@
+Build and inspect image layers
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman build --pull=never -t localhost/simpleapp .
+podman image tree localhost/simpleapp > answer.txt
+cat answer.txt
+STEP 1/2: FROM docker.io/library/httpd:2.4
+STEP 2/2: RUN echo "Hello, World!" > /usr/local/apache2/htdocs/index.html
+COMMIT localhost/simpleapp
+--> 2b8aaa3e16a0
+Successfully tagged localhost/simpleapp:latest
+2b8aaa3e16a08b14ba8a070802a6499e1888ddd989c9403ccec191b3453a3efd
+Image ID: 2b8aaa3e16a0
+Tags:     [localhost/simpleapp:latest]
+Size:     120.4MB
+Image Layers
+├── ID: a6dc765193a5 Size: 81.24MB
+├── ID: e3dc16d012df Size:  2.56kB
+├── ID: e3d486e4807e Size: 1.024kB
+├── ID: f81dcfc93e0e Size: 6.041MB
+├── ID: 91143227899f Size: 33.13MB
+├── ID: 0e599878c17d Size: 3.584kB Top Layer of: [docker.io/library/httpd:2.4]
+└── ID: 2ad940656a97 Size: 5.632kB Top Layer of: [localhost/simpleapp:latest]
+
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The image exists
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

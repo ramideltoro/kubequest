@@ -1,0 +1,23 @@
+Run a disposable command
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl run hello --image=busybox:1.37 --restart=Never --rm -i --command -- echo 'hello world' > answer.txt
+cat answer.txt
+hello world
+pod "hello" deleted from quest namespace
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The temporary Pod is gone
+
+Why the repair works
+--rm removes the attached temporary Pod after its process exits. Saving the output keeps evidence without leaving the workload behind.

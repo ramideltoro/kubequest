@@ -1,0 +1,22 @@
+Read application output
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS    RESTARTS   AGE
+pod/logger   1/1     Running   0          2s
+
+
+Complete the task
+$ kubectl logs logger > answer.txt
+cat answer.txt
+KUBEQUEST_LOG_READY
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+kubectl logs reads the container’s stdout and stderr; it does not read arbitrary files inside the container.

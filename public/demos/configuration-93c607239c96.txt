@@ -1,0 +1,43 @@
+Admit a workload within quota
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: within-budget
+  labels:
+    run: within-budget
+  namespace: one
+spec:
+  containers:
+    - name: within-budget
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: "1"
+          memory: 2Gi
+KUBEQUEST_YAML
+kubectl wait -n one --for=condition=Ready pod/within-budget --timeout=90s
+pod/within-budget created
+pod/within-budget condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The declared resources match the budget
+PASS The Pod is Ready
+
+Why the repair works
+Each quota dimension must fit independently. CPU and memory requests can satisfy quota but still require actual node capacity.

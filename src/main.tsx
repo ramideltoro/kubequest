@@ -29,6 +29,7 @@ import {
   LogOut,
 } from "lucide-react";
 import exerciseIndex from "../content/ckad-index.json";
+import exerciseMissionIndex from "../content/exercise-mission-index.json";
 import { useExerciseProgress } from "./exercise-progress";
 const Curriculum = lazy(() =>
   import("./Curriculum").then((m) => ({ default: m.Curriculum })),
@@ -908,7 +909,8 @@ function CKAD() {
             Now meet the situation.
           </h1>
           <p className="lede">
-            Eight real-cluster missions. Diagnose the cause, make a fix,
+            Eight original missions and 156 exercise labs. Diagnose the cause,
+            make a fix,
             <br />
             and prove the application works.
           </p>
@@ -1178,7 +1180,11 @@ function Progress() {
         <div className="attempt-list">
           {attempts.map((a) => (
             <Link to={"/ckad/" + a.mission} key={a.id}>
-              <span>{missions.find((m) => m.id === a.mission)?.title}</span>
+              <span>
+                {missions.find((m) => m.id === a.mission)?.title ||
+                  exerciseMissionIndex.find((m) => m.id === a.mission)?.title ||
+                  a.mission}
+              </span>
               <span>
                 {a.mode} · {Math.floor(a.seconds / 60)}m {a.seconds % 60}s
               </span>

@@ -1,0 +1,30 @@
+Look beyond the current namespace
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl get pods --all-namespaces > answer.txt
+cat answer.txt
+NAMESPACE     NAME                                     READY   STATUS              RESTARTS     AGE
+inventory     inventory-worker                         0/1     ContainerCreating   0            2s
+kube-system   coredns-c5fdd76cf-pjv25                  1/1     Running             2 (9d ago)   9d
+kube-system   helm-install-traefik-89hzq               0/1     Completed           1            9d
+kube-system   helm-install-traefik-crd-jnqml           0/1     Completed           0            9d
+kube-system   local-path-provisioner-d9d8769b6-m4kbq   1/1     Running             2 (9d ago)   9d
+kube-system   metrics-server-7f4b6d9bd7-mdlml          1/1     Running             2 (9d ago)   9d
+kube-system   svclb-traefik-f4a2579f-gmtjh             2/2     Running             4 (9d ago)   9d
+kube-system   traefik-697644c477-lcxsr                 1/1     Running             2 (9d ago)   9d
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+The -A flag requests a list across namespaces; the NAMESPACE column keeps identically named objects distinguishable.

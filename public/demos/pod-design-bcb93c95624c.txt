@@ -1,0 +1,28 @@
+Remove the scaling workload
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-r455p   1/1     Running   0          3s
+pod/nginx-84f7c9895d-v6gr8   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           3s
+
+
+Complete the task
+$ kubectl delete deployment nginx
+kubectl delete hpa nginx
+deployment.apps "nginx" deleted from quest namespace
+horizontalpodautoscaler.autoscaling "nginx" deleted from quest namespace
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Deployment is removed
+PASS The HPA is removed
+
+Why the repair works
+Deleting the Deployment does not automatically delete an independently created HPA; remove both objects.

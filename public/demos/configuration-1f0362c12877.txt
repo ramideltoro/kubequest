@@ -1,0 +1,54 @@
+Mount settings as files
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmvolume
+data:
+  var8: val8
+  var9: val9
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: config
+          mountPath: /etc/lala
+  volumes:
+    - name: config
+      configMap:
+        name: cmvolume
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+kubectl exec nginx -- ls /etc/lala
+configmap/cmvolume created
+pod/nginx created
+pod/nginx condition met
+var8
+var9
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The mounted files have the supplied values
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

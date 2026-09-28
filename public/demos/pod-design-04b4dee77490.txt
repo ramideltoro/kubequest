@@ -1,0 +1,27 @@
+Clean up the fleet
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS              RESTARTS   AGE
+pod/nginx1   0/1     ContainerCreating   0          2s
+pod/nginx2   0/1     ContainerCreating   0          2s
+pod/nginx3   0/1     ContainerCreating   0          1s
+
+
+Complete the task
+$ kubectl delete pods nginx1 nginx2 nginx3
+pod "nginx1" deleted from quest namespace
+pod "nginx2" deleted from quest namespace
+pod "nginx3" deleted from quest namespace
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS nginx1 is deleted
+PASS nginx2 is deleted
+PASS nginx3 is deleted
+
+Why the repair works
+Deleting the Pods removes the resources; deleting labels or annotations would leave the workloads running.

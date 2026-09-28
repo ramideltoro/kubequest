@@ -1,0 +1,32 @@
+Choose the ConfigMap key
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create configmap special-config --from-file=special=settings.txt
+kubectl get configmap special-config -o yaml
+configmap/special-config created
+apiVersion: v1
+data:
+  special: |
+    hello from a file
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-09-28T20:49:59Z"
+  name: special-config
+  namespace: quest
+  resourceVersion: "7168"
+  uid: 636f478a-3fda-4f12-ad10-675a86a46721
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The resulting data has the expected shape
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

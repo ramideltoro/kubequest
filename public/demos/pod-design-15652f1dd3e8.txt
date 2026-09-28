@@ -1,0 +1,28 @@
+Make labels a report column
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS              RESTARTS   AGE
+pod/nginx1   1/1     Running             0          2s
+pod/nginx2   0/1     ContainerCreating   0          1s
+pod/nginx3   1/1     Running             0          1s
+
+
+Complete the task
+$ kubectl get pods -L app > answer.txt
+cat answer.txt
+NAME     READY   STATUS    RESTARTS   AGE   APP
+nginx1   1/1     Running   0          4s    v1
+nginx2   1/1     Running   0          3s    v2
+nginx3   1/1     Running   0          3s    v1
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Labels are selectable metadata. Exact-match and set-based selectors operate on their values; annotations store descriptive information and cannot substitute for selector labels.

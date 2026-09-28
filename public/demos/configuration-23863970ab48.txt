@@ -1,0 +1,32 @@
+Inspect namespace policy
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl describe namespace limitrange > answer.txt
+cat answer.txt
+Name:         limitrange
+Labels:       kubernetes.io/metadata.name=limitrange
+Annotations:  <none>
+Status:       Active
+
+No resource quota.
+
+Resource Limits
+ Type  Resource  Min    Max    Default Request  Default Limit  Max Limit/Request Ratio
+ ----  --------  ---    ---    ---------------  -------------  -----------------------
+ Pod   memory    100Mi  500Mi  -                -              -
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Namespace description summarizes quota and limit-range policies, helping explain why a workload may be rejected.

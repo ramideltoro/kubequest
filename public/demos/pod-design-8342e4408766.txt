@@ -1,0 +1,38 @@
+Run a staged task
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hello
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - echo hello; sleep 3; echo world
+KUBEQUEST_YAML
+kubectl wait --for=condition=Complete job/hello --timeout=180s
+job.batch/hello created
+job.batch/hello condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The hello Job completed
+
+Why the repair works
+The shell interprets sequential commands inside one argument. restartPolicy Never lets the Job controller decide how to retry failed Pods.

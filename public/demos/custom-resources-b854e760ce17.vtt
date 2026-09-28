@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the starting environment. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Complete the task. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Complete the task · continued. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Run behavioral checks. All task checks pass against the real lab environment.
+
+00:00:32.000 --> 00:00:40.000
+A CRD registers an API type and schema. Its instances are stored by Kubernetes, but the name Operator does not install an operator controller or reconcile application behavior.

@@ -1,0 +1,36 @@
+One base, two environments
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cd kq-overlays
+mkdir -p staging
+cat > staging/kustomization.yaml <<'YAML'
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../base
+namePrefix: stage-
+replicas:
+- name: web
+  count: 2
+images:
+- name: nginx
+  newTag: 1.28-alpine
+YAML
+kubectl kustomize staging > staging.yaml
+
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Staging renders the requested deployment
+PASS The base remains one replica
+
+Why the repair works
+A base owns shared resources. An overlay references that base and applies environment-specific transformations. Inspect the rendered YAML before applying it; a namespace transformation does not create the Namespace.

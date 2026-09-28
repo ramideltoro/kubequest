@@ -1,0 +1,90 @@
+Share traffic with a canary
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stable
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v1
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: web
+        version: v2
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.24.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector:
+    app: web
+  ports:
+    - port: 80
+      targetPort: 80
+KUBEQUEST_YAML
+kubectl rollout status deployment/stable --timeout=120s
+kubectl rollout status deployment/canary --timeout=120s
+deployment.apps/stable created
+deployment.apps/canary created
+service/web created
+Waiting for deployment "stable" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "stable" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "stable" rollout to finish: 2 of 3 updated replicas are available...
+deployment "stable" successfully rolled out
+deployment "canary" successfully rolled out
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Stable has three replicas
+PASS Canary has one replica
+PASS The Service selects both versions
+
+Why the repair works
+A 3:1 endpoint count gives approximate 75/25 distribution for new connections. It is not a guarantee for each small sample, and connection reuse can skew observed requests.

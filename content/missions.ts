@@ -1,4 +1,14 @@
+import type { Visual } from "./visuals";
 export type Mission = {
+  namespace?: string;
+  exercise?: boolean;
+  sourceKind?: string;
+  sourceUrl?: string;
+  sourceTitle?: string;
+  sourceLicense?: string;
+  licensePath?: string;
+  sourceChanges?: string;
+  visual?: Visual;
   id: string;
   title: string;
   tagline: string;
@@ -244,27 +254,29 @@ export const domains = [
   {
     name: "Application Design & Build",
     weight: 20,
-    covered: "Init containers, shared volumes, Jobs, PVCs",
-    remaining:
-      "Image building, CronJobs, DaemonSets, additional multi-container patterns",
+    covered:
+      "Init containers, shared volumes, Jobs, CronJobs, PVCs, image building",
+    remaining: "Multi-stage builds and additional multi-container patterns",
   },
   {
     name: "Application Deployment",
     weight: 20,
-    covered: "Rolling updates, image failures, rollout recovery",
-    remaining: "Helm, Kustomize, canary and blue/green deployments",
+    covered: "Rolling updates, rollout recovery, canaries, Helm, Kustomize",
+    remaining: "Additional blue/green deployment scenarios",
   },
   {
     name: "Observability & Maintenance",
     weight: 15,
-    covered: "Readiness, liveness, events, logs, debugging",
-    remaining: "Startup probes and API deprecation exercises",
+    covered:
+      "Readiness, liveness, startup probes, events, logs, JSONPath reporting",
+    remaining: "API deprecation and migration exercises",
   },
   {
     name: "Configuration & Security",
     weight: 25,
-    covered: "ConfigMaps, Secrets, security contexts, resource limits",
-    remaining: "Quotas, RBAC, admission, CRDs and operators",
+    covered:
+      "ConfigMaps, Secrets, security contexts, resource limits, quotas, RBAC, CRDs",
+    remaining: "Admission behavior and operator lifecycle scenarios",
   },
   {
     name: "Services & Networking",

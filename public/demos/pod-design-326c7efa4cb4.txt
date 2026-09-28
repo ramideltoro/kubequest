@@ -1,0 +1,29 @@
+Keep the scheduled output
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ for i in $(seq 1 45); do JOB=$(kubectl get jobs -o json | jq -r '.items[] | select(.metadata.ownerReferences[]?.name == "clock") | .metadata.name' | head -1); test -n "$JOB" && break; sleep 2; done
+test -n "$JOB"
+kubectl wait --for=condition=Complete "job/$JOB" --timeout=90s
+kubectl logs "job/$JOB" > answer.txt
+kubectl delete cronjob clock
+cat answer.txt
+job.batch/clock-29843807 condition met
+cronjob.batch "clock" deleted from quest namespace
+Mon Sep 28 20:47:01 UTC 2026
+Hello from the Kubernetes cluster
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The CronJob is removed
+
+Why the repair works
+The owner reference identifies the Job created by this CronJob. Capture its output before deleting the schedule and dependent objects.

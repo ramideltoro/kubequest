@@ -1,0 +1,52 @@
+Declare an environment inspection
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'env.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-reader
+  labels:
+    run: env-reader
+spec:
+  containers:
+    - name: env-reader
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - env
+  restartPolicy: Never
+KUBEQUEST_FILE
+kubectl apply -f env.yaml
+kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/env-reader --timeout=90s
+kubectl logs env-reader > answer.txt
+cat answer.txt
+pod/env-reader created
+pod/env-reader condition met
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+HOSTNAME=env-reader
+KUBERNETES_PORT=tcp://10.43.0.1:443
+KUBERNETES_PORT_443_TCP=tcp://10.43.0.1:443
+KUBERNETES_PORT_443_TCP_PROTO=tcp
+KUBERNETES_PORT_443_TCP_PORT=443
+KUBERNETES_PORT_443_TCP_ADDR=10.43.0.1
+KUBERNETES_SERVICE_HOST=10.43.0.1
+KUBERNETES_SERVICE_PORT=443
+KUBERNETES_SERVICE_PORT_HTTPS=443
+HOME=/root
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The env process completed
+PASS The saved evidence contains the requested result
+
+Why the repair works
+The env process prints its environment and exits. restartPolicy Never preserves completion instead of repeatedly restarting a successful one-shot command.

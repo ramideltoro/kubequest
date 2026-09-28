@@ -7,13 +7,14 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "start": "tsx server/index.ts",
-    "test": "node scripts/import-ckad-exercises.mjs --check && tsx --test tests/*.test.ts",
+    "test": "node scripts/import-ckad-exercises.mjs --check && node scripts/build-exercise-labs.mjs --check && tsx --test tests/*.test.ts",
     "demo:render": "tsx scripts/render-demos.mjs",
     "test:live": "tsx tests/live-labs.ts",
     "test:browser": "node scripts/browser-checks.mjs && node scripts/learning-checks.mjs && node scripts/visual-checks.mjs && node scripts/exercise-checks.mjs && node scripts/curriculum-checks.mjs",
     "docs:check": "node scripts/check-wiki.mjs",
     "docs:export": "node scripts/export-wiki.mjs",
-    "exercises:import": "node scripts/import-ckad-exercises.mjs"
+    "exercises:import": "node scripts/import-ckad-exercises.mjs",
+    "labs:build": "node scripts/build-exercise-labs.mjs"
   },
   "dependencies": {
     "@codemirror/lang-yaml": "^6.1.2",

@@ -1,0 +1,37 @@
+Schedule by a node label
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: scheduled
+  labels:
+    run: scheduled
+spec:
+  containers:
+    - name: scheduled
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+  nodeSelector:
+    accelerator: nvidia-tesla-p100
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/scheduled --timeout=90s
+pod/scheduled created
+pod/scheduled condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The selector is configured
+PASS The Pod is Ready
+
+Why the repair works
+A nodeSelector matches node labels during scheduling. This label is a fixture for placement practice; it does not install or request a real GPU.

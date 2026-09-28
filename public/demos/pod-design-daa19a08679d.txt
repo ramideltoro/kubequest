@@ -1,0 +1,74 @@
+Inspect work and its output
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME              READY   STATUS              RESTARTS   AGE
+pod/hello-g4ghv   0/1     ContainerCreating   0          1s
+
+NAME              STATUS    COMPLETIONS   DURATION   AGE
+job.batch/hello   Running   0/1           2s         2s
+
+
+Complete the task
+$ kubectl wait --for=condition=Complete job/hello --timeout=180s
+{
+kubectl get job hello; kubectl describe job hello; kubectl logs job/hello
+} > answer.txt
+cat answer.txt
+job.batch/hello condition met
+NAME    STATUS     COMPLETIONS   DURATION   AGE
+hello   Complete   1/1           8s         9s
+Name:             hello
+Namespace:        quest
+Selector:         batch.kubernetes.io/controller-uid=8e8c6c3e-9562-4203-a524-2ff0ff723e72
+Labels:           batch.kubernetes.io/controller-uid=8e8c6c3e-9562-4203-a524-2ff0ff723e72
+                  batch.kubernetes.io/job-name=hello
+                  controller-uid=8e8c6c3e-9562-4203-a524-2ff0ff723e72
+                  job-name=hello
+Annotations:      <none>
+Parallelism:      1
+Completions:      1
+Completion Mode:  NonIndexed
+Suspend:          false
+Backoff Limit:    6
+Start Time:       Mon, 28 Sep 2026 20:52:55 +0000
+Completed At:     Mon, 28 Sep 2026 20:53:03 +0000
+Duration:         8s
+Pods Statuses:    0 Active (0 Ready) / 1 Succeeded / 0 Failed
+Pod Template:
+  Labels:  batch.kubernetes.io/controller-uid=8e8c6c3e-9562-4203-a524-2ff0ff723e72
+           batch.kubernetes.io/job-name=hello
+           controller-uid=8e8c6c3e-9562-4203-a524-2ff0ff723e72
+           job-name=hello
+  Containers:
+   worker:
+    Image:      busybox:1.37
+    Port:       <none>
+    Host Port:  <none>
+    Command:
+      sh
+      -c
+      echo hello; sleep 3; echo world
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type    Reason            Age   From            Message
+  ----    ------            ----  ----            -------
+  Normal  SuccessfulCreate  8s    job-controller  Created pod: hello-g4ghv
+  Normal  Completed         1s    job-controller  Job completed
+hello
+world
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Job status, events and logs provide distinct evidence: controller progress, lifecycle issues, and application output.

@@ -1,0 +1,35 @@
+Set namespace admission bounds
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create namespace limitrange
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: memory
+  namespace: limitrange
+spec:
+  limits:
+    - type: Pod
+      min:
+        memory: 100Mi
+      max:
+        memory: 500Mi
+KUBEQUEST_YAML
+namespace/limitrange created
+limitrange/memory created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod memory bounds are set
+
+Why the repair works
+A LimitRange validates per-object resource settings during admission. A Pod-level range checks the aggregate resource allocation of that Pod.

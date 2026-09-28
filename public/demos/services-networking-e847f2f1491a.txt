@@ -1,0 +1,91 @@
+Sample traffic across replicas
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                      READY   STATUS    RESTARTS   AGE
+pod/foo-dd8958b4f-4xjcr   1/1     Running   0          2s
+pod/foo-dd8958b4f-hzqkj   1/1     Running   0          2s
+pod/foo-dd8958b4f-xlvpq   1/1     Running   0          2s
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/foo   3/3     3            3           3s
+
+NAME          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/foo   ClusterIP   10.43.131.68   <none>        6262/TCP   1s
+
+
+Complete the task
+$ IP=$(kubectl get service foo -o jsonpath='{.spec.clusterIP}')
+for i in $(seq 1 30); do curl -fsS "http://$IP:6262"; echo; done > answer.txt
+cat answer.txt
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-4xjcr and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+Hello world from foo-dd8958b4f-hzqkj and version 2.0
+
+Hello world from foo-dd8958b4f-xlvpq and version 2.0
+
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS More than one replica answered
+
+Why the repair works
+Services distribute new connections across ready endpoints; the order is not guaranteed and consecutive requests can hit the same Pod. Sample enough independent connections instead of expecting strict round-robin order.

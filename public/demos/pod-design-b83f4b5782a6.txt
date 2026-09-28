@@ -1,0 +1,27 @@
+Change a paused template
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-4nkg8   1/1     Running   0          3s
+pod/nginx-84f7c9895d-r9kdl   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           3s
+
+
+Complete the task
+$ kubectl set image deployment/nginx nginx=nginx:1.19.9
+deployment.apps/nginx image updated
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The requested image is configured
+PASS The rollout stays paused
+PASS Running Pods retain the old image
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

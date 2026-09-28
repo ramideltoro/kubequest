@@ -1,0 +1,33 @@
+Contact each replica directly
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                      READY   STATUS    RESTARTS   AGE
+pod/foo-dd8958b4f-7kgvh   1/1     Running   0          3s
+pod/foo-dd8958b4f-dcg2t   1/1     Running   0          3s
+pod/foo-dd8958b4f-zvfjj   1/1     Running   0          3s
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/foo   3/3     3            3           3s
+
+
+Complete the task
+$ for IP in $(kubectl get pods -l app=foo -o jsonpath='{.items[*].status.podIP}'); do curl -fsS "http://$IP:8080"; echo; done > answer.txt
+cat answer.txt
+Hello world from foo-dd8958b4f-7kgvh and version 2.0
+
+Hello world from foo-dd8958b4f-dcg2t and version 2.0
+
+Hello world from foo-dd8958b4f-zvfjj and version 2.0
+
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS Each running Pod appears in the report
+
+Why the repair works
+A Service selects Pods by labels and maps a stable service port to a container endpoint. Verify actual traffic as well as the object fields; a Service with no usable endpoints cannot deliver requests.

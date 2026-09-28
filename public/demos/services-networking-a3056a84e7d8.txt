@@ -1,0 +1,75 @@
+Restrict ingress to approved clients
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/allowed                  1/1     Running   0          3s
+pod/denied                   1/1     Running   0          3s
+pod/nginx-65dfbbb4d7-c67rc   1/1     Running   0          3s
+pod/nginx-65dfbbb4d7-wx88r   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           3s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/nginx   ClusterIP   10.43.222.212   <none>        80/TCP    3s
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: web-only
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              access: granted
+      ports:
+        - protocol: TCP
+          port: 80
+KUBEQUEST_YAML
+sleep 3
+kubectl exec allowed -- wget -qO- -T 3 http://nginx
+networkpolicy.networking.k8s.io/web-only created
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The approved client can connect
+PASS The unapproved client is blocked
+
+Why the repair works
+NetworkPolicies are additive. Selecting the server Pods isolates their ingress, and the allowed peer selector opens only the intended client set. Always test both allowed and denied paths.

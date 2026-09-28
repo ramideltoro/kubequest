@@ -1,0 +1,54 @@
+Declare Linux capabilities
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'pod.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN
+            - SYS_TIME
+KUBEQUEST_FILE
+cat pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        capabilities:
+          add:
+            - NET_ADMIN
+            - SYS_TIME
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The manifest has the requested security context
+PASS The manifest was not applied
+
+Why the repair works
+A securityContext changes process identity or privileges. This is manifest practice only; default nginx may require additional filesystem changes to run under another UID, and added capabilities should only be granted when required.

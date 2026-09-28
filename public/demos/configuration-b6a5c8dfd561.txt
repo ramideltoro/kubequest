@@ -1,0 +1,20 @@
+Create a workload identity
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create serviceaccount myuser
+serviceaccount/myuser created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS myuser exists
+
+Why the repair works
+Creating a ServiceAccount gives a named workload identity. It does not automatically grant broad API permissions.

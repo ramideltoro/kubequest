@@ -1,0 +1,87 @@
+Inspect the owned ReplicaSet
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-8strr   1/1     Running   0          3s
+pod/nginx-84f7c9895d-n46zm   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           3s
+
+
+Complete the task
+$ kubectl get replicasets -l app=nginx -o yaml > answer.txt
+cat answer.txt
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-09-28T20:33:37Z"
+    generation: 1
+    labels:
+      app: nginx
+      pod-template-hash: 84f7c9895d
+    name: nginx-84f7c9895d
+    namespace: quest
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: nginx
+      uid: ce69e9a8-c0f7-4391-9aaa-dbe054463dc3
+    resourceVersion: "3336"
+    uid: ad09ad75-1c35-4235-be37-ff163e15e0cb
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: nginx
+        pod-template-hash: 84f7c9895d
+    template:
+      metadata:
+        labels:
+          app: nginx
+          pod-template-hash: 84f7c9895d
+      spec:
+        containers:
+        - image: nginx:1.18.0
+          imagePullPolicy: IfNotPresent
+          name: nginx
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+    terminatingReplicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

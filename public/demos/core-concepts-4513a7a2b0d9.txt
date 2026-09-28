@@ -1,0 +1,150 @@
+Inspect the desired object
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          3s
+
+
+Complete the task
+$ kubectl get pod nginx -o yaml > pod.yaml
+cat pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"labels":{"run":"nginx"},"name":"nginx","namespace":"quest"},"spec":{"containers":[{"image":"nginx:1.28","imagePullPolicy":"IfNotPresent","name":"nginx","ports":[{"containerPort":80}]}]}}
+  creationTimestamp: "2026-09-28T20:26:26Z"
+  generation: 1
+  labels:
+    run: nginx
+  name: nginx
+  namespace: quest
+  resourceVersion: "1912"
+  uid: 8a4ac905-03d0-47d1-932c-521ce8157b4f
+spec:
+  containers:
+  - image: nginx:1.28
+    imagePullPolicy: IfNotPresent
+    name: nginx
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-lt769
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: kubequest-lab
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-lt769
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:26:28Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:26:26Z"
+    observedGeneration: 1
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:26:28Z"
+    observedGeneration: 1
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:26:28Z"
+    observedGeneration: 1
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2026-09-28T20:26:26Z"
+    observedGeneration: 1
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: containerd://efa1375758fc233559712243b1c5369c89136d9786aa00cd212914dd56225f76
+    image: docker.io/library/nginx:1.28
+    imageID: sha256:fda7399e8104578dd71a8491d53621a60c1c5ed6b7f3befb583d4f164244255e
+    lastState: {}
+    name: nginx
+    ready: true
+    resources: {}
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2026-09-28T20:26:28Z"
+    user:
+      linux:
+        gid: 0
+        supplementalGroups:
+        - 0
+        uid: 0
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-lt769
+      readOnly: true
+      recursiveReadOnly: Disabled
+  hostIP: 10.0.2.15
+  hostIPs:
+  - ip: 10.0.2.15
+  observedGeneration: 1
+  phase: Running
+  podIP: 10.42.0.29
+  podIPs:
+  - ip: 10.42.0.29
+  qosClass: BestEffort
+  startTime: "2026-09-28T20:26:26Z"
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS pod.yaml contains the real Pod identity
+
+Why the repair works
+kubectl get -o yaml returns the stored object, including server-populated metadata and status. Those generated fields are useful for inspection but usually omitted from authored manifests.

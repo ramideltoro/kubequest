@@ -1,0 +1,55 @@
+Publish the init container’s page
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: shared
+  labels:
+    run: shared
+spec:
+  containers:
+    - name: shared
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: work
+          mountPath: /usr/share/nginx/html
+  volumes:
+    - name: work
+      emptyDir: {}
+  initContainers:
+    - name: prepare
+      image: busybox:1.37
+      command:
+        - sh
+        - -c
+        - echo Test > /work-dir/index.html
+      volumeMounts:
+        - name: work
+          mountPath: /work-dir
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/shared --timeout=90s
+IP=$(kubectl get pod shared -o jsonpath='{.status.podIP}')
+curl -fsS "$IP" > answer.txt
+cat answer.txt
+pod/shared created
+pod/shared condition met
+Test
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS An init container and emptyDir are configured
+PASS The shared page is served
+
+Why the repair works
+The init container completes before nginx starts. Both mount the same emptyDir under different paths, so nginx serves the file written during initialization.

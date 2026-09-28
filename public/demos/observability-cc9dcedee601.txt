@@ -1,0 +1,21 @@
+Find failing health checks
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl get events -A -o json | jq -r '.items[] | select(.reason == "Unhealthy" and (.message | contains("Liveness probe failed"))) | .metadata.namespace + "/" + .involvedObject.name' | sort -u > answer.txt
+cat answer.txt
+qa/unhealthy
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Unhealthy events include probe failures. Filter the message for liveness rather than treating every readiness failure as a restart signal.

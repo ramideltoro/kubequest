@@ -3,7 +3,7 @@ import { Lab } from "../server/lab.ts";
 import { missions } from "../content/missions.ts";
 import { mkdirSync, writeFileSync } from "node:fs";
 const lab = new Lab();
-const dir = "/var/lib/kubequest/qa";
+const dir = process.env.QA_OUTPUT_DIR || "/var/lib/kubequest/qa";
 mkdirSync(dir, { recursive: true });
 const sleep = (n: number) => new Promise((r) => setTimeout(r, n));
 let all = true;

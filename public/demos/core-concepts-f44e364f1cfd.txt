@@ -1,0 +1,50 @@
+Reach a Pod by IP
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          2s
+
+
+Complete the task
+$ IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')
+kubectl run client --image=busybox:1.37 --restart=Never --command -- wget -qO- "$IP"
+kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/client --timeout=90s
+kubectl logs client > answer.txt
+cat answer.txt
+pod/client created
+pod/client condition met
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The client completed its request
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Pod IP routes directly to that Pod while it exists. A successful HTTP response tests more than merely observing an assigned address.

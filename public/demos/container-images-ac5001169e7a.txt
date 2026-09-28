@@ -1,0 +1,21 @@
+Inspect the container’s page
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman exec test cat /usr/local/apache2/htdocs/index.html > answer.txt
+cat answer.txt
+Hello, World!
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

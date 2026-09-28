@@ -1,0 +1,26 @@
+Define autoscaling bounds
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-9rkqw   1/1     Running   0          3s
+pod/nginx-84f7c9895d-v6879   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           4s
+
+
+Complete the task
+$ kubectl autoscale deployment nginx --min=5 --max=10 --cpu=80%
+horizontalpodautoscaler.autoscaling/nginx autoscaled
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The HPA targets nginx with the requested bounds
+PASS The target utilization is 80 percent
+
+Why the repair works
+An HPA describes a control target. CPU utilization also requires CPU requests and working metrics; creating the object alone does not prove dynamic scaling under load.

@@ -1,0 +1,25 @@
+Create without starting
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman create --name parked docker.io/library/busybox:latest
+podman ps -a
+2ce16a76cf99f375af785b121095407861cb2a982aad5ff0c04f54a5273c4da8
+CONTAINER ID  IMAGE                             COMMAND               CREATED                 STATUS         PORTS                   NAMES
+b751dda726e6  docker.io/library/registry:2      /etc/docker/regis...  18 minutes ago          Up 18 minutes  0.0.0.0:5001->5000/tcp  lab-private-registry
+5e342b08be15  docker.io/library/registry:2      /etc/docker/regis...  18 minutes ago          Up 18 minutes  0.0.0.0:5000->5000/tcp  lab-registry
+2ce16a76cf99  docker.io/library/busybox:latest  sh                    Less than a second ago  Created                                parked
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS parked exists but is not running
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

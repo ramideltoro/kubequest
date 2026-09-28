@@ -25,9 +25,14 @@ import { EditorView, basicSetup } from "codemirror";
 import { yaml } from "@codemirror/lang-yaml";
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { tags } from "@lezer/highlight";
-import { missions, type Mission } from "../content/missions";
+import { type Mission } from "../content/missions";
+import {
+  allMissions as missions,
+  missionUrl,
+} from "../content/mission-catalog";
 import { api, useIdentity } from "./lib";
 import { KIcon } from "./simulations";
+import { LabPracticeRecord } from "./LabPracticeRecord";
 import { VisualStory } from "./VisualStory";
 import { Coach } from "./Coach";
 import { Resources } from "./Resources";
@@ -98,10 +103,12 @@ function LiveTerminal({ sessionId }: { sessionId: string }) {
 }
 function YamlEditor({
   initial,
+  namespace,
   onApply,
   disabled,
 }: {
   initial: string;
+  namespace: string;
   onApply: (yaml: string) => void;
   disabled: boolean;
 }) {
@@ -152,7 +159,7 @@ function YamlEditor({
     <div className="editor-panel">
       <div ref={el} />
       <div className="editor-footer">
-        <span>Applies to your active lab · namespace quest</span>
+        <span>Applies to your active lab · namespace {namespace}</span>
         <button
           className="button primary"
           disabled={disabled}
@@ -169,6 +176,7 @@ export function Demo({ mission }: { mission: Mission }) {
     <div className="demo">
       <video
         key={mission.id}
+        poster={mission.exercise ? `/demos/${mission.id}.jpg` : undefined}
         controls
         preload="metadata"
         aria-label={`${mission.title} recorded walkthrough`}
@@ -189,7 +197,7 @@ export function Demo({ mission }: { mission: Mission }) {
       <details>
         <summary>Read the walkthrough transcript</summary>
         <p>{mission.brief}</p>
-        <pre>{mission.solution}</pre>
+        <pre tabIndex={0}>{mission.solution}</pre>
         <p>{mission.why}</p>
         <a href={`/demos/${mission.id}.txt`}>Full recorded terminal output</a>
       </details>
@@ -298,9 +306,18 @@ export function MissionPage({ id }: { id: string }) {
   };
   return (
     <main className="mission-page">
-      <Link className="back" to="/ckad">
+      <Link
+        className="back"
+        to={
+          m.exercise
+            ? m.sourceKind === "curriculum"
+              ? "/ckad/curriculum"
+              : "/ckad/exercises"
+            : "/ckad"
+        }
+      >
         <ArrowLeft size={16} />
-        All CKAD missions
+        {m.exercise ? "All practice labs" : "All CKAD missions"}
       </Link>
       <div className="mission-heading">
         <div>
@@ -320,7 +337,7 @@ export function MissionPage({ id }: { id: string }) {
           <h3>Your objectives</h3>
           <ol className="objectives">
             {m.objectives.map((o, i) => (
-              <li key={o}>
+              <li key={i}>
                 <span>{i + 1}</span>
                 {o}
               </li>
@@ -330,11 +347,28 @@ export function MissionPage({ id }: { id: string }) {
             <Clock size={16} />
             {m.minutes} minute timed variation
           </div>
-          <div className="tag">Namespace: quest</div>
+          <div className="tag">Namespace: {m.namespace || "quest"}</div>
           <p className="small muted">
-            The lab contains intentionally broken resources. Work on the
-            existing objects unless the task explicitly calls for recreation.
+            {m.exercise
+              ? "The lab prepares this task’s prerequisites independently. Save requested files in /home/student. Stop or Reset discards your practice environment."
+              : "The lab contains intentionally broken resources. Work on the existing objects unless the task explicitly calls for recreation."}
           </p>
+          {m.exercise && (
+            <LabPracticeRecord
+              id={m.id}
+              curriculum={m.sourceKind === "curriculum"}
+            />
+          )}
+          {m.sourceUrl && (
+            <div className="mission-provenance">
+              <h3>Source exercise</h3>
+              <a href={m.sourceUrl} target="_blank" rel="noreferrer">
+                {m.sourceTitle}
+              </a>
+              <p>{m.sourceChanges}</p>
+              <a href={m.licensePath}>{m.sourceLicense} license</a>
+            </div>
+          )}
           {assistance && (
             <a
               className="text-link"
@@ -349,7 +383,7 @@ export function MissionPage({ id }: { id: string }) {
         <div className="mission-workspace">
           {assistance &&
             (!active || session.mode !== "independent" || coaching) && (
-              <VisualStory id={m.id} />
+              <VisualStory id={m.id} definition={m.visual} />
             )}
           {!me.user ? (
             <>
@@ -461,7 +495,11 @@ export function MissionPage({ id }: { id: string }) {
               {session && !active && (
                 <div className="notice">
                   Another mission has an active lab.{" "}
-                  <Link to={"/ckad/" + session.missionId}>
+                  <Link
+                    to={missionUrl(
+                      missions.find((m) => m.id === session.missionId)!,
+                    )}
+                  >
                     Return to it to stop or continue.
                   </Link>
                 </div>
@@ -491,8 +529,8 @@ export function MissionPage({ id }: { id: string }) {
                   <KIcon name="kubernetes" size={66} />
                   <h3>Your cluster is getting ready</h3>
                   <p>
-                    A fresh VM is starting and the mission’s broken resources
-                    are being created. This usually takes under two minutes.
+                    A fresh VM is starting and this task’s prerequisites are
+                    being prepared. Some scenarios take several minutes.
                   </p>
                   <div className="loading-bar" />
                 </div>
@@ -524,6 +562,7 @@ export function MissionPage({ id }: { id: string }) {
                   {panel === "yaml" && (
                     <YamlEditor
                       initial={m.starter}
+                      namespace={m.namespace || "quest"}
                       disabled={busy}
                       onApply={(yaml) =>
                         action(async () => {
@@ -637,10 +676,10 @@ export function MissionPage({ id }: { id: string }) {
                       : "Keep investigating"}{" "}
                     <span>{result.score}%</span>
                   </h3>
-                  {result.checks.map((c: any) => (
+                  {result.checks.map((c: any, checkIndex: number) => (
                     <div
                       className={c.passed ? "passed" : "failed"}
-                      key={c.label}
+                      key={checkIndex}
                     >
                       {c.passed ? (
                         <Check size={18} />
@@ -719,6 +758,10 @@ function iconFor(kind: string) {
   return (
     (
       {
+        ConfigMap: "cm",
+        Secret: "secret",
+        ServiceAccount: "sa",
+        CronJob: "cronjob",
         Pod: "pod",
         Deployment: "deploy",
         Service: "svc",

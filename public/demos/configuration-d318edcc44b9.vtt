@@ -1,0 +1,16 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the starting environment. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Complete the task. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Complete the task · continued. Commands and output shown here were captured from the actual lab.
+
+00:00:24.000 --> 00:00:32.000
+Run behavioral checks. All task checks pass against the real lab environment.
+
+00:00:32.000 --> 00:00:40.000
+Admission rejects requests that exceed quota before scheduling. The failure is the expected outcome here; increasing quota would bypass the lesson.

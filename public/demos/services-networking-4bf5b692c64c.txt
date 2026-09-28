@@ -1,0 +1,38 @@
+Map the application port
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                      READY   STATUS    RESTARTS   AGE
+pod/foo-dd8958b4f-f27pn   1/1     Running   0          3s
+pod/foo-dd8958b4f-hkkl2   1/1     Running   0          3s
+pod/foo-dd8958b4f-qxfcs   1/1     Running   0          3s
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/foo   3/3     3            3           3s
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Service
+metadata:
+  name: foo
+spec:
+  selector:
+    app: foo
+  ports:
+    - port: 6262
+      targetPort: 8080
+KUBEQUEST_YAML
+service/foo created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The port mapping is correct
+PASS The Service returns an HTTP response
+
+Why the repair works
+A Service selects Pods by labels and maps a stable service port to a container endpoint. Verify actual traffic as well as the object fields; a Service with no usable endpoints cannot deliver requests.
