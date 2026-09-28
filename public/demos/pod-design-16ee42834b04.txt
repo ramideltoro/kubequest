@@ -1,0 +1,36 @@
+Read the release history
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-5d789bdddf-26h44   1/1     Running   0          3s
+pod/nginx-5d789bdddf-k89th   1/1     Running   0          5s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           7s
+
+
+Complete the task
+$ {
+kubectl rollout history deployment/nginx; kubectl get replicasets -l app=nginx
+} > answer.txt
+cat answer.txt
+deployment.apps/nginx 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-5d789bdddf   2         2         2       7s
+nginx-84f7c9895d   0         0         0       9s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

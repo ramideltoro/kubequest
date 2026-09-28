@@ -1,0 +1,69 @@
+Give a slow application time to start
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n kq-startup
+NAME       READY   STATUS    RESTARTS   AGE
+pod/slow   1/1     Running   0          29s
+
+
+Complete the task
+$ cat > 'slow.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: slow
+  namespace: kq-startup
+spec:
+  containers:
+    - name: app
+      image: busybox:1.37
+      command:
+        - sh
+        - -c
+        - sleep 45; touch /tmp/healthy; sleep 3600
+      startupProbe:
+        exec:
+          command:
+            - test
+            - -f
+            - /tmp/healthy
+        periodSeconds: 2
+        failureThreshold: 45
+      livenessProbe:
+        exec:
+          command:
+            - test
+            - -f
+            - /tmp/healthy
+        periodSeconds: 5
+        failureThreshold: 3
+      readinessProbe:
+        exec:
+          command:
+            - test
+            - -f
+            - /tmp/healthy
+        periodSeconds: 2
+KUBEQUEST_FILE
+kubectl delete pod slow -n kq-startup
+kubectl apply -f slow.yaml
+kubectl wait -n kq-startup --for=condition=Ready pod/slow --timeout=90s
+kubectl exec -n kq-startup slow -- rm /tmp/healthy
+for i in $(seq 1 60); do test "$(kubectl get pod slow -n kq-startup -o jsonpath='{.status.containerStatuses[0].restartCount}')" -ge 1 && break; sleep 2; done
+kubectl wait -n kq-startup --for=condition=Ready pod/slow --timeout=90s
+pod "slow" deleted from kq-startup namespace
+pod/slow created
+pod/slow condition met
+pod/slow condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The startup budget is configured
+PASS The liveness check remains intact
+PASS A restart occurred and readiness recovered
+
+Why the repair works
+Until a startup probe succeeds, Kubernetes holds back liveness and readiness probes. After startup succeeds, liveness detects a broken process and readiness controls traffic eligibility. The startup failureThreshold × periodSeconds gives an approximate failure budget, not an exact stopwatch.

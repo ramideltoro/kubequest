@@ -1,0 +1,27 @@
+Preview a namespace
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create namespace myns --dry-run=client -o yaml > namespace.yaml
+cat namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: myns
+spec: {}
+status: {}
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS namespace.yaml declares myns
+PASS myns was not created
+
+Why the repair works
+Client dry-run generates an object locally. Redirecting it to a file lets you inspect or review it before applying.

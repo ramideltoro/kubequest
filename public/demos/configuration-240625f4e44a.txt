@@ -1,0 +1,35 @@
+Budget the namespace
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create namespace one
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: budget
+  namespace: one
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi
+KUBEQUEST_YAML
+namespace/one created
+resourcequota/budget created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Requests fit the specified quota
+PASS Limits fit the specified quota
+
+Why the repair works
+ResourceQuota limits aggregate namespace reservations and limits. It is distinct from a LimitRange’s per-object defaults and bounds.

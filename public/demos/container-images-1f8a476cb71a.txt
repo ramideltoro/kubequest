@@ -1,0 +1,32 @@
+Publish to the lab registry
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman tag localhost/simpleapp localhost:5000/simpleapp
+podman push --tls-verify=false localhost:5000/simpleapp
+curl -fsS http://127.0.0.1:5000/v2/_catalog
+{"repositories":["simpleapp"]}
+Getting image source signatures
+Copying blob sha256:1ec384e6a09f7278b7773c8a92d81b264e2bbd555c5cd4d8ca07211e25948948
+Copying blob sha256:ca3ca01a4c890177992fb7db19bc9d618c43e8fb5566e14e9352fd56344c7a0e
+Copying blob sha256:a6dc765193a52cbaede3c93a9ff48b9540948dd0774bbe7031fcb5847606f9ac
+Copying blob sha256:83961a5e50aedab5464694408a2fd0ef9d28a10cc7a755428a5f2fc78d877fc7
+Copying blob sha256:d2e7903b4893cc9c552daa08614eaccbc8f72d548637606cdd8ef96063b31a18
+Copying blob sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef
+Copying blob sha256:5bb884ee0f44d1eb4ee90e2cad6c64e2c517b2262e03fa8c8fb014a4c0771780
+Copying config sha256:57bc57ed1ab6b9e877a175bb13672a38cf594898e194d7840cefe84ac8528333
+Writing manifest to image destination
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The registry exposes the pushed manifest
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

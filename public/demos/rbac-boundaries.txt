@@ -1,0 +1,24 @@
+Grant exactly the access needed
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n kq-access
+No resources found in kq-access namespace.
+
+
+Complete the task
+$ kubectl create role pod-reader -n kq-access --verb=get,list,watch --resource=pods --dry-run=client -o yaml | kubectl apply -f -
+
+role.rbac.authorization.k8s.io/pod-reader configured
+Warning: resource roles/pod-reader is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The identity can watch Pods
+PASS The identity cannot delete Pods
+PASS Secrets and other namespaces stay inaccessible
+
+Why the repair works
+A ServiceAccount is an identity, a Role describes permitted operations, and a RoleBinding joins them inside a namespace. Pods belong to the core API group (the empty string), not apps. Container securityContext settings do not grant API permissions.

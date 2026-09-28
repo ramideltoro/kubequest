@@ -1,0 +1,31 @@
+Scope a Secret to its consumer
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create namespace secret-ops
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ext-service-secret
+  namespace: secret-ops
+type: Opaque
+stringData:
+  API_KEY: practice-api-key
+KUBEQUEST_YAML
+namespace/secret-ops created
+secret/ext-service-secret created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The namespaced key is present
+
+Why the repair works
+A Secret supplies sensitive values by reference. Base64 encoding is not encryption; these labs use artificial practice values only. Never paste real credentials into recordings or saved answers.

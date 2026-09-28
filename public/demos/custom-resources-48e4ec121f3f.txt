@@ -1,0 +1,28 @@
+Discover the resource aliases
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ {
+kubectl get operators; kubectl get operator; kubectl get op
+} > answer.txt
+cat answer.txt
+NAME              AGE
+operator-sample   2s
+NAME              AGE
+operator-sample   2s
+NAME              AGE
+operator-sample   2s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A CRD registers an API type and schema. Its instances are stored by Kubernetes, but the name Operator does not install an operator controller or reconcile application behavior.

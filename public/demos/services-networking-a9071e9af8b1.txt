@@ -1,0 +1,31 @@
+Inspect Service endpoints
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          3s
+
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/nginx   ClusterIP   10.43.228.244   <none>        80/TCP    2s
+
+
+Complete the task
+$ {
+kubectl get service nginx; kubectl get endpointslices -l kubernetes.io/service-name=nginx
+} > answer.txt
+cat answer.txt
+NAME    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+nginx   ClusterIP   10.43.228.244   <none>        80/TCP    2s
+NAME          ADDRESSTYPE   PORTS   ENDPOINTS    AGE
+nginx-6cs9b   IPv4          80      10.42.0.48   2s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+A Service selects Pods by labels and maps a stable service port to a container endpoint. Verify actual traffic as well as the object fields; a Service with no usable endpoints cannot deliver requests.

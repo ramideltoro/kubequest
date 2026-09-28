@@ -1,0 +1,31 @@
+Budget before admission
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run=client -o yaml > quota.yaml
+cat quota.yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: myrq
+spec:
+  hard:
+    cpu: "1"
+    memory: 1G
+    pods: "2"
+status: {}
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The quota file contains all three limits
+PASS The quota is not active
+
+Why the repair works
+A quota limits aggregate namespace consumption. Generating the manifest does not install an admission limit.

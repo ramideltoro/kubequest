@@ -1,0 +1,35 @@
+Run and test the image
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman run -d --name test -p 8080:80 localhost/simpleapp
+podman ps
+podman logs test
+sleep 2
+curl -fsS http://127.0.0.1:8080 > answer.txt
+cat answer.txt
+4ee74e3782b854f3500b49ddc2e4c2d6704187c10cec702a0f16a2772ada3d25
+CONTAINER ID  IMAGE                         COMMAND               CREATED                 STATUS                 PORTS                   NAMES
+b751dda726e6  docker.io/library/registry:2  /etc/docker/regis...  18 minutes ago          Up 18 minutes          0.0.0.0:5001->5000/tcp  lab-private-registry
+5e342b08be15  docker.io/library/registry:2  /etc/docker/regis...  18 minutes ago          Up 18 minutes          0.0.0.0:5000->5000/tcp  lab-registry
+4ee74e3782b8  localhost/simpleapp:latest    httpd-foreground      Less than a second ago  Up Less than a second  0.0.0.0:8080->80/tcp    test
+Hello, World!
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.88.0.6. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.88.0.6. Set the 'ServerName' directive globally to suppress this message
+[Mon Sep 28 21:08:09.924272 2026] [mpm_event:notice] [pid 1:tid 1] AH00489: Apache/2.4.68 (Unix) configured -- resuming normal operations
+[Mon Sep 28 21:08:09.924795 2026] [core:notice] [pid 1:tid 1] AH00094: Command line: 'httpd -D FOREGROUND'
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS test is running
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

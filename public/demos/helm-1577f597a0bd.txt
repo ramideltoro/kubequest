@@ -1,0 +1,32 @@
+Layer values for an upgrade
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                       READY   STATUS    RESTARTS   AGE
+pod/web-7c685698b9-5kllj   1/1     Running   0          4s
+pod/web-7c685698b9-9dtdk   1/1     Running   0          4s
+
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/web   2/2     2            2           4s
+
+
+Complete the task
+$ helm upgrade web ./web -f myvalues.yaml -f override.yaml --wait --timeout=120s
+Release "web" has been upgraded. Happy Helming!
+NAME: web
+LAST DEPLOYED: Mon Sep 28 21:03:50 2026
+NAMESPACE: quest
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The override produces three available replicas
+PASS Helm stores the merged replica value
+
+Why the repair works
+Helm renders a chart’s templates using merged values, then stores release state in the cluster. This lab uses a small bundled web chart and a local repository so it works without public internet access.

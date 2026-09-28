@@ -1,0 +1,48 @@
+Import a group of settings
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: anotherone
+data:
+  var6: val6
+  var7: val7
+KUBEQUEST_YAML
+kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      envFrom:
+        - configMapRef:
+            name: anotherone
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+configmap/anotherone created
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod imports anotherone
+PASS Both values reach the container
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

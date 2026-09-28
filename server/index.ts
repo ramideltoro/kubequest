@@ -10,7 +10,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createAuth } from "./auth.ts";
 import { Lab } from "./lab.ts";
-import { missions } from "../content/missions.ts";
+import { allMissions as missions } from "../content/mission-catalog.ts";
 import { lessons } from "../content/lessons.ts";
 import { foundations } from "../content/foundations.ts";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -167,7 +167,11 @@ export async function buildApp(
     lab.touch();
     try {
       return {
-        output: await lab.command("kubectl apply -n quest -f -", b.yaml, 30000),
+        output: await lab.command(
+          `kubectl apply -n ${missions.find((m) => m.id === lab.session!.missionId)?.namespace || "quest"} -f -`,
+          b.yaml,
+          30000,
+        ),
       };
     } finally {
       lab.operation = false;

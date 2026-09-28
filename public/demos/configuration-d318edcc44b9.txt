@@ -1,0 +1,43 @@
+Explain an admission rejection
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'over-budget.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: over-budget
+  labels:
+    run: over-budget
+  namespace: one
+spec:
+  containers:
+    - name: over-budget
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: "2"
+          memory: 3Gi
+        limits:
+          cpu: "3"
+          memory: 4Gi
+KUBEQUEST_FILE
+if kubectl apply -f over-budget.yaml > answer.txt 2>&1; then echo "Unexpected admission"; exit 1; fi
+cat answer.txt
+Error from server (Forbidden): error when creating "over-budget.yaml": pods "over-budget" is forbidden: exceeded quota: budget, requested: limits.cpu=3,limits.memory=4Gi,requests.cpu=2,requests.memory=3Gi, used: limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0, limited: limits.cpu=2,limits.memory=2Gi,requests.cpu=1,requests.memory=1Gi
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The over-budget Pod was not admitted
+
+Why the repair works
+Admission rejects requests that exceed quota before scheduling. The failure is the expected outcome here; increasing quota would bypass the lesson.

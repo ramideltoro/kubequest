@@ -251,3 +251,32 @@ test("Timed deadline prevents further edits and triggers an automatic persisted 
     await f.app.close();
   }
 });
+
+test("converted exercise labs use the same owner authentication boundary", async () => {
+  const f = await fixture();
+  try {
+    const payload = { missionId: "helm-e2c42ac9f9fa", mode: "guided" };
+    const anonymous = await f.app.inject({
+      method: "POST",
+      url: "/api/private/session/start",
+      payload,
+      headers: { origin: env.PUBLIC_ORIGIN },
+    });
+    assert.equal(anonymous.statusCode, 401);
+    assert.equal(f.started, 0);
+    const owner = await f.app.inject({
+      method: "POST",
+      url: "/api/private/session/start",
+      payload,
+      headers: {
+        origin: env.PUBLIC_ORIGIN,
+        cookie: "__Host-kubequest=" + (await token()),
+      },
+    });
+    assert.equal(owner.statusCode, 200);
+    assert.equal(owner.json().session.missionId, payload.missionId);
+    assert.equal(f.started, 1);
+  } finally {
+    await f.app.close();
+  }
+});

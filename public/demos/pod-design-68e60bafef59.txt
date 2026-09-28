@@ -1,0 +1,24 @@
+Read an annotation
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS              RESTARTS   AGE
+pod/nginx1   1/1     Running             0          2s
+pod/nginx2   1/1     Running             0          2s
+pod/nginx3   0/1     ContainerCreating   0          2s
+
+
+Complete the task
+$ kubectl get pod nginx1 -o jsonpath='{.metadata.annotations.description}{"\n"}' > answer.txt
+cat answer.txt
+my description
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Labels are selectable metadata. Exact-match and set-based selectors operate on their values; annotations store descriptive information and cannot substitute for selector labels.

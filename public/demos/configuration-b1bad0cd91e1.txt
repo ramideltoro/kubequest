@@ -1,0 +1,23 @@
+Request a short-lived API token
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create token myuser --duration=10m > token.txt
+chmod 600 token.txt
+printf "Token saved locally; do not share it.\n"
+Token saved locally; do not share it.
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS A JWT-shaped token was saved
+PASS The token belongs to myuser
+
+Why the repair works
+TokenRequest issues a bounded credential for a ServiceAccount. Keep it in the disposable VM and avoid printing it in public output.

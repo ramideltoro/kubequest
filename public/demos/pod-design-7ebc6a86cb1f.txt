@@ -1,0 +1,23 @@
+Run the schedule on demand
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create job manual --from=cronjob/clock
+kubectl wait --for=condition=Complete job/manual --timeout=180s
+job.batch/manual created
+job.batch/manual condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The manual Job completed
+PASS The output matches the schedule
+
+Why the repair works
+Creating a Job from a CronJob copies its job template. Suspending the schedule does not prevent this manual invocation.

@@ -1,0 +1,30 @@
+Create an instance of the custom type
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'operator.yaml' <<'KUBEQUEST_FILE'
+apiVersion: stable.example.com/v1
+kind: Operator
+metadata:
+  name: operator-sample
+spec:
+  email: operator-sample@stable.example.com
+  name: operator sample
+  age: 30
+KUBEQUEST_FILE
+kubectl apply -f operator.yaml
+operator.stable.example.com/operator-sample created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The custom object has the supplied fields
+
+Why the repair works
+A CRD registers an API type and schema. Its instances are stored by Kubernetes, but the name Operator does not install an operator controller or reconcile application behavior.

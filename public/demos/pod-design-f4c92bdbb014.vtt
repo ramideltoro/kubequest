@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the starting environment. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Complete the task. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Run behavioral checks. All task checks pass against the real lab environment.
+
+00:00:24.000 --> 00:00:32.000
+An HPA describes a control target. CPU utilization also requires CPU requests and working metrics; creating the object alone does not prove dynamic scaling under load.

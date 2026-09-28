@@ -1,0 +1,20 @@
+Declare an SSH-auth Secret
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create secret generic my-secret -n secret-ops --type=kubernetes.io/ssh-auth --from-file=ssh-privatekey=id_rsa
+secret/my-secret created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Type and key are correct
+
+Why the repair works
+A Secret supplies sensitive values by reference. Base64 encoding is not encryption; these labs use artificial practice values only. Never paste real credentials into recordings or saved answers.

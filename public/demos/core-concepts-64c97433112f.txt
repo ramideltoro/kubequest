@@ -1,0 +1,24 @@
+Change the running image
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME        READY   STATUS    RESTARTS   AGE
+pod/nginx   1/1     Running   0          1s
+
+
+Complete the task
+$ kubectl set image pod/nginx nginx=nginx:1.24.0
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+pod/nginx image updated
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The requested image is in the spec
+PASS The running container reports the new image
+
+Why the repair works
+The kubelet reconciles the changed image by replacing the container. Verify runtime status as well as the spec.

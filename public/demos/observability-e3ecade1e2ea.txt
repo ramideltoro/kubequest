@@ -1,0 +1,46 @@
+Read a changing log stream
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: counter
+  labels:
+    run: counter
+spec:
+  containers:
+    - name: counter
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - -c
+        - 'i=0; while true; do echo "$i: $(date)"; i=$((i+1)); sleep 1; done'
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/counter --timeout=90s
+sleep 3
+kubectl logs counter > answer.txt
+cat answer.txt
+pod/counter created
+pod/counter condition met
+0: Mon Sep 28 20:55:30 UTC 2026
+1: Mon Sep 28 20:55:31 UTC 2026
+2: Mon Sep 28 20:55:32 UTC 2026
+3: Mon Sep 28 20:55:33 UTC 2026
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Container logs contain the process’s standard output. Capture a bounded sample instead of leaving an endless follow session running.

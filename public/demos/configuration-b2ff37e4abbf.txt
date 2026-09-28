@@ -1,0 +1,41 @@
+Fit within the allowed range
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+  namespace: limitrange
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: 250Mi
+        limits:
+          memory: 400Mi
+KUBEQUEST_YAML
+kubectl wait -n limitrange --for=condition=Ready pod/nginx --timeout=90s
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The memory request is 250Mi
+PASS The Pod is Ready
+
+Why the repair works
+The request lies between the supplied minimum and maximum. A 400Mi limit also stays within the namespace’s bounds.

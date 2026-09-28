@@ -1,0 +1,38 @@
+Offer a static volume
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'pv.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: myvolume
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: normal
+  hostPath:
+    path: /var/kubequest-volume
+    type: DirectoryOrCreate
+KUBEQUEST_FILE
+kubectl apply -f pv.yaml
+persistentvolume/myvolume created
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The PV has the expected capacity and class
+PASS Both access modes are declared
+
+Why the repair works
+The claim binds a workload to a PersistentVolume. This single-node lab uses hostPath for practice; declaring ReadWriteMany does not make hostPath shared across machines or provide production-grade durability.

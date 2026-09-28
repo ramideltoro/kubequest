@@ -1,0 +1,35 @@
+Resume the queued release
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-cf7z2   1/1     Running   0          3s
+pod/nginx-84f7c9895d-vgjmb   1/1     Running   0          3s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     0            2           3s
+
+
+Complete the task
+$ kubectl rollout resume deployment/nginx
+kubectl rollout status deployment/nginx --timeout=120s
+deployment.apps/nginx resumed
+Waiting for deployment "nginx" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "nginx" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "nginx" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "nginx" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "nginx" rollout to finish: 1 old replicas are pending termination...
+deployment "nginx" successfully rolled out
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The requested image is configured
+PASS The desired replicas are available
+PASS The rollout is resumed
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

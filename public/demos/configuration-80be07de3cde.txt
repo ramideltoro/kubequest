@@ -1,0 +1,42 @@
+Reserve and limit resources
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 200m
+          memory: 512Mi
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS CPU requests and limits are set
+PASS Memory requests and limits are set
+
+Why the repair works
+Requests guide scheduling; limits constrain consumption. CPU and memory quantities have different units and enforcement behavior.

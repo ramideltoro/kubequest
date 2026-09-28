@@ -1,0 +1,29 @@
+Return to a chosen revision
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS         RESTARTS   AGE
+pod/nginx-5d789bdddf-lfb7m   1/1     Running        0          2s
+pod/nginx-5d789bdddf-xqzmb   1/1     Running        0          2s
+pod/nginx-cdfdf5c7f-5fjvp    0/1     ErrImagePull   0          0s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     1            2           5s
+
+
+Complete the task
+$ kubectl rollout undo deployment/nginx --to-revision=2
+kubectl rollout status deployment/nginx --timeout=120s
+deployment.apps/nginx rolled back
+deployment "nginx" successfully rolled out
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The requested image is configured
+PASS The desired replicas are available
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

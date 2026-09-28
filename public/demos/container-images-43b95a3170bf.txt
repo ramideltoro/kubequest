@@ -1,0 +1,25 @@
+Log in to the private fixture
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ printf 'practice-password\n' | podman login --tls-verify=false --authfile /home/student/auth.json --username student --password-stdin localhost:5001
+chmod 600 auth.json
+jq '.auths | keys' auth.json
+Login Succeeded!
+[
+  "localhost:5001"
+]
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The auth file names the registry
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

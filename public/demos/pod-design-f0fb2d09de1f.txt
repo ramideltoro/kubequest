@@ -1,0 +1,20 @@
+Retain a small run history
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl patch cronjob clock --type=merge -p '{"spec":{"successfulJobsHistoryLimit":2,"failedJobsHistoryLimit":1}}'
+cronjob.batch/clock patched
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The history limits are set
+
+Why the repair works
+History limits bound retained completed Jobs; they do not change how often the task runs.

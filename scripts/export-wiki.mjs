@@ -66,6 +66,29 @@ try {
 } catch (error) {
   if (error.status !== 128 && error.status !== 1) throw error;
 }
+let exerciseLabs = [];
+try {
+  execFileSync(
+    "git",
+    ["cat-file", "-e", revision + ":content/exercise-missions.json"],
+    { stdio: "ignore" },
+  );
+  exerciseLabs = JSON.parse(read("content/exercise-missions.json")).map(
+    (m) => ({
+      id: m.id,
+      title: m.title,
+      domain: m.domain,
+      namespace: m.namespace,
+      path:
+        m.sourceKind === "curriculum"
+          ? "/ckad/curriculum/" + m.id
+          : "/ckad/exercises/" + m.id,
+      objectives: m.objectives,
+    }),
+  );
+} catch (error) {
+  if (error.status !== 128 && error.status !== 1) throw error;
+}
 const overviewPaths = {
   "path-foundations": "/foundations",
   "path-basics": "/basics",
@@ -165,6 +188,7 @@ const snapshot = {
   })),
   routes,
   exerciseLibrary,
+  exerciseLabs,
   dependencies,
   foundations: foundations.map((l) => ({
     id: l.id,

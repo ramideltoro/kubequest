@@ -1,0 +1,35 @@
+Clean the container workspace
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME            READY   STATUS              RESTARTS   AGE
+pod/simpleapp   0/1     ContainerCreating   0          1s
+
+
+Complete the task
+$ podman rm --all --force
+podman rmi --all --force
+kubectl delete pod simpleapp
+5e342b08be15a02a6355e3fc3b321f60cce29e2e4b15efd51955260bb77ea063
+b751dda726e639f7e5e998ebf63e0cc5c34c9112e5505f3a5e0d0542c8edaadd
+add8608a8336e300ee34270014c2682655039fb74abba8821e67102b6a091902
+Untagged: docker.io/library/httpd:2.4
+Untagged: docker.io/library/registry:2
+Untagged: docker.io/library/busybox:latest
+Untagged: localhost/simpleapp:latest
+Deleted: 26b2eb03618e749084668eaff68cff8f81dda12d06ac641be7a6398b82a6f25b
+Deleted: aaef90e065235eb0b2d9938be85d1b81add2902cf89affe2cdfa19be33476ac0
+Deleted: da16813eb5aadbb1798bf0fa1bc6a60aaf167101246f3bbed801cc6c0bad7fa7
+pod "simpleapp" deleted from quest namespace
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS No Podman containers remain
+PASS No Podman images remain
+PASS The Kubernetes Pod is removed
+
+Why the repair works
+These cleanup commands affect the disposable guest’s Podman storage only. Kubernetes uses a separate containerd image store; deleting Podman images does not remove those images.

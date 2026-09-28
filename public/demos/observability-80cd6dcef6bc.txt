@@ -1,0 +1,43 @@
+Tune probe timing
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'pod.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    run: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+            - ls
+        initialDelaySeconds: 5
+        periodSeconds: 5
+KUBEQUEST_FILE
+kubectl apply -f pod.yaml
+kubectl wait -n quest --for=condition=Ready pod/nginx --timeout=90s
+pod/nginx created
+pod/nginx condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The exec probe is configured
+PASS The probe timing matches
+PASS The Pod is Ready
+
+Why the repair works
+Liveness failure requests a container restart. An ls probe illustrates exec syntax; a real application should use a check that reflects its actual health.

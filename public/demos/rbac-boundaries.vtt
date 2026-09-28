@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:08.000
+Inspect the starting environment. Commands and output shown here were captured from the actual lab.
+
+00:00:08.000 --> 00:00:16.000
+Complete the task. Commands and output shown here were captured from the actual lab.
+
+00:00:16.000 --> 00:00:24.000
+Run behavioral checks. All task checks pass against the real lab environment.
+
+00:00:24.000 --> 00:00:32.000
+A ServiceAccount is an identity, a Role describes permitted operations, and a RoleBinding joins them inside a namespace. Pods belong to the core API group (the empty string), not apps. Container securityContext settings do not grant API permissions.

@@ -1,0 +1,43 @@
+Combine selection with permission
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: targeted
+  labels:
+    run: tolerant
+spec:
+  containers:
+    - name: tolerant
+      image: nginx:1.28
+      imagePullPolicy: IfNotPresent
+  tolerations:
+    - key: tier
+      operator: Equal
+      value: frontend
+      effect: NoSchedule
+  nodeSelector:
+    kubequest/target: controlplane
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/targeted --timeout=90s
+pod/targeted created
+pod/targeted condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The target selector is present
+PASS The target taint is tolerated
+PASS The Pod is Ready
+
+Why the repair works
+Selection narrows the candidate nodes; toleration permits the workload through the taint. Both constraints must be satisfied.

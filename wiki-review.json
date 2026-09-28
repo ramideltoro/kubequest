@@ -1,5 +1,5 @@
 {
   "repository": "https://github.com/ramideltoro/kubequest-wiki",
-  "revision": "5b99eadf4813ec5d3405d79878969ad3169c9b07",
-  "summary": "Document four gap-focused guided lessons, explicit overlap exclusions and prerequisite reuse, pinned MIT/Apache attribution, separate local progress, public routes and validation limits; update source package UML."
+  "revision": "6ebf688ddf751f0e9d10c1b95135347b2937a27e",
+  "summary": "Document all 156 exercise/guided missions, shared public pages and recorded solutions, owner-only real labs, offline Helm/Podman fixtures, grading and media qualification, safe template activation, preserved source attribution and progress; update deployment/package UML and generated release references."
 }

@@ -1,0 +1,48 @@
+Write through the claim
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ cat > 'pod.yaml' <<'KUBEQUEST_FILE'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: writer
+  labels:
+    run: writer
+spec:
+  containers:
+    - name: writer
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - -c
+        - sleep 3600
+      volumeMounts:
+        - name: data
+          mountPath: /etc/foo
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: mypvc
+KUBEQUEST_FILE
+kubectl apply -f pod.yaml
+kubectl wait -n quest --for=condition=Ready pod/writer --timeout=90s
+kubectl exec writer -- cp /etc/passwd /etc/foo/passwd
+pod/writer created
+pod/writer condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod mounts mypvc
+PASS The file was copied to the mounted volume
+
+Why the repair works
+The claim binds a workload to a PersistentVolume. This single-node lab uses hostPath for practice; declaring ReadWriteMany does not make hostPath shared across machines or provide production-grade durability.

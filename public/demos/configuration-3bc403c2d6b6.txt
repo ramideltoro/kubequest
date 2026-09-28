@@ -1,0 +1,69 @@
+Inventory workload identities
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl get serviceaccounts --all-namespaces > answer.txt
+cat answer.txt
+NAMESPACE         NAME                                          AGE
+default           default                                       9d
+kube-node-lease   default                                       9d
+kube-public       default                                       9d
+kube-system       attachdetach-controller                       9d
+kube-system       certificate-controller                        9d
+kube-system       clusterrole-aggregation-controller            9d
+kube-system       coredns                                       9d
+kube-system       cronjob-controller                            9d
+kube-system       daemon-set-controller                         9d
+kube-system       default                                       9d
+kube-system       deployment-controller                         9d
+kube-system       disruption-controller                         9d
+kube-system       endpoint-controller                           9d
+kube-system       endpointslice-controller                      9d
+kube-system       endpointslicemirroring-controller             9d
+kube-system       ephemeral-volume-controller                   9d
+kube-system       expand-controller                             9d
+kube-system       generic-garbage-collector                     9d
+kube-system       helm-traefik                                  9d
+kube-system       helm-traefik-crd                              9d
+kube-system       horizontal-pod-autoscaler                     9d
+kube-system       job-controller                                9d
+kube-system       legacy-service-account-token-cleaner          9d
+kube-system       local-path-provisioner-service-account        9d
+kube-system       metrics-server                                9d
+kube-system       namespace-controller                          9d
+kube-system       node-controller                               9d
+kube-system       persistent-volume-binder                      9d
+kube-system       pod-garbage-collector                         9d
+kube-system       pv-protection-controller                      9d
+kube-system       pvc-protection-controller                     9d
+kube-system       replicaset-controller                         9d
+kube-system       replication-controller                        9d
+kube-system       resource-claim-controller                     9d
+kube-system       resourcequota-controller                      9d
+kube-system       root-ca-cert-publisher                        9d
+kube-system       service-account-controller                    9d
+kube-system       service-cidrs-controller                      9d
+kube-system       statefulset-controller                        9d
+kube-system       svclb                                         9d
+kube-system       token-cleaner                                 9d
+kube-system       traefik                                       9d
+kube-system       ttl-after-finished-controller                 9d
+kube-system       ttl-controller                                9d
+kube-system       validatingadmissionpolicy-status-controller   9d
+kube-system       volumeattributesclass-protection-controller   9d
+quest             default                                       1s
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+ServiceAccounts are namespaced identities for workloads. Listing them does not reveal their permissions; bindings determine authorization.

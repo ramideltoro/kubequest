@@ -1,0 +1,30 @@
+Export a container filesystem
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ podman export parked --output=output.tar
+tar -tf output.tar | head -10 || true
+bin/
+bin/[
+bin/[[
+bin/acpid
+bin/add-shell
+bin/addgroup
+bin/adduser
+bin/adjtimex
+bin/ar
+bin/arch
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The archive contains the container filesystem
+
+Why the repair works
+podman export writes the container filesystem. It does not preserve image metadata, layer history or the original build recipe as podman save would.

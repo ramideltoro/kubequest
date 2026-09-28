@@ -1,0 +1,42 @@
+Finish a one-shot Pod
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello
+  labels:
+    run: hello
+spec:
+  containers:
+    - name: hello
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - echo
+        - hello world
+  restartPolicy: Never
+KUBEQUEST_YAML
+kubectl wait --for=jsonpath='{.status.phase}'=Succeeded pod/hello --timeout=90s
+kubectl logs hello > answer.txt
+cat answer.txt
+pod/hello created
+pod/hello condition met
+hello world
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod succeeded
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Never leaves a successful one-shot container completed; the output remains available until the Pod is deleted.

@@ -1,0 +1,39 @@
+Pull the published image into Kubernetes
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simpleapp
+  labels:
+    run: simpleapp
+spec:
+  containers:
+    - name: simpleapp
+      image: localhost:5000/simpleapp:latest
+      imagePullPolicy: Always
+      ports:
+        - containerPort: 80
+KUBEQUEST_YAML
+kubectl wait -n quest --for=condition=Ready pod/simpleapp --timeout=90s
+IP=$(kubectl get pod simpleapp -o jsonpath='{.status.podIP}'); curl -fsS "$IP"
+pod/simpleapp created
+pod/simpleapp condition met
+Hello, World!
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Pod is Ready
+PASS The Pod serves the built page
+
+Why the repair works
+Podman manages containers inside the disposable lab VM. Images are templates; containers are instances with writable filesystems. The provided registries and credentials are local practice fixtures, not external accounts.

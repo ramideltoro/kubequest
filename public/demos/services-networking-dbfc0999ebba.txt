@@ -1,0 +1,48 @@
+Prepare a hostname service
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: foo
+  template:
+    metadata:
+      labels:
+        app: foo
+    spec:
+      containers:
+        - name: nginx
+          image: dgkanatsios/simpleapp:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+KUBEQUEST_YAML
+kubectl rollout status deployment/foo --timeout=120s
+deployment.apps/foo created
+Waiting for deployment "foo" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "foo" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "foo" rollout to finish: 2 of 3 updated replicas are available...
+deployment "foo" successfully rolled out
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS Three replicas are available
+PASS The image and port are configured
+PASS No Service has been created
+
+Why the repair works
+A Service selects Pods by labels and maps a stable service port to a container endpoint. Verify actual traffic as well as the object fields; a Service with no usable endpoints cannot deliver requests.

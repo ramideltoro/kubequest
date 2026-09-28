@@ -1,0 +1,33 @@
+Load a configuration file
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl create configmap from-file --from-file=settings.txt
+kubectl get configmap from-file -o yaml
+configmap/from-file created
+apiVersion: v1
+data:
+  settings.txt: |
+    foo=lala
+    foo2=lolo
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-09-28T20:49:42Z"
+  name: from-file
+  namespace: quest
+  resourceVersion: "7145"
+  uid: 38a89576-9f80-4c58-bf61-e658ce887c56
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The resulting data has the expected shape
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

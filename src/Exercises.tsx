@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,6 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { CurriculumBanner } from "./CurriculumBanner";
+import missionIndex from "../content/exercise-mission-index.json";
 import library from "../content/ckad-exercises.json";
 import { useExerciseProgress } from "./exercise-progress";
 
@@ -95,8 +96,8 @@ export function ExerciseLibrary() {
           </h1>
           <p className="lede">
             {library.exercises.length} exercises. {library.topics.length}{" "}
-            topics. Try the task, compare your solution, and keep track of what
-            needs another pass.
+            topics. Explore each mission, watch its public solution video, and
+            sign in to run the independently prepared lab.
           </p>
         </div>
         <div className="catalog-summary dark">
@@ -112,21 +113,22 @@ export function ExerciseLibrary() {
       <details className="deeper exercise-guide">
         <summary>How to practice and prepare</summary>
         <p>
-          Read the documentation links for a topic, then attempt each task
-          before revealing its solution. Work through a topic in order: later
-          tasks can reuse objects from earlier ones.
+          Every exercise opens as a mission with a situation, objectives, an
+          interactive diagram and a public solution video. Each live lab
+          prepares its own prerequisites, so you can start any task
+          independently.
         </p>
         <p>
-          Run commands in your own disposable practice cluster. These reference
-          exercises do not start a KubeQuest lab and are not automatically
-          graded. Helm, Podman, a registry, or cluster-admin access may be
-          required for some topics.
+          Sign in with the authorized account to start a disposable Kubernetes
+          lab, use the terminal or YAML editor, inspect live resources and check
+          your work. Helm, Podman, local chart repositories and practice
+          registries are supplied for the tasks that need them.
         </p>
         <p>
-          The imported examples retain upstream versions and assumptions. Older
-          images, APIs, and chart repositories may need adapting to your
-          environment. Topic groupings are the source’s organization, not
-          current exam weights. Consult the{" "}
+          The lab situation documents adaptations to older image names, external
+          dependencies and cleanup steps. Original questions remain linked and
+          attributed. Topic groupings are the source’s organization, not current
+          exam weights. Consult the{" "}
           <a href="https://training.linuxfoundation.org/certification/certified-kubernetes-application-developer-ckad/">
             current CKAD objectives
           </a>{" "}
@@ -220,7 +222,8 @@ export function ExerciseLibrary() {
               {library.topics.find((t) => t.id === e.topic)?.title} ·{" "}
               {e.section}
             </span>
-            <h2>{e.title}</h2>
+            <h2>{missionIndex.find((m) => m.id === e.id)?.title || e.title}</h2>
+            <p>{missionIndex.find((m) => m.id === e.id)?.tagline}</p>
             <span className="exercise-card-bottom">
               <span
                 className={
@@ -248,141 +251,14 @@ export function ExerciseLibrary() {
     </main>
   );
 }
+const ExerciseMission = lazy(() =>
+  import("./Lab").then((m) => ({ default: m.MissionPage })),
+);
 export function ExerciseRoute() {
   const { id } = useParams();
-  return <ExercisePage key={id} id={id || ""} />;
-}
-function ExercisePage({ id }: { id: string }) {
-  const exercise = library.exercises.find((e) => e.id === id);
-  const { progress, setStatus } = useExerciseProgress();
-  const [message, setMessage] = useState("");
-  const [showSolution, setShowSolution] = useState(false);
-  if (!exercise)
-    return (
-      <main className="page">
-        <h1>Exercise not found</h1>
-        <Link to="/ckad/exercises">Browse all exercises</Link>
-      </main>
-    );
-  const topic = library.topics.find((t) => t.id === exercise.topic)!;
-  const siblings = library.exercises.filter((e) => e.topic === exercise.topic);
-  const position = siblings.findIndex((e) => e.id === id);
-  const status = progress[id];
   return (
-    <main className="page exercise-detail">
-      <Link className="text-link" to={`/ckad/exercises?topic=${topic.id}`}>
-        <ArrowLeft size={16} /> {topic.title}
-      </Link>
-      <span className="eyebrow">
-        EXERCISE {position + 1} OF {siblings.length} · {exercise.section}
-      </span>
-      <h1>{exercise.title}</h1>
-      <p className="exercise-notice">
-        Self-guided practice in your own disposable environment. Follow this
-        topic in order; tasks may depend on earlier resources. Examples retain
-        upstream versions and may need updating for your cluster.
-      </p>
-      {exercise.context && (
-        <section className="exercise-context">
-          <h2>Documentation and context</h2>
-          <Content>{exercise.context}</Content>
-        </section>
-      )}
-      {exercise.prompt && (
-        <section>
-          <h2>Your task</h2>
-          <Content>{exercise.prompt}</Content>
-        </section>
-      )}
-      <div className="exercise-actions">
-        <button
-          className="button primary"
-          aria-pressed={status === "practiced"}
-          onClick={() =>
-            setMessage(
-              setStatus(id, status === "practiced" ? undefined : "practiced")
-                ? status === "practiced"
-                  ? "Marked not started."
-                  : "Marked practiced on this device."
-                : "Your browser could not save progress. Enable local storage to keep your practice history.",
-            )
-          }
-        >
-          <Check size={17} />
-          {status === "practiced" ? "Practiced" : "Mark practiced"}
-        </button>
-        <button
-          className="button secondary"
-          aria-pressed={status === "review"}
-          onClick={() =>
-            setMessage(
-              setStatus(id, status === "review" ? undefined : "review")
-                ? status === "review"
-                  ? "Removed from review list."
-                  : "Saved for review on this device."
-                : "Your browser could not save progress. Enable local storage to keep your practice history.",
-            )
-          }
-        >
-          {status === "review" ? "Saved for review" : "Review later"}
-        </button>
-        <a
-          className="text-link"
-          href={exercise.sourceUrl}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Original exercise <ExternalLink size={15} />
-        </a>
-      </div>
-      <p className="small muted">
-        Progress is self-reported and stored only in this browser. It does not
-        count as a graded lab result.
-      </p>
-      <p role="status" className="exercise-save-status">
-        {message}
-      </p>
-      <section className="exercise-solution">
-        <button
-          className="button secondary"
-          aria-expanded={showSolution}
-          aria-controls="exercise-solution-content"
-          onClick={() => setShowSolution(!showSolution)}
-        >
-          {showSolution ? "Hide solution" : "Reveal solution"}
-        </button>
-        {showSolution && (
-          <div id="exercise-solution-content">
-            <h2>Upstream solution</h2>
-            <Content>{exercise.solution}</Content>
-          </div>
-        )}
-      </section>
-      <nav className="exercise-pagination" aria-label="Exercises in this topic">
-        {position > 0 ? (
-          <Link
-            className="text-link"
-            to={`/ckad/exercises/${siblings[position - 1].id}`}
-          >
-            <ArrowLeft size={16} /> Previous exercise
-          </Link>
-        ) : (
-          <span />
-        )}
-        {position + 1 < siblings.length ? (
-          <Link
-            className="text-link"
-            to={`/ckad/exercises/${siblings[position + 1].id}`}
-          >
-            Next exercise <ArrowRight size={16} />
-          </Link>
-        ) : (
-          <Link className="text-link" to="/ckad/exercises">
-            Explore another topic <ArrowRight size={16} />
-          </Link>
-        )}
-      </nav>
-      <Attribution />
-    </main>
+    <Suspense fallback={<main className="page">Loading lab…</main>}>
+      <ExerciseMission key={id} id={id || ""} />
+    </Suspense>
   );
 }

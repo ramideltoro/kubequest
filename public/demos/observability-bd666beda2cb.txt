@@ -1,0 +1,45 @@
+Investigate a missing path
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken
+  labels:
+    run: broken
+spec:
+  containers:
+    - name: broken
+      image: busybox:1.37
+      imagePullPolicy: IfNotPresent
+      command:
+        - ls
+        - /notexist
+  restartPolicy: Never
+KUBEQUEST_YAML
+kubectl wait --for=jsonpath='{.status.phase}'=Failed pod/broken --timeout=90s
+kubectl logs broken > answer.txt
+cat answer.txt
+kubectl delete pod broken --grace-period=0 --force
+pod/broken created
+pod/broken condition met
+ls: /notexist: No such file or directory
+pod "broken" force deleted from quest namespace
+Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The failed Pod is removed
+
+Why the repair works
+A nonzero process exit puts this Never-restarting Pod into Failed. Preserve diagnostic output before deleting it.

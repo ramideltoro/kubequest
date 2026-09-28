@@ -1,0 +1,25 @@
+Scaffold a Helm chart
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ helm create chart-test
+helm lint chart-test
+Creating chart-test
+==> Linting chart-test
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The chart has metadata and templates
+
+Why the repair works
+Helm renders a chart’s templates using merged values, then stores release state in the cluster. This lab uses a small bundled web chart and a local repository so it works without public internet access.

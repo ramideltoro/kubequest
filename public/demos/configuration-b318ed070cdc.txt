@@ -1,0 +1,35 @@
+Inspect configuration data
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl get configmap config -o yaml > answer.txt
+cat answer.txt
+apiVersion: v1
+data:
+  foo: lala
+  foo2: lolo
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"foo":"lala","foo2":"lolo"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"config","namespace":"quest"}}
+  creationTimestamp: "2026-09-28T20:49:33Z"
+  name: config
+  namespace: quest
+  resourceVersion: "7132"
+  uid: f65f0726-61b8-4f72-bb9b-8da4d0822b10
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+PASS The saved evidence contains the requested result
+
+Why the repair works
+Configuration is a separate API object. A workload references its keys through environment variables or files, so changing the image is not required to supply application settings.

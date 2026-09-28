@@ -1,0 +1,41 @@
+Repeat the Job sequentially
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: repeat
+spec:
+  completions: 5
+  parallelism: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - echo hello; sleep 3; echo world
+KUBEQUEST_YAML
+kubectl wait --for=condition=Complete job/repeat --timeout=180s
+job.batch/repeat created
+job.batch/repeat condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The completion and parallelism policy matches
+PASS Five runs succeeded
+
+Why the repair works
+completions counts required successes; parallelism caps concurrent Pods. They are separate controls.

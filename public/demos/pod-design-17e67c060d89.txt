@@ -1,0 +1,40 @@
+Calculate with a Job
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: pi
+          image: perl:5.34
+          command:
+            - perl
+            - -Mbignum=bpi
+            - -wle
+            - print bpi(2000)
+KUBEQUEST_YAML
+kubectl wait --for=condition=Complete job/pi --timeout=180s
+job.batch/pi created
+job.batch/pi condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The pi Job completed
+PASS The result begins with pi
+
+Why the repair works
+A Job tracks successful completions. The container command is an argument array, so quoting must preserve the Perl expression as one argument.

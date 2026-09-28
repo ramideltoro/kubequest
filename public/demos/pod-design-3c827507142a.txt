@@ -1,0 +1,39 @@
+Bound a Job’s running time
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+No resources found in quest namespace.
+
+
+Complete the task
+$ kubectl apply -f - <<'KUBEQUEST_YAML'
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: deadline
+spec:
+  activeDeadlineSeconds: 30
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: worker
+          image: busybox:1.37
+          command:
+            - sleep
+            - "3600"
+KUBEQUEST_YAML
+kubectl wait --for=condition=Failed job/deadline --timeout=90s
+job.batch/deadline created
+job.batch/deadline condition met
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The deadline is configured
+PASS The Job stopped at its deadline
+
+Why the repair works
+activeDeadlineSeconds bounds the Job’s total active time. It is different from retry limits or CronJob scheduling deadlines.

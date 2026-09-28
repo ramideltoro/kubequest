@@ -1,0 +1,30 @@
+Scale the application
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-84f7c9895d-2bw7q   1/1     Running   0          2s
+pod/nginx-84f7c9895d-rmr87   1/1     Running   0          2s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx   2/2     2            2           2s
+
+
+Complete the task
+$ kubectl scale deployment nginx --replicas=5
+kubectl rollout status deployment/nginx --timeout=120s
+deployment.apps/nginx scaled
+Waiting for deployment "nginx" rollout to finish: 2 of 5 updated replicas are available...
+Waiting for deployment "nginx" rollout to finish: 3 of 5 updated replicas are available...
+Waiting for deployment "nginx" rollout to finish: 4 of 5 updated replicas are available...
+deployment "nginx" successfully rolled out
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The desired replicas are available
+
+Why the repair works
+A Deployment creates ReplicaSets for changes to its Pod template. Observe rollout status to confirm the new template became available; desired state and running state are separate evidence.

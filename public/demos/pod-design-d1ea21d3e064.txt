@@ -1,0 +1,24 @@
+Remove completed work
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME              READY   STATUS      RESTARTS   AGE
+pod/hello-bncld   0/1     Completed   0          8s
+
+NAME              STATUS     COMPLETIONS   DURATION   AGE
+job.batch/hello   Complete   1/1           7s         9s
+
+
+Complete the task
+$ kubectl delete job hello
+job.batch "hello" deleted from quest namespace
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The Job is removed
+
+Why the repair works
+Deleting the Job normally garbage-collects its owned Pods. Keep any required results before cleanup.

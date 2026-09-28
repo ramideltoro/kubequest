@@ -1,0 +1,23 @@
+Turn cluster objects into a useful report
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n kq-report
+No resources found in kq-report namespace.
+
+
+Complete the task
+$ kubectl get configmaps -n kq-report -l practice=kq-report --sort-by=.metadata.name -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.data.owner}{"\t"}{.data.tier}{"\n"}{end}' > owners.tsv
+
+cat owners.tsv
+api	payments	backend
+web	storefront	frontend
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The report has the exact rows and separators
+
+Why the repair works
+kubectl returns structured objects. JSONPath selects fields directly, avoiding fragile parsing of the human-readable table. A named object has fields at its root; a list wraps objects inside items. Use range/end for one line per item and explicit tab/newline literals.

@@ -1,0 +1,22 @@
+Recover the previous logs
+
+Actual commands and output captured in a disposable KubeQuest Kubernetes lab. Video is a condensed replay; the full transcript follows.
+
+Inspect the starting environment
+$ kubectl get pods,deployments,services,jobs -n quest
+NAME         READY   STATUS    RESTARTS     AGE
+pod/logger   1/1     Running   1 (5s ago)   16s
+
+
+Complete the task
+$ kubectl logs logger --previous > answer.txt
+cat answer.txt
+KUBEQUEST_PREVIOUS_INSTANCE
+
+
+Run behavioral checks
+$ KubeQuest: Check my work
+PASS The saved evidence contains the requested result
+
+Why the repair works
+--previous requests the preceding terminated container instance. It is especially useful when a restart has replaced the process whose failure you need to investigate.
