@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Settings2, X, ArrowUpRight } from "lucide-react";
 import { lessons } from "../content/lessons";
 import { foundations } from "../content/foundations";
+import curriculumIndex from "../content/ckad-curriculum-index.json";
 import exerciseIndex from "../content/ckad-index.json";
 import { missions } from "../content/missions";
 
@@ -44,6 +45,12 @@ export function SiteFooter() {
     };
   }, [menu]);
   const items = [
+    ...curriculumIndex.map((m) => ({
+      title: m.title,
+      description: m.skill + " " + m.objective,
+      kind: "Guided practice",
+      url: "/ckad/curriculum/" + m.id,
+    })),
     ...foundations.map((lesson) => ({
       title: lesson.title,
       description: lesson.subtitle,
@@ -117,7 +124,7 @@ export function SiteFooter() {
             © {new Date().getFullYear()}{" "}
             <a href="https://www.ramideltoro.com">Rami Del Toro</a> · All Rights
             Reserved. <Link to="/ckad/exercises">Community exercises</Link>{" "}
-            retain their MIT license.
+            retain their respective open-source licenses.
           </p>
         </div>
       </footer>

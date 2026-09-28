@@ -9,6 +9,7 @@ import {
   Check,
   ExternalLink,
 } from "lucide-react";
+import { CurriculumBanner } from "./CurriculumBanner";
 import library from "../content/ckad-exercises.json";
 import { useExerciseProgress } from "./exercise-progress";
 
@@ -107,6 +108,7 @@ export function ExerciseLibrary() {
           <small>Self-reported · no exam score</small>
         </div>
       </div>
+      <CurriculumBanner />
       <details className="deeper exercise-guide">
         <summary>How to practice and prepare</summary>
         <p>
