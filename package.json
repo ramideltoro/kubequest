@@ -10,7 +10,7 @@
     "test": "node scripts/import-ckad-exercises.mjs --check && tsx --test tests/*.test.ts",
     "demo:render": "tsx scripts/render-demos.mjs",
     "test:live": "tsx tests/live-labs.ts",
-    "test:browser": "node scripts/browser-checks.mjs && node scripts/learning-checks.mjs && node scripts/visual-checks.mjs && node scripts/exercise-checks.mjs",
+    "test:browser": "node scripts/browser-checks.mjs && node scripts/learning-checks.mjs && node scripts/visual-checks.mjs && node scripts/exercise-checks.mjs && node scripts/curriculum-checks.mjs",
     "docs:check": "node scripts/check-wiki.mjs",
     "docs:export": "node scripts/export-wiki.mjs",
     "exercises:import": "node scripts/import-ckad-exercises.mjs"

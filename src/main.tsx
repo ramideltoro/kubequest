@@ -30,6 +30,12 @@ import {
 } from "lucide-react";
 import exerciseIndex from "../content/ckad-index.json";
 import { useExerciseProgress } from "./exercise-progress";
+const Curriculum = lazy(() =>
+  import("./Curriculum").then((m) => ({ default: m.Curriculum })),
+);
+const CurriculumRoute = lazy(() =>
+  import("./Curriculum").then((m) => ({ default: m.CurriculumRoute })),
+);
 const ExerciseLibrary = lazy(() =>
   import("./Exercises").then((m) => ({ default: m.ExerciseLibrary })),
 );
@@ -166,6 +172,28 @@ function App() {
                 fallback={<main className="page">Loading exercise…</main>}
               >
                 <ExerciseRoute />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/ckad/curriculum"
+            element={
+              <Suspense
+                fallback={
+                  <main className="page">Loading guided practice…</main>
+                }
+              >
+                <Curriculum />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/ckad/curriculum/:id"
+            element={
+              <Suspense
+                fallback={<main className="page">Loading lesson…</main>}
+              >
+                <CurriculumRoute />
               </Suspense>
             }
           />
@@ -913,6 +941,19 @@ function CKAD() {
           Browse exercises <ArrowRight size={17} />
         </Link>
       </section>
+      <section className="exercise-banner">
+        <div>
+          <span className="eyebrow">GUIDED PRACTICE</span>
+          <h2>Four focused lessons for the next step.</h2>
+          <p>
+            Kustomize overlays, RBAC boundaries, startup probes and JSONPath
+            reporting.
+          </p>
+        </div>
+        <Link className="button primary" to="/ckad/curriculum">
+          Explore guided practice
+        </Link>
+      </section>
       <VisualStory id="path-ckad" />
       <div className="mission-grid">
         {missions.map((m, i) => (
@@ -1118,6 +1159,9 @@ function Progress() {
         <div className="exercise-actions">
           <Link className="button primary" to="/ckad/exercises">
             Browse exercises
+          </Link>
+          <Link className="button secondary" to="/ckad/curriculum">
+            Guided practice progress
           </Link>
           <Link className="button secondary" to="/ckad/exercises?status=review">
             Review saved exercises

@@ -1,0 +1,126 @@
+[
+  {
+    "id": "kustomize-overlays",
+    "title": "One base, two environments",
+    "skill": "Kustomize overlays",
+    "domain": "Application deployment",
+    "minutes": 30,
+    "objective": "Render environment-specific Deployments without changing or copying the base.",
+    "gap": "The existing library teaches Deployment updates and Helm. This adds Kustomize bases, overlays, and inspecting rendered differences.",
+    "prerequisites": [
+      "pod-design-973f33289f82"
+    ],
+    "requirements": "kubectl with built-in Kustomize and a POSIX shell. Rendering is local; applying the optional deployment requires your own disposable cluster.",
+    "concept": "A base owns shared resources. An overlay references that base and applies environment-specific transformations. Inspect the rendered YAML before applying it; a namespace transformation does not create the Namespace.",
+    "example": "Create a fresh working directory and these files. The base describes one replica; the production overlay changes only the name and replica count.\n\n```bash\nmkdir -p kq-overlays/base kq-overlays/production\ncd kq-overlays\ncat > base/kustomization.yaml <<'YAML'\napiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\nresources:\n- deployment.yaml\nYAML\ncat > base/deployment.yaml <<'YAML'\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: web\n  template:\n    metadata:\n      labels:\n        app: web\n    spec:\n      containers:\n      - name: nginx\n        image: nginx:1.28\nYAML\ncat > production/kustomization.yaml <<'YAML'\napiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\nresources:\n- ../base\nnamePrefix: prod-\nreplicas:\n- name: web\n  count: 3\nYAML\nkubectl kustomize production\n```",
+    "guided": "Render the base with `kubectl kustomize base`, then render production. Find `metadata.name` and `spec.replicas`: expect web/1 and prod-web/3. The replica transformer matches the original resource name, web.",
+    "challenge": "Add a staging overlay that produces stage-web with two replicas and image nginx:1.28-alpine. Leave base and production unchanged. Save the rendered staging manifest as staging.yaml.",
+    "hints": [
+      "Create staging/kustomization.yaml and reference ../base.",
+      "Use namePrefix, replicas, and images. The image transformer matches nginx; set newTag to 1.28-alpine."
+    ],
+    "verification": "```bash\nkubectl kustomize base\nkubectl kustomize production\nkubectl kustomize staging > staging.yaml\ncat staging.yaml\n```\n\nExpect base web/1/nginx:1.28, production prod-web/3/nginx:1.28, and staging stage-web/2/nginx:1.28-alpine. Confirm the Deployment selector still matches the Pod labels. Rendering checks configuration, not runtime health.",
+    "solution": "```bash\nmkdir -p staging\ncat > staging/kustomization.yaml <<'YAML'\napiVersion: kustomize.config.k8s.io/v1beta1\nkind: Kustomization\nresources:\n- ../base\nnamePrefix: stage-\nreplicas:\n- name: web\n  count: 2\nimages:\n- name: nginx\n  newTag: 1.28-alpine\nYAML\nkubectl kustomize staging > staging.yaml\n```\n\nOnly staging declares the differences. Both overlays continue to inherit the original base. To try it on a disposable cluster: `kubectl create namespace kq-overlay`, then `kubectl apply -n kq-overlay -k staging` and `kubectl rollout status -n kq-overlay deployment/stage-web`.",
+    "mistakes": "Editing the base changes every overlay. Copying an entire Deployment into staging loses inheritance. A successful render does not prove an image can be pulled.",
+    "cleanup": "No cluster resources are created by rendering. If you used the optional deployment, delete only its practice namespace: `kubectl delete namespace kq-overlay`.",
+    "source": "https://github.com/ChathurangaVKD/ckad-exam-prep/blob/7334227234d20855d4b0d700ef72ecbe9f9c68f9/02-application-deployment/kustomize/overlays/production/kustomization.yaml",
+    "author": "ChathurangaVKD and contributors",
+    "license": "MIT",
+    "licensePath": "/licenses/ckad-exam-prep.txt",
+    "changes": "Rewritten as a self-contained two-overlay challenge with local rendering checks.",
+    "docs": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+  },
+  {
+    "id": "rbac-boundaries",
+    "title": "Grant exactly the access needed",
+    "skill": "Namespaced RBAC",
+    "domain": "Environment, configuration and security",
+    "minutes": 30,
+    "objective": "Bind a ServiceAccount to a namespaced Role and verify both allowed and forbidden operations.",
+    "gap": "ServiceAccount creation and container security already exist. This adds API authorization through Role/RoleBinding and negative permission checks.",
+    "prerequisites": [
+      "configuration-5829be3df80e"
+    ],
+    "requirements": "A disposable Kubernetes cluster with RBAC enabled. Your practice identity must be allowed to create namespaces, Roles and RoleBindings, grant these permissions, and impersonate ServiceAccounts.",
+    "concept": "A ServiceAccount is an identity, a Role describes permitted operations, and a RoleBinding joins them inside a namespace. Pods belong to the core API group (the empty string), not apps. Container securityContext settings do not grant API permissions.",
+    "example": "Create a reader that can get and list Pods, but cannot delete them.\n\n```bash\nkubectl create namespace kq-access\nkubectl create serviceaccount reporter -n kq-access\nkubectl create role pod-reader -n kq-access --verb=get,list --resource=pods\nkubectl create rolebinding reporter-read -n kq-access --role=pod-reader --serviceaccount=kq-access:reporter\nkubectl auth can-i list pods -n kq-access --as=system:serviceaccount:kq-access:reporter\nkubectl auth can-i delete pods -n kq-access --as=system:serviceaccount:kq-access:reporter\n```\n\nExpect yes, then no. A denied can-i check intentionally returns a nonzero exit status.",
+    "guided": "Inspect `kubectl get role pod-reader -n kq-access -o yaml` and `kubectl get rolebinding reporter-read -n kq-access -o yaml`. Locate the empty apiGroups entry, the allowed verbs, the roleRef, and the subject namespace.",
+    "challenge": "Let reporter watch Pods as well as get/list. Keep delete Pods, get Secrets, and list Pods in the default namespace forbidden. Do not grant a ClusterRoleBinding or wildcard access.",
+    "hints": [
+      "Change only the verbs of pod-reader. The existing binding already connects the identity.",
+      "Generate the updated Role with kubectl create role --dry-run=client -o yaml, then apply it."
+    ],
+    "verification": "```bash\nkubectl auth can-i watch pods -n kq-access --as=system:serviceaccount:kq-access:reporter\nkubectl auth can-i delete pods -n kq-access --as=system:serviceaccount:kq-access:reporter\nkubectl auth can-i get secrets -n kq-access --as=system:serviceaccount:kq-access:reporter\nkubectl auth can-i list pods -n default --as=system:serviceaccount:kq-access:reporter\n```\n\nExpect yes/no/no/no, in order. If a forbidden check says yes, inspect other bindings: RBAC permissions are additive. If impersonation itself is forbidden, use the stated practice administrator identity; this is not a defect in the Role.",
+    "solution": "```bash\nkubectl create role pod-reader -n kq-access --verb=get,list,watch --resource=pods --dry-run=client -o yaml | kubectl apply -f -\n```\n\nThe Role now grants only three Pod verbs in kq-access. The unchanged RoleBinding still points to reporter. There is no deny rule; the negative checks verify that no other binding grants unintended access.",
+    "mistakes": "A binding in the wrong namespace does not grant the intended local access. Using apiGroups: [apps] for Pods is incorrect. Testing only an allowed operation can hide excessive privileges.",
+    "cleanup": "`kubectl delete namespace kq-access` removes the practice identity, Role and binding.",
+    "source": "https://github.com/jamesbuckett/ckad-questions/blob/e12d8c4502aadcf4ef87599d036b4f202381708e/02-ckad-env-configuration-security.md#02-05-rbac-question",
+    "author": "James Buckett and contributors",
+    "license": "Apache-2.0",
+    "licensePath": "/licenses/ckad-questions.txt",
+    "changes": "Rewritten from the RBAC scenario; correct core API group, least-privilege objective, explicit impersonation prerequisites and negative checks.",
+    "docs": "https://kubernetes.io/docs/reference/access-authn-authz/rbac/"
+  },
+  {
+    "id": "startup-probe-budget",
+    "title": "Give a slow application time to start",
+    "skill": "Startup-probe troubleshooting",
+    "domain": "Observability and maintenance",
+    "minutes": 25,
+    "objective": "Protect a slow startup without weakening steady-state liveness checks.",
+    "gap": "Readiness and liveness have exercises and a mission. Startup probes are mentioned in Basics but had no hands-on challenge.",
+    "prerequisites": [
+      "observability-533bdca201e2"
+    ],
+    "requirements": "A disposable cluster with kubectl and permission to create a namespace and Pod. It must be able to pull busybox:1.37.",
+    "concept": "Until a startup probe succeeds, Kubernetes holds back liveness and readiness probes. After startup succeeds, liveness detects a broken process and readiness controls traffic eligibility. The startup failureThreshold × periodSeconds gives an approximate failure budget, not an exact stopwatch.",
+    "example": "This process needs 25 seconds before creating its healthy marker. The startup check allows roughly 60 seconds. Save as slow.yaml.\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: slow\n  namespace: kq-startup\nspec:\n  containers:\n  - name: app\n    image: busybox:1.37\n    command: [\"sh\", \"-c\", \"sleep 25; touch /tmp/healthy; sleep 3600\"]\n    startupProbe:\n      exec:\n        command: [\"test\", \"-f\", \"/tmp/healthy\"]\n      periodSeconds: 2\n      failureThreshold: 30\n    livenessProbe:\n      exec:\n        command: [\"test\", \"-f\", \"/tmp/healthy\"]\n      periodSeconds: 5\n      failureThreshold: 3\n    readinessProbe:\n      exec:\n        command: [\"test\", \"-f\", \"/tmp/healthy\"]\n      periodSeconds: 2\n```\n\n```bash\nkubectl create namespace kq-startup\nkubectl apply -f slow.yaml\nkubectl wait -n kq-startup --for=condition=Ready pod/slow --timeout=120s\n```",
+    "guided": "Inspect `kubectl describe pod slow -n kq-startup`. Early startup-probe failures are expected while the file is absent. Confirm the Pod becomes Ready with zero restarts in a healthy practice environment.",
+    "challenge": "Change the startup delay to 45 seconds and allow approximately 90 seconds for startup. Keep the existing two-second startup period and steady-state liveness settings. Recreate the Pod, confirm successful startup, then remove the healthy file to prove liveness still restarts the container.",
+    "hints": [
+      "Pod probe and command fields cannot generally be edited in place. Update the file and delete/recreate this practice Pod.",
+      "90 / 2 = 45 startup failures. Removing /tmp/healthy after readiness succeeds tests steady-state liveness."
+    ],
+    "verification": "```bash\nkubectl wait -n kq-startup --for=condition=Ready pod/slow --timeout=150s\nkubectl get pod slow -n kq-startup -o jsonpath='{.status.containerStatuses[0].restartCount}{\"\\n\"}'\nkubectl exec -n kq-startup slow -- rm /tmp/healthy\nkubectl get pod slow -n kq-startup -w\n```\n\nBefore removing the file, expect Ready and zero restarts. Afterwards, readiness fails and liveness eventually increases the restart count. Stop watching with Ctrl-C. The container then needs another 45 seconds to recover; use describe to confirm the liveness failure events.",
+    "solution": "In slow.yaml change `sleep 25` to `sleep 45` and startupProbe.failureThreshold from 30 to 45. Leave liveness unchanged.\n\n```bash\nkubectl delete pod slow -n kq-startup\nkubectl apply -f slow.yaml\n```\n\nThe startup allowance covers initialization only. Deleting the marker after startup has succeeded is handled by liveness; the startup probe does not resume until the container restarts.",
+    "mistakes": "Raising only liveness delays also slows failure detection after startup. A Ready Pod alone does not prove it avoided restarts. Image pull failures and scheduling failures are not solved by probe changes.",
+    "cleanup": "`kubectl delete namespace kq-startup` removes the practice Pod.",
+    "source": "https://github.com/ChathurangaVKD/ckad-exam-prep/blob/7334227234d20855d4b0d700ef72ecbe9f9c68f9/03-observability-maintenance/probes/pod-with-probes.yaml",
+    "author": "ChathurangaVKD and contributors",
+    "license": "MIT",
+    "licensePath": "/licenses/ckad-exam-prep.txt",
+    "changes": "Replaced the HTTP example with an observable slow-start and controlled failure challenge; added budget reasoning and recovery checks.",
+    "docs": "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/"
+  },
+  {
+    "id": "jsonpath-reports",
+    "title": "Turn cluster objects into a useful report",
+    "skill": "JSONPath reporting",
+    "domain": "Observability and maintenance",
+    "minutes": 20,
+    "objective": "Extract named fields from a list of objects into a predictable tab-separated report.",
+    "gap": "The library uses individual JSONPath snippets inside solutions. This adds a dedicated list traversal and output-formatting challenge, without repeating Pod debugging.",
+    "prerequisites": [
+      "core-concepts-e5a88a4a02dc"
+    ],
+    "requirements": "kubectl and a disposable cluster where you can create a namespace and ConfigMaps. No running workload or image download is needed.",
+    "concept": "kubectl returns structured objects. JSONPath selects fields directly, avoiding fragile parsing of the human-readable table. A named object has fields at its root; a list wraps objects inside items. Use range/end for one line per item and explicit tab/newline literals.",
+    "example": "Use two small ConfigMaps as predictable reporting fixtures.\n\n```bash\nkubectl create namespace kq-report\nkubectl create configmap api -n kq-report --from-literal=owner=payments --from-literal=tier=backend\nkubectl create configmap web -n kq-report --from-literal=owner=storefront --from-literal=tier=frontend\nkubectl label configmap api web -n kq-report practice=kq-report\nkubectl get configmap api -n kq-report -o jsonpath='{.data.owner}{\"\\n\"}'\n```\n\nThe single-object result is payments. Inspect `kubectl get configmaps -n kq-report -l practice=kq-report -o json` to find the items array.",
+    "guided": "List just the fixture names, one per line:\n\n```bash\nkubectl get configmaps -n kq-report -l practice=kq-report --sort-by=.metadata.name -o jsonpath='{range .items[*]}{.metadata.name}{\"\\n\"}{end}'\n```",
+    "challenge": "Write a headerless file owners.tsv with one line per fixture, sorted by name. Columns must be name, owner, and tier separated by actual tab characters. Extract the fields with JSONPath rather than parsing kubectl table output.",
+    "hints": [
+      "Start from the guided range expression and add .data.owner and .data.tier inside the range.",
+      "Use {\"\\t\"} between fields and {\"\\n\"} before {end}. Redirect with > owners.tsv."
+    ],
+    "verification": "```bash\nprintf 'api\tpayments\tbackend\nweb\tstorefront\tfrontend\n' > expected.tsv\ndiff -u expected.tsv owners.tsv\n```\n\nNo output and exit status zero means the exact two rows, order, separators and newline match. If fields are blank, inspect the JSON rather than guessing the path.",
+    "solution": "```bash\nkubectl get configmaps -n kq-report -l practice=kq-report --sort-by=.metadata.name -o jsonpath='{range .items[*]}{.metadata.name}{\"\\t\"}{.data.owner}{\"\\t\"}{.data.tier}{\"\\n\"}{end}' > owners.tsv\n```\n\nThe label selector excludes unrelated ConfigMaps, including automatically created ones. Sorting makes the output stable. range changes the current object to each item, so .data.owner is relative to that item.",
+    "mistakes": "Using .data.owner directly on a list produces no per-object report. Omitting range can flatten output and lose row boundaries. Shell quoting matters; these commands use POSIX shell quoting.",
+    "cleanup": "`kubectl delete namespace kq-report` removes only these practice resources. Remove owners.tsv and expected.tsv if no longer needed.",
+    "source": "https://github.com/jamesbuckett/ckad-questions/blob/e12d8c4502aadcf4ef87599d036b4f202381708e/05-ckad-observability-maintenance.md#05-04-jsonpath-question",
+    "author": "James Buckett and contributors",
+    "license": "Apache-2.0",
+    "licensePath": "/licenses/ckad-questions.txt",
+    "changes": "Expanded the single-field task into deterministic list reporting using ConfigMap fixtures, with no scheduling dependency.",
+    "docs": "https://kubernetes.io/docs/reference/kubectl/jsonpath/"
+  }
+]

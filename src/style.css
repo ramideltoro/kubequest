@@ -4110,3 +4110,12 @@ pre {
   outline: 2px solid var(--amber);
   outline-offset: 3px;
 }
+
+.curriculum-detail > section { margin-block: 2rem; }
+.curriculum-detail > .eyebrow, .curriculum-detail > .text-link { display: block; margin-block: 1rem; }
+.curriculum-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+
+.curriculum-catalog > p, .curriculum-detail section > p { margin-block: 0.85rem; }
+.curriculum-catalog > .deeper { margin-top: 2rem; }
+.curriculum-detail h3 { margin-block: 1.25rem 0.6rem; }
+.curriculum-detail details { margin-block: 1rem; }

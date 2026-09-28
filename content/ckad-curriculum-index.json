@@ -1,0 +1,34 @@
+[
+  {
+    "id": "kustomize-overlays",
+    "title": "One base, two environments",
+    "skill": "Kustomize overlays",
+    "domain": "Application deployment",
+    "minutes": 30,
+    "objective": "Render environment-specific Deployments without changing or copying the base."
+  },
+  {
+    "id": "rbac-boundaries",
+    "title": "Grant exactly the access needed",
+    "skill": "Namespaced RBAC",
+    "domain": "Environment, configuration and security",
+    "minutes": 30,
+    "objective": "Bind a ServiceAccount to a namespaced Role and verify both allowed and forbidden operations."
+  },
+  {
+    "id": "startup-probe-budget",
+    "title": "Give a slow application time to start",
+    "skill": "Startup-probe troubleshooting",
+    "domain": "Observability and maintenance",
+    "minutes": 25,
+    "objective": "Protect a slow startup without weakening steady-state liveness checks."
+  },
+  {
+    "id": "jsonpath-reports",
+    "title": "Turn cluster objects into a useful report",
+    "skill": "JSONPath reporting",
+    "domain": "Observability and maintenance",
+    "minutes": 20,
+    "objective": "Extract named fields from a list of objects into a predictable tab-separated report."
+  }
+]

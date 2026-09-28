@@ -1,5 +1,5 @@
 {
   "repository": "https://github.com/ramideltoro/kubequest-wiki",
-  "revision": "a3c6380e6d7401d6b8dae6812e75669e287896c8",
-  "summary": "Document all 152 imported community exercises, MIT provenance, public self-guided access, local progress, maintenance and validation; update source-package and access UML diagrams and generated release reference."
+  "revision": "5b99eadf4813ec5d3405d79878969ad3169c9b07",
+  "summary": "Document four gap-focused guided lessons, explicit overlap exclusions and prerequisite reuse, pinned MIT/Apache attribution, separate local progress, public routes and validation limits; update source package UML."
 }
