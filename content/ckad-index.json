@@ -1,0 +1,985 @@
+{
+  "source": {
+    "repository": "https://github.com/dgkanatsios/CKAD-exercises",
+    "revision": "d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4",
+    "importedAt": "2026-09-27",
+    "license": "MIT",
+    "author": "Dimitris-Ilias Gkanatsios"
+  },
+  "topics": [
+    {
+      "id": "core-concepts",
+      "title": "Core concepts",
+      "file": "a.core_concepts.md",
+      "count": 18
+    },
+    {
+      "id": "multi-container-pods",
+      "title": "Multi-container Pods",
+      "file": "b.multi_container_pods.md",
+      "count": 2
+    },
+    {
+      "id": "pod-design",
+      "title": "Pod design",
+      "file": "c.pod_design.md",
+      "count": 52
+    },
+    {
+      "id": "configuration",
+      "title": "Configuration",
+      "file": "d.configuration.md",
+      "count": 30
+    },
+    {
+      "id": "observability",
+      "title": "Observability",
+      "file": "e.observability.md",
+      "count": 8
+    },
+    {
+      "id": "services-networking",
+      "title": "Services and networking",
+      "file": "f.services.md",
+      "count": 10
+    },
+    {
+      "id": "state-persistence",
+      "title": "State persistence",
+      "file": "g.state.md",
+      "count": 6
+    },
+    {
+      "id": "helm",
+      "title": "Helm",
+      "file": "h.helm.md",
+      "count": 10
+    },
+    {
+      "id": "custom-resources",
+      "title": "Custom resources",
+      "file": "i.crd.md",
+      "count": 4
+    },
+    {
+      "id": "container-images",
+      "title": "Container images (Podman)",
+      "file": "j.podman.md",
+      "count": 12
+    }
+  ],
+  "exercises": [
+    {
+      "id": "core-concepts-9fe4b7befc3e",
+      "title": "Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-46382324b97f",
+      "title": "Create the pod that was just described using YAML",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-30a3e4723da4",
+      "title": "Create a busybox pod (using kubectl command) that runs the command \"env\". Run it and see the output",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-498eb2350d82",
+      "title": "Create a busybox pod (using YAML) that runs the command \"env\". Run it and see the output",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-6859cb9f987c",
+      "title": "Get the YAML for a new namespace called 'myns' without creating it",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-b5617fdaea63",
+      "title": "Create the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-fb1d8a1a19d6",
+      "title": "Get pods on all namespaces",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-c0a84a627e7f",
+      "title": "Create a pod with image nginx called nginx and expose traffic on port 80",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-64c97433112f",
+      "title": "Change pod's image to nginx:1.24.0. Observe that the container will be restarted as soon as the image gets pulled",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-f44e364f1cfd",
+      "title": "Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-4513a7a2b0d9",
+      "title": "Get pod's YAML",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-89c8c63d629c",
+      "title": "Get information about the pod, including details about potential issues (e.g. pod hasn't started)",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-e5a88a4a02dc",
+      "title": "Get pod logs",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-6c4359ff0c03",
+      "title": "If pod crashed and restarted, get logs about the previous instance",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-7b9d88de80a8",
+      "title": "Execute a simple shell on the nginx pod",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-c7716ab3c79b",
+      "title": "Create a busybox pod that echoes 'hello world' and then exits",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-a3e184ead16d",
+      "title": "Do the same, but have the pod deleted automatically when it's completed",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "core-concepts-314d16e6bd4e",
+      "title": "Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod",
+      "topic": "core-concepts",
+      "section": "Core concepts"
+    },
+    {
+      "id": "multi-container-pods-b17c25b2c8e7",
+      "title": "Create a Pod with two containers, both with image busybox and command \"echo hello; sleep 3600\". Connect to the second container and run 'ls'",
+      "topic": "multi-container-pods",
+      "section": "Multi-container Pods"
+    },
+    {
+      "id": "multi-container-pods-189ad413452d",
+      "title": "Create a pod with an nginx container exposed on port 80. Add a busybox init container which downloads a page using 'echo \"Test\" > /work-dir/index.html'. Make a volume of type emptyDir and mount it in both containers. For the nginx container, mount it on \"/usr/share/nginx/html\" and for the initcontainer, mount it on \"/work-dir\". When done, get the IP of the created pod and create a busybox pod and run \"wget -O- IP\"",
+      "topic": "multi-container-pods",
+      "section": "Multi-container Pods"
+    },
+    {
+      "id": "pod-design-37f7507a9fa2",
+      "title": "Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-bdfa22153e9c",
+      "title": "Show all labels of the pods",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-595fd3f0a021",
+      "title": "Change the labels of pod 'nginx2' to be app=v2",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-15652f1dd3e8",
+      "title": "Get the label 'app' for the pods (show a column with APP labels)",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-6d1e95383349",
+      "title": "Get only the 'app=v2' pods",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-f3509c39a308",
+      "title": "Get 'app=v2' and not 'tier=frontend' pods",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-57be32fa1342",
+      "title": "Add a new label tier=web to all pods having 'app=v2' or 'app=v1' labels",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-2b45f7cefe0b",
+      "title": "Add an annotation 'owner: marketing' to all pods having 'app=v2' label",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-507ce0884753",
+      "title": "Remove the 'app' label from the pods we created before",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-90b5a5ea06c7",
+      "title": "Annotate pods nginx1, nginx2, nginx3 with \"description='my description'\" value",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-68e60bafef59",
+      "title": "Check the annotations for pod nginx1",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-5964954756c7",
+      "title": "Remove the annotations for these three pods",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-04b4dee77490",
+      "title": "Remove these pods to have a clean state in your cluster",
+      "topic": "pod-design",
+      "section": "Labels and Annotations"
+    },
+    {
+      "id": "pod-design-3f78ce59b4e5",
+      "title": "Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'",
+      "topic": "pod-design",
+      "section": "Pod Placement"
+    },
+    {
+      "id": "pod-design-0ccd9d47b8f9",
+      "title": "Create a pod that will be placed on node `node01` using `nodeName`",
+      "topic": "pod-design",
+      "section": "Pod Placement"
+    },
+    {
+      "id": "pod-design-acbf8c02347c",
+      "title": "Taint a node with key `tier` and value `frontend` with the effect `NoSchedule`. Then, create a pod that tolerates this taint.",
+      "topic": "pod-design",
+      "section": "Pod Placement"
+    },
+    {
+      "id": "pod-design-248c76a858eb",
+      "title": "Create a pod that will be placed on node `controlplane`. Use nodeSelector and tolerations.",
+      "topic": "pod-design",
+      "section": "Pod Placement"
+    },
+    {
+      "id": "pod-design-973f33289f82",
+      "title": "Create a deployment with image nginx:1.18.0, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-42f3676ecebd",
+      "title": "View the YAML of this deployment",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-dac437fcac74",
+      "title": "View the YAML of the replica set that was created by this deployment",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-a922504e884b",
+      "title": "Get the YAML for one of the pods",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-7b48343af726",
+      "title": "Check how the deployment rollout is going",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-985f76e6e2f9",
+      "title": "Update the nginx image to nginx:1.19.8",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-16ee42834b04",
+      "title": "Check the rollout history and confirm that the replicas are OK",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-19963b26c7e8",
+      "title": "Undo the latest rollout and verify that new pods have the old image (nginx:1.18.0)",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-9feccab0a17e",
+      "title": "Do an on-purpose update of the deployment with a wrong image nginx:1.91",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-5f9c9acd7a6a",
+      "title": "Verify that something's wrong with the rollout",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-d34f2c9fd53f",
+      "title": "Return the deployment to the second revision (number 2) and verify the image is nginx:1.19.8",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-f2f6f368987e",
+      "title": "Check the details of the fourth revision (number 4)",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-7e6e4d7574a7",
+      "title": "Scale the deployment to 5 replicas",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-f4c92bdbb014",
+      "title": "Autoscale the deployment, pods between 5 and 10, targeting CPU utilization at 80%",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-232feff34a3e",
+      "title": "Pause the rollout of the deployment",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-b83f4b5782a6",
+      "title": "Update the image to nginx:1.19.9 and check that there's nothing going on, since we paused the rollout",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-375f2201d654",
+      "title": "Resume the rollout and check that the nginx:1.19.9 image has been applied",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-bcb93c95624c",
+      "title": "Delete the deployment and the horizontal pod autoscaler you created",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-5756e6dd2543",
+      "title": "Implement canary deployment by running two instances of nginx marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio",
+      "topic": "pod-design",
+      "section": "Deployments"
+    },
+    {
+      "id": "pod-design-17e67c060d89",
+      "title": "Create a job named pi with image perl:5.34 that runs the command with arguments \"perl -Mbignum=bpi -wle 'print bpi(2000)'\"",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-4a8595435c50",
+      "title": "Wait till it's done, get the output",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-8342e4408766",
+      "title": "Create a job with the image busybox that executes the command 'echo hello;sleep 30;echo world'",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-4ac9e50b3065",
+      "title": "Follow the logs for the pod (you'll wait for 30 seconds)",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-daa19a08679d",
+      "title": "See the status of the job, describe it and see the logs",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-d1ea21d3e064",
+      "title": "Delete the job",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-422b71cc3116",
+      "title": "Create the same job, make it run 5 times, one after the other. Verify its status and delete it",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-30965b7fb4fe",
+      "title": "Create the same job, but make it run 5 parallel times",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-3c827507142a",
+      "title": "Create a job but ensure that it will be automatically terminated by kubernetes if it takes more than 30 seconds to execute",
+      "topic": "pod-design",
+      "section": "Jobs"
+    },
+    {
+      "id": "pod-design-b9a8beee7468",
+      "title": "Create a cron job with image busybox that runs on a schedule of \"*/1 * * * *\" and writes 'date; echo Hello from the Kubernetes cluster' to standard output",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-326c7efa4cb4",
+      "title": "See its logs and delete it",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-ff45a0c70050",
+      "title": "Create the same cron job again, and watch the status. Once it ran, check which job ran by the created cron job. Check the log, and delete the cron job",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-0a4a1211a3b1",
+      "title": "Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to start execution after its scheduled time (i.e. the job missed its scheduled time).",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-e3c31cdd1946",
+      "title": "Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it successfully starts but takes more than 12 seconds to complete execution.",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-f0fb2d09de1f",
+      "title": "Keep only the last 2 successful and 1 failed runs of a CronJob",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "pod-design-7ebc6a86cb1f",
+      "title": "Create a job from cronjob.",
+      "topic": "pod-design",
+      "section": "Cron jobs"
+    },
+    {
+      "id": "configuration-c27d125de6f8",
+      "title": "Create a configmap named config with values foo=lala,foo2=lolo",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-b318ed070cdc",
+      "title": "Display its values",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-6bb39c927302",
+      "title": "Create and display a configmap from a file",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-0b3877bf80d8",
+      "title": "Create and display a configmap from a .env file",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-552fe2c83f71",
+      "title": "Create and display a configmap from a file, giving the key 'special'",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-c167ab2b2c47",
+      "title": "Create a configMap called 'options' with the value var5=val5. Create a new nginx pod that loads the value from variable 'var5' in an env variable called 'option'",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-0716914d43a8",
+      "title": "Create a configMap 'anotherone' with values 'var6=val6', 'var7=val7'. Load this configMap as env variables into a new nginx pod",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-1f0362c12877",
+      "title": "Create a configMap 'cmvolume' with values 'var8=val8', 'var9=val9'. Load this as a volume inside an nginx pod on path '/etc/lala'. Create the pod and 'ls' into the '/etc/lala' directory.",
+      "topic": "configuration",
+      "section": "ConfigMaps"
+    },
+    {
+      "id": "configuration-18ba5b39bc81",
+      "title": "Create the YAML for an nginx pod that runs with the user ID 101. No need to create the pod",
+      "topic": "configuration",
+      "section": "SecurityContext"
+    },
+    {
+      "id": "configuration-30413a9484f7",
+      "title": "Create the YAML for an nginx pod that has the capabilities \"NET_ADMIN\", \"SYS_TIME\" added to its single container",
+      "topic": "configuration",
+      "section": "SecurityContext"
+    },
+    {
+      "id": "configuration-80be07de3cde",
+      "title": "Create an nginx pod with requests cpu=100m,memory=256Mi and limits cpu=200m,memory=512Mi",
+      "topic": "configuration",
+      "section": "Resource requests and limits"
+    },
+    {
+      "id": "configuration-82621d7ef845",
+      "title": "Create a namespace named limitrange with a LimitRange that limits pod memory to a max of 500Mi and min of 100Mi",
+      "topic": "configuration",
+      "section": "Limit Ranges"
+    },
+    {
+      "id": "configuration-23863970ab48",
+      "title": "Describe the namespace limitrange",
+      "topic": "configuration",
+      "section": "Limit Ranges"
+    },
+    {
+      "id": "configuration-b2ff37e4abbf",
+      "title": "Create an nginx pod that requests 250Mi of memory in the limitrange namespace",
+      "topic": "configuration",
+      "section": "Limit Ranges"
+    },
+    {
+      "id": "configuration-240625f4e44a",
+      "title": "Create ResourceQuota in namespace `one` with hard requests `cpu=1`, `memory=1Gi` and hard limits `cpu=2`, `memory=2Gi`.",
+      "topic": "configuration",
+      "section": "Resource Quotas"
+    },
+    {
+      "id": "configuration-d318edcc44b9",
+      "title": "Attempt to create a pod with resource requests `cpu=2`, `memory=3Gi` and limits `cpu=3`, `memory=4Gi` in namespace `one`",
+      "topic": "configuration",
+      "section": "Resource Quotas"
+    },
+    {
+      "id": "configuration-93c607239c96",
+      "title": "Create a pod with resource requests `cpu=0.5`, `memory=1Gi` and limits `cpu=1`, `memory=2Gi` in namespace `one`",
+      "topic": "configuration",
+      "section": "Resource Quotas"
+    },
+    {
+      "id": "configuration-facb0bc27a56",
+      "title": "Create a secret called mysecret with the values password=mypass",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-800020510cb6",
+      "title": "Create a secret called mysecret2 that gets key/value from a file",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-cbda172d940d",
+      "title": "Get the value of mysecret2",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-76840b9115ac",
+      "title": "Create an nginx pod that mounts the secret mysecret2 in a volume on path /etc/foo",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-5c1870eb99ab",
+      "title": "Delete the pod you just created and mount the variable 'username' from secret mysecret2 onto a new nginx pod in env variable called 'USERNAME'",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-efc409e4f8dd",
+      "title": "Create a Secret named 'ext-service-secret' in the namespace 'secret-ops'. Then, provide the key-value pair API_KEY=LmLHbYhsgWZwNifiqaRorH8T as literal.",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-29300ee8ebe5",
+      "title": "Consuming the Secret. Create a Pod named 'consumer' with the image 'nginx' in the namespace 'secret-ops' and consume the Secret as an environment variable. Then, open an interactive shell to the Pod, and print all environment variables.",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-8f029585a7e8",
+      "title": "Create a Secret named 'my-secret' of type 'kubernetes.io/ssh-auth' in the namespace 'secret-ops'. Define a single key named 'ssh-privatekey', and point it to the file 'id_rsa' in this directory.",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-48e7cab49f7c",
+      "title": "Create a Pod named 'consumer' with the image 'nginx' in the namespace 'secret-ops', and consume the Secret as Volume. Mount the Secret as Volume to the path /var/app with read-only access. Open an interactive shell to the Pod, and render the contents of the file.",
+      "topic": "configuration",
+      "section": "Secrets"
+    },
+    {
+      "id": "configuration-3bc403c2d6b6",
+      "title": "See all the service accounts of the cluster in all namespaces",
+      "topic": "configuration",
+      "section": "ServiceAccounts"
+    },
+    {
+      "id": "configuration-b6a5c8dfd561",
+      "title": "Create a new serviceaccount called 'myuser'",
+      "topic": "configuration",
+      "section": "ServiceAccounts"
+    },
+    {
+      "id": "configuration-5829be3df80e",
+      "title": "Create an nginx pod that uses 'myuser' as a service account",
+      "topic": "configuration",
+      "section": "ServiceAccounts"
+    },
+    {
+      "id": "configuration-b1bad0cd91e1",
+      "title": "Generate an API token for the service account 'myuser'",
+      "topic": "configuration",
+      "section": "ServiceAccounts"
+    },
+    {
+      "id": "observability-dfe4918a2044",
+      "title": "Create an nginx pod with a liveness probe that just runs the command 'ls'. Save its YAML in pod.yaml. Run it, check its probe status, delete it.",
+      "topic": "observability",
+      "section": "Liveness, readiness and startup probes"
+    },
+    {
+      "id": "observability-80cd6dcef6bc",
+      "title": "Modify the pod.yaml file so that liveness probe starts kicking in after 5 seconds whereas the interval between probes would be 5 seconds. Run it, check the probe, delete it.",
+      "topic": "observability",
+      "section": "Liveness, readiness and startup probes"
+    },
+    {
+      "id": "observability-533bdca201e2",
+      "title": "Create an nginx pod (that includes port 80) with an HTTP readinessProbe on path '/' on port 80. Again, run it, check the readinessProbe, delete it.",
+      "topic": "observability",
+      "section": "Liveness, readiness and startup probes"
+    },
+    {
+      "id": "observability-cc9dcedee601",
+      "title": "Lots of pods are running in `qa`,`alan`,`test`,`production` namespaces.  All of these pods are configured with liveness probe.  Please list all pods whose liveness probe are failed in the format of `<namespace>/<pod name>` per line.",
+      "topic": "observability",
+      "section": "Liveness, readiness and startup probes"
+    },
+    {
+      "id": "observability-e3ecade1e2ea",
+      "title": "Create a busybox pod that runs `i=0; while true; do echo \"$i: $(date)\"; i=$((i+1)); sleep 1; done`. Check its logs",
+      "topic": "observability",
+      "section": "Logging"
+    },
+    {
+      "id": "observability-bd666beda2cb",
+      "title": "Create a busybox pod that runs 'ls /notexist'. Determine if there's an error (of course there is), see it. In the end, delete the pod",
+      "topic": "observability",
+      "section": "Debugging"
+    },
+    {
+      "id": "observability-e9b29e7f92d6",
+      "title": "Create a busybox pod that runs 'notexist'. Determine if there's an error (of course there is), see it. In the end, delete the pod forcefully with a 0 grace period",
+      "topic": "observability",
+      "section": "Debugging"
+    },
+    {
+      "id": "observability-81c0ce5fbdb0",
+      "title": "Get CPU/memory utilization for nodes ([metrics-server](https://github.com/kubernetes-incubator/metrics-server) must be running)",
+      "topic": "observability",
+      "section": "Debugging"
+    },
+    {
+      "id": "services-networking-7cd99a0ac81c",
+      "title": "Create a pod with image nginx called nginx and expose its port 80",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-a9071e9af8b1",
+      "title": "Confirm that ClusterIP has been created. Also check endpoints",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-bda0945b807f",
+      "title": "Get service's ClusterIP, create a temp busybox pod and 'hit' that IP with wget",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-3c8f38af34c6",
+      "title": "Convert the ClusterIP to NodePort for the same service and find the NodePort port. Hit service using Node's IP. Delete the service and the pod at the end.",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-dbfc0999ebba",
+      "title": "Create a deployment called foo using image 'dgkanatsios/simpleapp' (a simple server that returns hostname) and 3 replicas. Label it as 'app=foo'. Declare that containers in this pod will accept traffic on port 8080 (do NOT create a service yet)",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-7b4bb0108f61",
+      "title": "Get the pod IPs. Create a temp busybox pod and try hitting them on port 8080",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-4bf5b692c64c",
+      "title": "Create a service that exposes the deployment on port 6262. Verify its existence, check the endpoints",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-e847f2f1491a",
+      "title": "Create a temp busybox pod and connect via wget to foo service. Verify that each time there's a different hostname returned. Delete deployment and services to cleanup the cluster",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-a3056a84e7d8",
+      "title": "Create an nginx deployment of 2 replicas, expose it via a ClusterIP service on port 80. Create a NetworkPolicy so that only pods with labels 'access: granted' can access the pods in this deployment and apply it",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "services-networking-220b10897573",
+      "title": "Create an Ingress resource to expose an existing service using HTTP path routing",
+      "topic": "services-networking",
+      "section": "Services and networking"
+    },
+    {
+      "id": "state-persistence-f14ded9c4d31",
+      "title": "Create busybox pod with two containers, each one will have the image busybox and will run the 'sleep 3600' command. Make both containers mount an emptyDir at '/etc/foo'. Connect to the second busybox, write the first column of '/etc/passwd' file to '/etc/foo/passwd'. Connect to the first busybox and write '/etc/foo/passwd' file to standard output. Delete pod.",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "state-persistence-62c5b08b6401",
+      "title": "Create a PersistentVolume of 10Gi, called 'myvolume'. Make it have accessMode of 'ReadWriteOnce' and 'ReadWriteMany', storageClassName 'normal', mounted on hostPath '/etc/foo'. Save it on pv.yaml, add it to the cluster. Show the PersistentVolumes that exist on the cluster",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "state-persistence-6e4927ffaf92",
+      "title": "Create a PersistentVolumeClaim for this PersistentVolume, called 'mypvc', a request of 4Gi and an accessMode of ReadWriteOnce, with the storageClassName of normal, and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "state-persistence-9b5571617d59",
+      "title": "Create a busybox pod with command 'sleep 3600', save it on pod.yaml. Mount the PersistentVolumeClaim to '/etc/foo'. Connect to the 'busybox' pod, and copy the '/etc/passwd' file to '/etc/foo/passwd'",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "state-persistence-557b44434396",
+      "title": "Create a second pod which is identical with the one you just created (you can easily do it by changing the 'name' property on pod.yaml). Connect to it and verify that '/etc/foo' contains the 'passwd' file. Delete pods to cleanup. Note: If you can't see the file from the second pod, can you figure out why? What would you do to fix that?",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "state-persistence-d11d90dc5f93",
+      "title": "Create a busybox pod with 'sleep 3600' as arguments. Copy '/etc/passwd' from the pod to your local folder",
+      "topic": "state-persistence",
+      "section": "Define volumes"
+    },
+    {
+      "id": "helm-e2c42ac9f9fa",
+      "title": "Creating a basic Helm chart",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-f0e0d766e5cc",
+      "title": "Running a Helm chart",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-549a8e435eba",
+      "title": "Find pending Helm deployments on all namespaces",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-49c8f3a48a65",
+      "title": "Uninstall a Helm release",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-1577f597a0bd",
+      "title": "Upgrading a Helm chart",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-f6b7be3f958c",
+      "title": "Using Helm repo",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-bbba15a6304b",
+      "title": "Download a Helm chart from a repository",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-f92cbe0a5a34",
+      "title": "Add the Bitnami repo at https://charts.bitnami.com/bitnami to Helm",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-94840f9d566c",
+      "title": "Write the contents of the values.yaml file of the `bitnami/node` chart to standard output",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "helm-0b7d0c5d4101",
+      "title": "Install the `bitnami/node` chart setting the number of replicas to 5",
+      "topic": "helm",
+      "section": "Helm in K8s"
+    },
+    {
+      "id": "custom-resources-b854e760ce17",
+      "title": "Create a CustomResourceDefinition manifest file for an Operator with the following specifications :",
+      "topic": "custom-resources",
+      "section": "CRD in K8s"
+    },
+    {
+      "id": "custom-resources-6e678c4dd728",
+      "title": "Create the CRD resource in the K8S API",
+      "topic": "custom-resources",
+      "section": "CRD in K8s"
+    },
+    {
+      "id": "custom-resources-62a9622546dd",
+      "title": "Create custom object from the CRD",
+      "topic": "custom-resources",
+      "section": "CRD in K8s"
+    },
+    {
+      "id": "custom-resources-48e4ec121f3f",
+      "title": "Listing operator",
+      "topic": "custom-resources",
+      "section": "CRD in K8s"
+    },
+    {
+      "id": "container-images-d43ab80e8740",
+      "title": "Create a Dockerfile to deploy an Apache HTTP Server which hosts a custom main page",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-1f9d206bd6b7",
+      "title": "Build and see how many layers the image consists of",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-52068ec01497",
+      "title": "Run the image locally, inspect its status and logs, finally test that it responds as expected",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-ac5001169e7a",
+      "title": "Run a command inside the pod to print out the index.html file",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-1f8a476cb71a",
+      "title": "Tag the image with ip and port of a private local registry and then push the image to this registry",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-e3eb6e9b9907",
+      "title": "Create a container without running/starting it",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-a8392159fb28",
+      "title": "Export a container to output.tar file",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-6e1079117d58",
+      "title": "Run a pod with the image pushed to the registry",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-43b95a3170bf",
+      "title": "Log into a remote registry server and then read the credentials from the default file",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-b4f392c395d5",
+      "title": "Create a secret both from existing login credentials and from the CLI",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-0442ba5ba29b",
+      "title": "Create the manifest for a Pod that uses one of the two secrets just created to pull an image hosted on the relative private remote registry",
+      "topic": "container-images",
+      "section": "Podman basics"
+    },
+    {
+      "id": "container-images-5dbe478b1ac2",
+      "title": "Clean up all the images and containers",
+      "topic": "container-images",
+      "section": "Podman basics"
+    }
+  ]
+}

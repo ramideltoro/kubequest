@@ -50,6 +50,22 @@ try {
   // Only a missing historical file is optional; malformed new content must fail export.
   if (error.status !== 128 && error.status !== 1) throw error;
 }
+let exerciseLibrary = null;
+try {
+  execFileSync(
+    "git",
+    ["cat-file", "-e", revision + ":content/ckad-index.json"],
+    { stdio: "ignore" },
+  );
+  const index = JSON.parse(read("content/ckad-index.json"));
+  exerciseLibrary = {
+    source: index.source,
+    count: index.exercises.length,
+    topics: index.topics,
+  };
+} catch (error) {
+  if (error.status !== 128 && error.status !== 1) throw error;
+}
 const overviewPaths = {
   "path-foundations": "/foundations",
   "path-basics": "/basics",
@@ -148,6 +164,7 @@ const snapshot = {
     comparison: v.contrast?.label || null,
   })),
   routes,
+  exerciseLibrary,
   dependencies,
   foundations: foundations.map((l) => ({
     id: l.id,

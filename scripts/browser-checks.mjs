@@ -97,7 +97,8 @@ try {
     .getByRole("button", { name: "Search lessons and missions", exact: true })
     .click();
   await page.getByRole("searchbox").fill("endpoints");
-  assert.equal(await page.locator(".search-results a").count(), 1);
+  assert.equal(await page.locator(".search-results a").count(), 3);
+  assert.equal(await page.locator('.search-results a[href^="/ckad/exercises/"]').count(), 2);
   await page.getByRole("searchbox").press("Escape");
   await page.locator("dialog").waitFor({ state: "hidden" });
   assert(

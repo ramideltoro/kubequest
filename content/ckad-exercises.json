@@ -1,0 +1,1683 @@
+{
+  "source": {
+    "repository": "https://github.com/dgkanatsios/CKAD-exercises",
+    "revision": "d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4",
+    "importedAt": "2026-09-27",
+    "license": "MIT",
+    "author": "Dimitris-Ilias Gkanatsios"
+  },
+  "topics": [
+    {
+      "id": "core-concepts",
+      "title": "Core concepts",
+      "file": "a.core_concepts.md",
+      "introductions": [
+        {
+          "title": "Core Concepts (13%)",
+          "markdown": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)"
+        }
+      ],
+      "count": 18
+    },
+    {
+      "id": "multi-container-pods",
+      "title": "Multi-container Pods",
+      "file": "b.multi_container_pods.md",
+      "introductions": [],
+      "count": 2
+    },
+    {
+      "id": "pod-design",
+      "title": "Pod design",
+      "file": "c.pod_design.md",
+      "introductions": [
+        {
+          "title": "Pod design (20%)",
+          "markdown": "[Labels And Annotations](#labels-and-annotations)\n\n[Deployments](#deployments)\n\n[Jobs](#jobs)\n\n[Cron Jobs](#cron-jobs)"
+        },
+        {
+          "title": "Labels and Annotations",
+          "markdown": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)"
+        },
+        {
+          "title": "Deployments",
+          "markdown": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)"
+        },
+        {
+          "title": "Cron jobs",
+          "markdown": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)"
+        }
+      ],
+      "count": 52
+    },
+    {
+      "id": "configuration",
+      "title": "Configuration",
+      "file": "d.configuration.md",
+      "introductions": [
+        {
+          "title": "Configuration (18%)",
+          "markdown": "[ConfigMaps](#configmaps)\n\n[SecurityContext](#securitycontext)\n\n[Resource Requests and Limits](#resource-requests-and-limits)\n\n[Limit Ranges](#limit-ranges)\n\n[Resource Quotas](#resource-quotas)\n\n[Secrets](#secrets)\n\n[Service Accounts](#serviceaccounts)\n\n\n#Tips, export to variable\n\n\nexport ns=\"-n secret-ops\"</br>\n\nexport do=\"--dry-run=client -oyaml\"</br>"
+        },
+        {
+          "title": "ConfigMaps",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)"
+        },
+        {
+          "title": "SecurityContext",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)"
+        },
+        {
+          "title": "Resource requests and limits",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/)"
+        },
+        {
+          "title": "Limit Ranges",
+          "markdown": "kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)"
+        },
+        {
+          "title": "Resource Quotas",
+          "markdown": "kubernetes.io > Documentation > Concepts > Policies > Resource Quotas (https://kubernetes.io/docs/concepts/policy/resource-quotas/)"
+        },
+        {
+          "title": "Secrets",
+          "markdown": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)"
+        },
+        {
+          "title": "ServiceAccounts",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)"
+        }
+      ],
+      "count": 30
+    },
+    {
+      "id": "observability",
+      "title": "Observability",
+      "file": "e.observability.md",
+      "introductions": [
+        {
+          "title": "Liveness, readiness and startup probes",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "id": "services-networking",
+      "title": "Services and networking",
+      "file": "f.services.md",
+      "introductions": [],
+      "count": 10
+    },
+    {
+      "id": "state-persistence",
+      "title": "State persistence",
+      "file": "g.state.md",
+      "introductions": [
+        {
+          "title": "State Persistence (8%)",
+          "markdown": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a Volume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-volume-storage/)\n\nkubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)"
+        }
+      ],
+      "count": 6
+    },
+    {
+      "id": "helm",
+      "title": "Helm",
+      "file": "h.helm.md",
+      "introductions": [
+        {
+          "title": "Managing Kubernetes with Helm",
+          "markdown": "- Note: Helm is part of the new CKAD syllabus. Here are a few examples of using Helm to manage Kubernetes."
+        }
+      ],
+      "count": 10
+    },
+    {
+      "id": "custom-resources",
+      "title": "Custom resources",
+      "file": "i.crd.md",
+      "introductions": [
+        {
+          "title": "Extend the Kubernetes API with CRD (CustomResourceDefinition)",
+          "markdown": "- Note: CRD is part of the new CKAD syllabus. Here are a few examples of installing custom resource into the Kubernetes API by creating a CRD."
+        }
+      ],
+      "count": 4
+    },
+    {
+      "id": "container-images",
+      "title": "Container images (Podman)",
+      "file": "j.podman.md",
+      "introductions": [
+        {
+          "title": "Define, build and modify container images",
+          "markdown": "- Note: The topic is part of the new CKAD syllabus. Here are a few examples of using **podman** to manage the life cycle of container images. The use of **docker** had been the industry standard for many years, but now large companies like [Red Hat](https://www.redhat.com/en/blog/say-hello-buildah-podman-and-skopeo) are moving to a new suite of open source tools: podman, skopeo and buildah. Also Kubernetes has moved in this [direction](https://kubernetes.io/blog/2022/02/17/dockershim-faq/). In particular, `podman` is meant to be the replacement of the `docker` command: so it makes sense to get familiar with it, although they are quite interchangeable considering that they use the same syntax."
+        }
+      ],
+      "count": 12
+    }
+  ],
+  "exercises": [
+    {
+      "id": "core-concepts-9fe4b7befc3e",
+      "topic": "core-concepts",
+      "title": "Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl create namespace mynamespace\nkubectl run nginx --image=nginx --restart=Never -n mynamespace\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L14"
+    },
+    {
+      "id": "core-concepts-46382324b97f",
+      "topic": "core-concepts",
+      "title": "Create the pod that was just described using YAML",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "Easily generate YAML with:\n\n```bash\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -n mynamespace -o yaml > pod.yaml\n```\n\n```bash\ncat pod.yaml\n```\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\n  namespace: mynamespace\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\n```\n\nAlternatively, you can run in one line\n\n```bash\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubectl create -n mynamespace -f -\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L27"
+    },
+    {
+      "id": "core-concepts-30a3e4723da4",
+      "topic": "core-concepts",
+      "title": "Create a busybox pod (using kubectl command) that runs the command \"env\". Run it and see the output",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl run busybox --image=busybox --command --restart=Never -it --rm -- env # -it will help in seeing the output, --rm will immediately delete the pod after it exits\n# or, just run it without -it\nkubectl run busybox --image=busybox --command --restart=Never -- env\n# and then, check its logs\nkubectl logs busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L75"
+    },
+    {
+      "id": "core-concepts-498eb2350d82",
+      "topic": "core-concepts",
+      "title": "Create a busybox pod (using YAML) that runs the command \"env\". Run it and see the output",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\n# create a  YAML template with this command\nkubectl run busybox --image=busybox --restart=Never --dry-run=client -o yaml --command -- env > envpod.yaml\n# see it\ncat envpod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  containers:\n  - command:\n    - env\n    image: busybox\n    name: busybox\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\n# apply it and then see the logs\nkubectl apply -f envpod.yaml\nkubectl logs busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L91"
+    },
+    {
+      "id": "core-concepts-6859cb9f987c",
+      "topic": "core-concepts",
+      "title": "Get the YAML for a new namespace called 'myns' without creating it",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl create namespace myns -o yaml --dry-run=client\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L132"
+    },
+    {
+      "id": "core-concepts-b5617fdaea63",
+      "topic": "core-concepts",
+      "title": "Create the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl create quota myrq --hard=cpu=1,memory=1G,pods=2 --dry-run=client -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L144"
+    },
+    {
+      "id": "core-concepts-fb1d8a1a19d6",
+      "topic": "core-concepts",
+      "title": "Get pods on all namespaces",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl get po --all-namespaces\n```\nAlternatively \n\n```bash\nkubectl get po -A\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L156"
+    },
+    {
+      "id": "core-concepts-c0a84a627e7f",
+      "topic": "core-concepts",
+      "title": "Create a pod with image nginx called nginx and expose traffic on port 80",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --port=80\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L172"
+    },
+    {
+      "id": "core-concepts-64c97433112f",
+      "topic": "core-concepts",
+      "title": "Change pod's image to nginx:1.24.0. Observe that the container will be restarted as soon as the image gets pulled",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "*Note*: The `RESTARTS` column should contain 0 initially (ideally - it could be any number)\n\n```bash\n# kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG\nkubectl set image pod/nginx nginx=nginx:1.24.0\nkubectl describe po nginx # you will see an event 'Container will be killed and recreated'\nkubectl get po nginx -w # watch it\n```\n\n*Note*: some time after changing the image, you should see that the value in the `RESTARTS` column has been increased by 1, because the container has been restarted, as stated in the events shown at the bottom of the `kubectl describe pod` command:\n\n```\nEvents:\n  Type    Reason     Age                  From               Message\n  ----    ------     ----                 ----               -------\n[...]\n  Normal  Killing    100s                 kubelet, node3     Container pod1 definition changed, will be restarted\n  Normal  Pulling    100s                 kubelet, node3     Pulling image \"nginx:1.24.0\"\n  Normal  Pulled     41s                  kubelet, node3     Successfully pulled image \"nginx:1.24.0\"\n  Normal  Created    36s (x2 over 9m43s)  kubelet, node3     Created container pod1\n  Normal  Started    36s (x2 over 9m43s)  kubelet, node3     Started container pod1\n```\n\n*Note*: you can check pod's image by running\n\n```bash\nkubectl get po nginx -o jsonpath='{.spec.containers[].image}{\"\\n\"}'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L184"
+    },
+    {
+      "id": "core-concepts-f44e364f1cfd",
+      "topic": "core-concepts",
+      "title": "Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl get po -o wide # get the IP, will be something like '10.1.1.131'\n# create a temp busybox pod\nkubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- 10.1.1.131:80\n```\n\nAlternatively you can also try a more advanced option:\n\n```bash\n# Get IP of the nginx pod\nNGINX_IP=$(kubectl get pod nginx -o jsonpath='{.status.podIP}')\n# create a temp busybox pod\nkubectl run busybox --image=busybox --env=\"NGINX_IP=$NGINX_IP\" --rm -it --restart=Never -- sh -c 'wget -O- $NGINX_IP:80'\n``` \n\nOr just in one line:\n\n```bash\nkubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- $(kubectl get pod nginx -o jsonpath='{.status.podIP}:{.spec.containers[0].ports[0].containerPort}')\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L221"
+    },
+    {
+      "id": "core-concepts-4513a7a2b0d9",
+      "topic": "core-concepts",
+      "title": "Get pod's YAML",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl get po nginx -o yaml\n# or\nkubectl get po nginx -oyaml\n# or\nkubectl get po nginx --output yaml\n# or\nkubectl get po nginx --output=yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L250"
+    },
+    {
+      "id": "core-concepts-89c8c63d629c",
+      "topic": "core-concepts",
+      "title": "Get information about the pod, including details about potential issues (e.g. pod hasn't started)",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl describe po nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L268"
+    },
+    {
+      "id": "core-concepts-e5a88a4a02dc",
+      "topic": "core-concepts",
+      "title": "Get pod logs",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl logs nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L280"
+    },
+    {
+      "id": "core-concepts-6c4359ff0c03",
+      "topic": "core-concepts",
+      "title": "If pod crashed and restarted, get logs about the previous instance",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl logs nginx -p\n# or\nkubectl logs nginx --previous\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L292"
+    },
+    {
+      "id": "core-concepts-7b9d88de80a8",
+      "topic": "core-concepts",
+      "title": "Execute a simple shell on the nginx pod",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl exec -it nginx -- /bin/sh\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L306"
+    },
+    {
+      "id": "core-concepts-c7716ab3c79b",
+      "topic": "core-concepts",
+      "title": "Create a busybox pod that echoes 'hello world' and then exits",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl run busybox --image=busybox -it --restart=Never -- echo 'hello world'\n# or\nkubectl run busybox --image=busybox -it --restart=Never -- /bin/sh -c 'echo hello world'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L318"
+    },
+    {
+      "id": "core-concepts-a3e184ead16d",
+      "topic": "core-concepts",
+      "title": "Do the same, but have the pod deleted automatically when it's completed",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'\nkubectl get po # nowhere to be found :)\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L332"
+    },
+    {
+      "id": "core-concepts-314d16e6bd4e",
+      "topic": "core-concepts",
+      "title": "Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod",
+      "section": "Core concepts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Reference > kubectl CLI > [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)\n\nkubernetes.io > Documentation > Tasks > Monitoring, Logging, and Debugging > [Get a Shell to a Running Container](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Configure Access to Multiple Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/) using API\n\nkubernetes.io > Documentation > Tasks > Access Applications in a Cluster > [Use Port Forwarding to Access Applications in a Cluster](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --env=var1=val1\n# then\nkubectl exec -it nginx -- env\n# or\nkubectl exec -it nginx -- sh -c 'echo $var1'\n# or\nkubectl describe po nginx | grep val1\n# or\nkubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env\n# or\nkubectl run nginx --image nginx --restart=Never --env=var1=val1 -it --rm -- sh -c 'echo $var1'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/a.core_concepts.md#L345"
+    },
+    {
+      "id": "multi-container-pods-b17c25b2c8e7",
+      "topic": "multi-container-pods",
+      "title": "Create a Pod with two containers, both with image busybox and command \"echo hello; sleep 3600\". Connect to the second container and run 'ls'",
+      "section": "Multi-container Pods",
+      "prompt": "",
+      "context": "",
+      "solution": "The easiest way to do it is create a pod with a single container and save its definition in a YAML file:\n\n```bash\nkubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'echo hello;sleep 3600' > pod.yaml\nvi pod.yaml\n```\n\nCopy/paste the container related values, so your final YAML should contain the following two containers (make sure those containers have a different name):\n\n```YAML\ncontainers:\n  - args:\n    - /bin/sh\n    - -c\n    - echo hello;sleep 3600\n    image: busybox\n    imagePullPolicy: IfNotPresent\n    name: busybox\n    resources: {}\n  - args:\n    - /bin/sh\n    - -c\n    - echo hello;sleep 3600\n    image: busybox\n    name: busybox2\n```\n\n```bash\nkubectl create -f pod.yaml\n# Connect to the busybox2 container within the pod\nkubectl exec -it busybox -c busybox2 -- /bin/sh\nls\nexit\n\n# or you can do the above with just a one-liner\nkubectl exec -it busybox -c busybox2 -- ls\n\n# you can do some cleanup\nkubectl delete po busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/b.multi_container_pods.md#L4"
+    },
+    {
+      "id": "multi-container-pods-189ad413452d",
+      "topic": "multi-container-pods",
+      "title": "Create a pod with an nginx container exposed on port 80. Add a busybox init container which downloads a page using 'echo \"Test\" > /work-dir/index.html'. Make a volume of type emptyDir and mount it in both containers. For the nginx container, mount it on \"/usr/share/nginx/html\" and for the initcontainer, mount it on \"/work-dir\". When done, get the IP of the created pod and create a busybox pod and run \"wget -O- IP\"",
+      "section": "Multi-container Pods",
+      "prompt": "",
+      "context": "",
+      "solution": "The easiest way to do it is create a pod with a single container and save its definition in a YAML file:\n\n```bash\nkubectl run box --image=nginx --restart=Never --port=80 --dry-run=client -o yaml > pod-init.yaml\n```\n\nCopy/paste the container related values, so your final YAML should contain the volume and the initContainer:\n\nVolume:\n\n```YAML\ncontainers:\n- image: nginx\n...\n  volumeMounts:\n  - name: vol\n    mountPath: /usr/share/nginx/html\nvolumes:\n- name: vol\n  emptyDir: {}\n```\n\ninitContainer:\n\n```YAML\n...\ninitContainers:\n- args:\n  - /bin/sh\n  - -c\n  - echo \"Test\" > /work-dir/index.html\n  image: busybox\n  name: box\n  volumeMounts:\n  - name: vol\n    mountPath: /work-dir\n```\n\nIn total you get:\n\n```YAML\n\napiVersion: v1\nkind: Pod\nmetadata:\n  labels:\n    run: box\n  name: box\nspec:\n  initContainers: \n  - args: \n    - /bin/sh \n    - -c \n    - echo \"Test\" > /work-dir/index.html\n    image: busybox \n    name: box \n    volumeMounts: \n    - name: vol \n      mountPath: /work-dir \n  containers:\n  - image: nginx\n    name: nginx\n    ports:\n    - containerPort: 80\n    volumeMounts: \n    - name: vol \n      mountPath: /usr/share/nginx/html \n  volumes: \n  - name: vol \n    emptyDir: {} \n```\n\n```bash\n# Apply pod\nkubectl apply -f pod-init.yaml\n\n# Get IP\nkubectl get po -o wide\n\n# Execute wget\nkubectl run box-test --image=busybox --restart=Never -it --rm -- /bin/sh -c \"wget -O- $(kubectl get pod box -o jsonpath='{.status.podIP}')\"\n\n# you can do some cleanup\nkubectl delete po box\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/b.multi_container_pods.md#L53"
+    },
+    {
+      "id": "pod-design-37f7507a9fa2",
+      "topic": "pod-design",
+      "title": "Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl run nginx1 --image=nginx --restart=Never --labels=app=v1\nkubectl run nginx2 --image=nginx --restart=Never --labels=app=v1\nkubectl run nginx3 --image=nginx --restart=Never --labels=app=v1\n# or\nfor i in `seq 1 3`; do kubectl run nginx$i --image=nginx -l app=v1 ; done\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L15"
+    },
+    {
+      "id": "pod-design-bdfa22153e9c",
+      "topic": "pod-design",
+      "title": "Show all labels of the pods",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl get po --show-labels\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L31"
+    },
+    {
+      "id": "pod-design-595fd3f0a021",
+      "topic": "pod-design",
+      "title": "Change the labels of pod 'nginx2' to be app=v2",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl label po nginx2 app=v2 --overwrite\n# or edit the pod yaml\nkubectl edit po nginx2\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L43"
+    },
+    {
+      "id": "pod-design-15652f1dd3e8",
+      "topic": "pod-design",
+      "title": "Get the label 'app' for the pods (show a column with APP labels)",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl get po -L app\n# or\nkubectl get po --label-columns=app\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L57"
+    },
+    {
+      "id": "pod-design-6d1e95383349",
+      "topic": "pod-design",
+      "title": "Get only the 'app=v2' pods",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl get po -l app=v2\n# or\nkubectl get po -l 'app in (v2)'\n# or\nkubectl get po --selector=app=v2\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L71"
+    },
+    {
+      "id": "pod-design-f3509c39a308",
+      "topic": "pod-design",
+      "title": "Get 'app=v2' and not 'tier=frontend' pods",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl get po -l app=v2,tier!=frontend\n# or\nkubectl get po -l 'app in (v2), tier notin (frontend)'\n# or\nkubectl get po --selector=app=v2,tier!=frontend\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L87"
+    },
+    {
+      "id": "pod-design-57be32fa1342",
+      "topic": "pod-design",
+      "title": "Add a new label tier=web to all pods having 'app=v2' or 'app=v1' labels",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl label po -l \"app in(v1,v2)\" tier=web\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L103"
+    },
+    {
+      "id": "pod-design-2b45f7cefe0b",
+      "topic": "pod-design",
+      "title": "Add an annotation 'owner: marketing' to all pods having 'app=v2' label",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl annotate po -l \"app=v2\" owner=marketing\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L115"
+    },
+    {
+      "id": "pod-design-507ce0884753",
+      "topic": "pod-design",
+      "title": "Remove the 'app' label from the pods we created before",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl label po nginx1 nginx2 nginx3 app-\n# or\nkubectl label po nginx{1..3} app-\n# or\nkubectl label po -l app app-\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L126"
+    },
+    {
+      "id": "pod-design-90b5a5ea06c7",
+      "topic": "pod-design",
+      "title": "Annotate pods nginx1, nginx2, nginx3 with \"description='my description'\" value",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl annotate po nginx1 nginx2 nginx3 description='my description'\n\n#or\n\nkubectl annotate po nginx{1..3} description='my description'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L142"
+    },
+    {
+      "id": "pod-design-68e60bafef59",
+      "topic": "pod-design",
+      "title": "Check the annotations for pod nginx1",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl annotate pod nginx1 --list\n\n# or\n\nkubectl describe po nginx1 | grep -i 'annotations'\n\n# or\n\nkubectl get po nginx1 -o custom-columns=Name:metadata.name,ANNOTATIONS:metadata.annotations.description\n```\n\nAs an alternative to using `| grep` you can use jsonPath like `kubectl get po nginx1 -o jsonpath='{.metadata.annotations}{\"\\n\"}'`",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L159"
+    },
+    {
+      "id": "pod-design-5964954756c7",
+      "topic": "pod-design",
+      "title": "Remove the annotations for these three pods",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl annotate po nginx{1..3} description- owner-\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L181"
+    },
+    {
+      "id": "pod-design-04b4dee77490",
+      "topic": "pod-design",
+      "title": "Remove these pods to have a clean state in your cluster",
+      "section": "Labels and Annotations",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Overview > Working with Kubernetes Objects > [Labels and Selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)",
+      "solution": "```bash\nkubectl delete po nginx{1..3}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L193"
+    },
+    {
+      "id": "pod-design-3f78ce59b4e5",
+      "topic": "pod-design",
+      "title": "Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'",
+      "section": "Pod Placement",
+      "prompt": "",
+      "context": "",
+      "solution": "Add the label to a node:\n\n```bash\nkubectl label nodes <your-node-name> accelerator=nvidia-tesla-p100\nkubectl get nodes --show-labels\n```\n\nWe can use the 'nodeSelector' property on the Pod YAML:\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  name: cuda-test\nspec:\n  containers:\n    - name: cuda-test\n      image: \"k8s.gcr.io/cuda-vector-add:v0.1\"\n  nodeSelector: # add this\n    accelerator: nvidia-tesla-p100 # the selection label\n```\n\nYou can easily find out where in the YAML it should be placed by:\n\n```bash\nkubectl explain po.spec\n```\n\nOR:\nUse node affinity (https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes-using-node-affinity/#schedule-a-pod-using-required-node-affinity)\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  name: affinity-pod\nspec:\n  affinity:\n    nodeAffinity:\n      requiredDuringSchedulingIgnoredDuringExecution:\n        nodeSelectorTerms:\n        - matchExpressions:\n          - key: accelerator\n            operator: In\n            values:\n            - nvidia-tesla-p100\n  containers:\n    ...\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L207"
+    },
+    {
+      "id": "pod-design-0ccd9d47b8f9",
+      "topic": "pod-design",
+      "title": "Create a pod that will be placed on node `node01` using `nodeName`",
+      "section": "Pod Placement",
+      "prompt": "",
+      "context": "",
+      "solution": "`nodeName` forces the Pod to be bound to a specific node (bypassing the scheduler). For more details, see the official docs: [https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename)\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: nodename-pod\nspec:\n  nodeName: node01\n  containers:\n  - name: nodename-con\n    image: nginx  \n```\n\nVerify which node it landed on:\n\n```bash\nkubectl get pod nodename-pod -o wide\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L265"
+    },
+    {
+      "id": "pod-design-acbf8c02347c",
+      "topic": "pod-design",
+      "title": "Taint a node with key `tier` and value `frontend` with the effect `NoSchedule`. Then, create a pod that tolerates this taint.",
+      "section": "Pod Placement",
+      "prompt": "",
+      "context": "",
+      "solution": "Taint a node:\n\n```bash\nkubectl taint node node1 tier=frontend:NoSchedule # key=value:Effect\nkubectl describe node node1 # view the taints on a node\n```\n\nAnd to tolerate the taint:\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: frontend\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n  tolerations:\n  - key: \"tier\"\n    operator: \"Equal\"\n    value: \"frontend\"\n    effect: \"NoSchedule\"\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L293"
+    },
+    {
+      "id": "pod-design-248c76a858eb",
+      "topic": "pod-design",
+      "title": "Create a pod that will be placed on node `controlplane`. Use nodeSelector and tolerations.",
+      "section": "Pod Placement",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nvi pod.yaml\n```\n\n```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: frontend\nspec:\n  containers:\n  - name: nginx\n    image: nginx\n  nodeSelector:\n    kubernetes.io/hostname: controlplane\n  tolerations:\n  - key: \"node-role.kubernetes.io/control-plane\"\n    operator: \"Exists\"\n    effect: \"NoSchedule\"\n```\n\n```bash\nkubectl create -f pod.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L325"
+    },
+    {
+      "id": "pod-design-973f33289f82",
+      "topic": "pod-design",
+      "title": "Create a deployment with image nginx:1.18.0, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl create deployment nginx  --image=nginx:1.18.0  --dry-run=client -o yaml > deploy.yaml\nvi deploy.yaml\n# change the replicas field from 1 to 2\n# add this section to the container spec and save the deploy.yaml file\n# ports:\n#   - containerPort: 80\nkubectl apply -f deploy.yaml\n```\n\nor, do something like:\n\n```bash\nkubectl create deployment nginx  --image=nginx:1.18.0  --dry-run=client -o yaml | sed 's/replicas: 1/replicas: 2/g'  | sed 's/image: nginx:1.18.0/image: nginx:1.18.0\\n        ports:\\n        - containerPort: 80/g' | kubectl apply -f -\n```\n\nor,\n```bash\nkubectl create deploy nginx --image=nginx:1.18.0 --replicas=2 --port=80\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L362"
+    },
+    {
+      "id": "pod-design-42f3676ecebd",
+      "topic": "pod-design",
+      "title": "View the YAML of this deployment",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl get deploy nginx -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L391"
+    },
+    {
+      "id": "pod-design-dac437fcac74",
+      "topic": "pod-design",
+      "title": "View the YAML of the replica set that was created by this deployment",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl describe deploy nginx # you'll see the name of the replica set on the Events section and in the 'NewReplicaSet' property\n# OR you can find rs directly by:\nkubectl get rs -l run=nginx # if you created deployment by 'run' command\nkubectl get rs -l app=nginx # if you created deployment by 'create' command\n# you could also just do kubectl get rs\nkubectl get rs nginx-7bf7478b77 -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L403"
+    },
+    {
+      "id": "pod-design-a922504e884b",
+      "topic": "pod-design",
+      "title": "Get the YAML for one of the pods",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl get po # get all the pods\n# OR you can find pods directly by:\nkubectl get po -l run=nginx # if you created deployment by 'run' command\nkubectl get po -l app=nginx # if you created deployment by 'create' command\nkubectl get po nginx-7bf7478b77-gjzp8 -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L420"
+    },
+    {
+      "id": "pod-design-7b48343af726",
+      "topic": "pod-design",
+      "title": "Check how the deployment rollout is going",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout status deploy nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L436"
+    },
+    {
+      "id": "pod-design-985f76e6e2f9",
+      "topic": "pod-design",
+      "title": "Update the nginx image to nginx:1.19.8",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl set image deploy nginx nginx=nginx:1.19.8\n# alternatively...\nkubectl edit deploy nginx # change the .spec.template.spec.containers[0].image\n```\n\nThe syntax of the 'kubectl set image' command is `kubectl set image (-f FILENAME | TYPE NAME) CONTAINER_NAME_1=CONTAINER_IMAGE_1 ... CONTAINER_NAME_N=CONTAINER_IMAGE_N [options]`",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L448"
+    },
+    {
+      "id": "pod-design-16ee42834b04",
+      "topic": "pod-design",
+      "title": "Check the rollout history and confirm that the replicas are OK",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout history deploy nginx\nkubectl get deploy nginx\nkubectl get rs # check that a new replica set has been created\nkubectl get po\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L464"
+    },
+    {
+      "id": "pod-design-19963b26c7e8",
+      "topic": "pod-design",
+      "title": "Undo the latest rollout and verify that new pods have the old image (nginx:1.18.0)",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout undo deploy nginx\n# wait a bit\nkubectl get po # select one 'Running' Pod\nkubectl describe po nginx-5ff4457d65-nslcl | grep -i image # should be nginx:1.18.0\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L479"
+    },
+    {
+      "id": "pod-design-9feccab0a17e",
+      "topic": "pod-design",
+      "title": "Do an on-purpose update of the deployment with a wrong image nginx:1.91",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl set image deploy nginx nginx=nginx:1.91\n# or\nkubectl edit deploy nginx\n# change the image to nginx:1.91\n# vim tip: type (without quotes) '/image' and press Enter, to navigate quickly\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L494"
+    },
+    {
+      "id": "pod-design-5f9c9acd7a6a",
+      "topic": "pod-design",
+      "title": "Verify that something's wrong with the rollout",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout status deploy nginx\n# or\nkubectl get po # you'll see 'ErrImagePull' or 'ImagePullBackOff'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L510"
+    },
+    {
+      "id": "pod-design-d34f2c9fd53f",
+      "topic": "pod-design",
+      "title": "Return the deployment to the second revision (number 2) and verify the image is nginx:1.19.8",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout undo deploy nginx --to-revision=2\nkubectl describe deploy nginx | grep Image:\nkubectl rollout status deploy nginx # Everything should be OK\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L525"
+    },
+    {
+      "id": "pod-design-f2f6f368987e",
+      "topic": "pod-design",
+      "title": "Check the details of the fourth revision (number 4)",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout history deploy nginx --revision=4 # You'll also see the wrong image displayed here\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L539"
+    },
+    {
+      "id": "pod-design-7e6e4d7574a7",
+      "topic": "pod-design",
+      "title": "Scale the deployment to 5 replicas",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl scale deploy nginx --replicas=5\nkubectl get po\nkubectl describe deploy nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L551"
+    },
+    {
+      "id": "pod-design-f4c92bdbb014",
+      "topic": "pod-design",
+      "title": "Autoscale the deployment, pods between 5 and 10, targeting CPU utilization at 80%",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl autoscale deploy nginx --min=5 --max=10 --cpu-percent=80\n# view the horizontalpodautoscalers.autoscaling for nginx\nkubectl get hpa nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L565"
+    },
+    {
+      "id": "pod-design-232feff34a3e",
+      "topic": "pod-design",
+      "title": "Pause the rollout of the deployment",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout pause deploy nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L579"
+    },
+    {
+      "id": "pod-design-b83f4b5782a6",
+      "topic": "pod-design",
+      "title": "Update the image to nginx:1.19.9 and check that there's nothing going on, since we paused the rollout",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl set image deploy nginx nginx=nginx:1.19.9\n# or\nkubectl edit deploy nginx\n# change the image to nginx:1.19.9\nkubectl rollout history deploy nginx # no new revision\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L591"
+    },
+    {
+      "id": "pod-design-375f2201d654",
+      "topic": "pod-design",
+      "title": "Resume the rollout and check that the nginx:1.19.9 image has been applied",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl rollout resume deploy nginx\nkubectl rollout history deploy nginx\nkubectl rollout history deploy nginx --revision=6 # insert the number of your latest revision\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L607"
+    },
+    {
+      "id": "pod-design-bcb93c95624c",
+      "topic": "pod-design",
+      "title": "Delete the deployment and the horizontal pod autoscaler you created",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "```bash\nkubectl delete deploy nginx\nkubectl delete hpa nginx\n\n# or\nkubectl delete deploy/nginx hpa/nginx\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L621"
+    },
+    {
+      "id": "pod-design-5756e6dd2543",
+      "topic": "pod-design",
+      "title": "Implement canary deployment by running two instances of nginx marked as version=v1 and version=v2 so that the load is balanced at 75%-25% ratio",
+      "section": "Deployments",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Workloads > Workload Resources > [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)",
+      "solution": "Deploy 3 replicas of v1:\n```\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app-v1\n  labels:\n    app: my-app\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: my-app\n      version: v1\n  template:\n    metadata:\n      labels:\n        app: my-app\n        version: v1\n    spec:\n      containers:\n      - name: nginx\n        image: nginx\n        ports:\n        - containerPort: 80\n        volumeMounts:\n        - name: workdir\n          mountPath: /usr/share/nginx/html\n      initContainers:\n      - name: install\n        image: busybox:1.28\n        command:\n        - /bin/sh\n        - -c\n        - \"echo version-1 > /work-dir/index.html\"\n        volumeMounts:\n        - name: workdir\n          mountPath: \"/work-dir\"\n      volumes:\n      - name: workdir\n        emptyDir: {}\n```\n\nCreate the service:\n```\napiVersion: v1\nkind: Service\nmetadata:\n  name: my-app-svc\n  labels:\n    app: my-app\nspec:\n  type: ClusterIP\n  ports:\n  - name: http\n    port: 80\n    targetPort: 80\n  selector:\n    app: my-app\n```\n\nTest if the deployment was successful from within a Pod:\n```\n# run a wget to the Service my-app-svc\nkubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox --command -- wget -qO- my-app-svc\n\nversion-1\n```\n\nDeploy 1 replica of v2:\n```\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: my-app-v2\n  labels:\n    app: my-app\nspec:\n  replicas: 1\n  selector:\n    matchLabels:\n      app: my-app\n      version: v2\n  template:\n    metadata:\n      labels:\n        app: my-app\n        version: v2\n    spec:\n      containers:\n      - name: nginx\n        image: nginx\n        ports:\n        - containerPort: 80\n        volumeMounts:\n        - name: workdir\n          mountPath: /usr/share/nginx/html\n      initContainers:\n      - name: install\n        image: busybox:1.28\n        command:\n        - /bin/sh\n        - -c\n        - \"echo version-2 > /work-dir/index.html\"\n        volumeMounts:\n        - name: workdir\n          mountPath: \"/work-dir\"\n      volumes:\n      - name: workdir\n        emptyDir: {}\n```\n\nObserve that calling the ip exposed by the service the requests are load balanced across the two versions:\n```\n# run a busyBox pod that will make a wget call to the service my-app-svc and print out the version of the pod it reached.\nkubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox -- /bin/sh -c 'while sleep 1; do wget -qO- my-app-svc; done'\n\nversion-1\nversion-1\nversion-1\nversion-2\nversion-2\nversion-1\n```\n\nIf the v2 is stable, scale it up to 4 replicas and shutdown the v1:\n```\nkubectl scale --replicas=4 deploy my-app-v2\nkubectl delete deploy my-app-v1\nwhile sleep 0.1; do curl $(kubectl get svc my-app-svc -o jsonpath=\"{.spec.clusterIP}\"); done\nversion-2\nversion-2\nversion-2\nversion-2\nversion-2\nversion-2\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L636"
+    },
+    {
+      "id": "pod-design-17e67c060d89",
+      "topic": "pod-design",
+      "title": "Create a job named pi with image perl:5.34 that runs the command with arguments \"perl -Mbignum=bpi -wle 'print bpi(2000)'\"",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl create job pi  --image=perl:5.34 -- perl -Mbignum=bpi -wle 'print bpi(2000)'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L784"
+    },
+    {
+      "id": "pod-design-4a8595435c50",
+      "topic": "pod-design",
+      "title": "Wait till it's done, get the output",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)\nkubectl get po # get the pod name\nkubectl logs pi-**** # get the pi numbers\nkubectl delete job pi\n```\nOR\n\n```bash\nkubectl get jobs -w # wait till 'SUCCESSFUL' is 1 (will take some time, perl image might be big)\nkubectl logs job/pi\nkubectl delete job pi\n```\nOR\n\n```bash\nkubectl wait --for=condition=complete --timeout=300s job pi\nkubectl logs job/pi\nkubectl delete job pi\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L796"
+    },
+    {
+      "id": "pod-design-8342e4408766",
+      "topic": "pod-design",
+      "title": "Create a job with the image busybox that executes the command 'echo hello;sleep 30;echo world'",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl create job busybox --image=busybox -- /bin/sh -c 'echo hello;sleep 30;echo world'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L825"
+    },
+    {
+      "id": "pod-design-4ac9e50b3065",
+      "topic": "pod-design",
+      "title": "Follow the logs for the pod (you'll wait for 30 seconds)",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get po # find the job pod\nkubectl logs busybox-ptx58 -f # follow the logs\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L837"
+    },
+    {
+      "id": "pod-design-daa19a08679d",
+      "topic": "pod-design",
+      "title": "See the status of the job, describe it and see the logs",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get jobs\nkubectl describe jobs busybox\nkubectl logs job/busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L850"
+    },
+    {
+      "id": "pod-design-d1ea21d3e064",
+      "topic": "pod-design",
+      "title": "Delete the job",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl delete job busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L864"
+    },
+    {
+      "id": "pod-design-422b71cc3116",
+      "topic": "pod-design",
+      "title": "Create the same job, make it run 5 times, one after the other. Verify its status and delete it",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'echo hello;sleep 30;echo world' > job.yaml\nvi job.yaml\n```\n\nAdd job.spec.completions=5 and job.spec.completionMode=Indexed\n\n```YAML\napiVersion: batch/v1\nkind: Job\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  completions: 5 # add this line\n  completionMode: Indexed # add this line\n  template:\n    metadata:\n      creationTimestamp: null\n      labels:\n        run: busybox\n    spec:\n      containers:\n      - args:\n        - /bin/sh\n        - -c\n        - echo hello;sleep 30;echo world\n        image: busybox\n        name: busybox\n        resources: {}\n      restartPolicy: OnFailure\nstatus: {}\n```\n\n```bash\nkubectl create -f job.yaml\n```\n\nVerify that it has been completed:\n\n```bash\nkubectl get job busybox -w # will take two and a half minutes\nkubectl delete jobs busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L876"
+    },
+    {
+      "id": "pod-design-30965b7fb4fe",
+      "topic": "pod-design",
+      "title": "Create the same job, but make it run 5 parallel times",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nvi job.yaml\n```\n\nAdd job.spec.parallelism=5\n\n```YAML\napiVersion: batch/v1\nkind: Job\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  parallelism: 5 # add this line\n  template:\n    metadata:\n      creationTimestamp: null\n      labels:\n        run: busybox\n    spec:\n      containers:\n      - args:\n        - /bin/sh\n        - -c\n        - echo hello;sleep 30;echo world\n        image: busybox\n        name: busybox\n        resources: {}\n      restartPolicy: OnFailure\nstatus: {}\n```\n\n```bash\nkubectl create -f job.yaml\nkubectl get jobs\n```\n\nIt will take some time for the parallel jobs to finish (>= 30 seconds)\n\n```bash\nkubectl delete job busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L931"
+    },
+    {
+      "id": "pod-design-3c827507142a",
+      "topic": "pod-design",
+      "title": "Create a job but ensure that it will be automatically terminated by kubernetes if it takes more than 30 seconds to execute",
+      "section": "Jobs",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl create job busybox --image=busybox --dry-run=client -o yaml -- /bin/sh -c 'while true; do echo hello; sleep 10;done' > job.yaml\nvi job.yaml\n```\n\nAdd job.spec.activeDeadlineSeconds=30\n\n```bash\napiVersion: batch/v1\nkind: Job\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  activeDeadlineSeconds: 30 # add this line\n  template:\n    metadata:\n      creationTimestamp: null\n      labels:\n        run: busybox\n    spec:\n      containers:\n      - args:\n        - /bin/sh\n        - -c\n        - while true; do echo hello; sleep 10;done\n        image: busybox\n        name: busybox\n        resources: {}\n      restartPolicy: OnFailure\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L984"
+    },
+    {
+      "id": "pod-design-b9a8beee7468",
+      "topic": "pod-design",
+      "title": "Create a cron job with image busybox that runs on a schedule of \"*/1 * * * *\" and writes 'date; echo Hello from the Kubernetes cluster' to standard output",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl create cronjob busybox --image=busybox --schedule=\"*/1 * * * *\" -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1030"
+    },
+    {
+      "id": "pod-design-326c7efa4cb4",
+      "topic": "pod-design",
+      "title": "See its logs and delete it",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl get po # copy the ID of the pod whose container was just created\nkubectl logs <busybox-***> # you will see the date and message \nkubectl delete cj busybox # cj stands for cronjob\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1042"
+    },
+    {
+      "id": "pod-design-ff45a0c70050",
+      "topic": "pod-design",
+      "title": "Create the same cron job again, and watch the status. Once it ran, check which job ran by the created cron job. Check the log, and delete the cron job",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl get cj\nkubectl get jobs --watch\nkubectl get po --show-labels # observe that the pods have a label that mentions their 'parent' job\nkubectl logs busybox-1529745840-m867r\n# Bear in mind that Kubernetes will run a new job/pod for each new cron job\nkubectl delete cj busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1056"
+    },
+    {
+      "id": "pod-design-0a4a1211a3b1",
+      "topic": "pod-design",
+      "title": "Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it takes more than 17 seconds to start execution after its scheduled time (i.e. the job missed its scheduled time).",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule=\"* * * * *\" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml\nvi time-limited-job.yaml\n```\nAdd cronjob.spec.startingDeadlineSeconds=17\n\n```bash\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  creationTimestamp: null\n  name: time-limited-job\nspec:\n  startingDeadlineSeconds: 17 # add this line\n  jobTemplate:\n    metadata:\n      creationTimestamp: null\n      name: time-limited-job\n    spec:\n      template:\n        metadata:\n          creationTimestamp: null\n        spec:\n          containers:\n          - args:\n            - /bin/sh\n            - -c\n            - date; echo Hello from the Kubernetes cluster\n            image: busybox\n            name: time-limited-job\n            resources: {}\n          restartPolicy: Never\n  schedule: '* * * * *'\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1073"
+    },
+    {
+      "id": "pod-design-e3c31cdd1946",
+      "topic": "pod-design",
+      "title": "Create a cron job with image busybox that runs every minute and writes 'date; echo Hello from the Kubernetes cluster' to standard output. The cron job should be terminated if it successfully starts but takes more than 12 seconds to complete execution.",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl create cronjob time-limited-job --image=busybox --restart=Never --dry-run=client --schedule=\"* * * * *\" -o yaml -- /bin/sh -c 'date; echo Hello from the Kubernetes cluster' > time-limited-job.yaml\nvi time-limited-job.yaml\n```\nAdd cronjob.spec.jobTemplate.spec.activeDeadlineSeconds=12\n\n```bash\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  creationTimestamp: null\n  name: time-limited-job\nspec:\n  jobTemplate:\n    metadata:\n      creationTimestamp: null\n      name: time-limited-job\n    spec:\n      activeDeadlineSeconds: 12 # add this line\n      template:\n        metadata:\n          creationTimestamp: null\n        spec:\n          containers:\n          - args:\n            - /bin/sh\n            - -c\n            - date; echo Hello from the Kubernetes cluster\n            image: busybox\n            name: time-limited-job\n            resources: {}\n          restartPolicy: Never\n  schedule: '* * * * *'\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1117"
+    },
+    {
+      "id": "pod-design-f0fb2d09de1f",
+      "topic": "pod-design",
+      "title": "Keep only the last 2 successful and 1 failed runs of a CronJob",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "Create a CronJob with history limits configured:\n```bash\nkubectl create cronjob history-demo \\\n  --image=busybox \\\n  --schedule=\"*/1 * * * *\" \\\n  --dry-run=client -o yaml \\\n  -- /bin/sh -c 'date; echo Hello from history demo' > history-demo.yaml\n```\n\nEdit the file:\n\n```bash\nvi history-demo.yaml\n```\n\nAdd the following fields under spec:\n\n```bash\napiVersion: batch/v1\nkind: CronJob\nmetadata:\n  name: history-demo\nspec:\n  schedule: \"*/1 * * * *\"\n  successfulJobsHistoryLimit: 2   # keep last 2 successful jobs\n  failedJobsHistoryLimit: 1        # keep last 1 failed job\n  jobTemplate:\n    spec:\n      template:\n        spec:\n          containers:\n          - name: history-demo\n            image: busybox\n            args:\n            - /bin/sh\n            - -c\n            - date; echo Hello from history demo\n          restartPolicy: Never\n```\n\nApply the CronJob:\n```bash\nkubectl apply -f history-demo.yaml\n```\n\nVerify job history behavior:\n\n```bash\nkubectl get cj history-demo\nkubectl get jobs --watch\n```\n\nAfter several runs, confirm that:\n- Only 2 successful Jobs are kept\n- Only 1 failed Job is kept (if failures occur)\n\nClean up:\n```bash\nkubectl delete cj history-demo\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1161"
+    },
+    {
+      "id": "pod-design-7ebc6a86cb1f",
+      "topic": "pod-design",
+      "title": "Create a job from cronjob.",
+      "section": "Cron jobs",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Run Jobs > [Running Automated Tasks with a CronJob](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)",
+      "solution": "```bash\nkubectl create job --from=cronjob/sample-cron-job sample-job\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/c.pod_design.md#L1227"
+    },
+    {
+      "id": "configuration-c27d125de6f8",
+      "topic": "configuration",
+      "title": "Create a configmap named config with values foo=lala,foo2=lolo",
+      "section": "ConfigMaps",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create configmap config --from-literal=foo=lala --from-literal=foo2=lolo\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L25"
+    },
+    {
+      "id": "configuration-b318ed070cdc",
+      "topic": "configuration",
+      "title": "Display its values",
+      "section": "ConfigMaps",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl get cm config -o yaml\n# or\nkubectl describe cm config\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L37"
+    },
+    {
+      "id": "configuration-6bb39c927302",
+      "topic": "configuration",
+      "title": "Create and display a configmap from a file",
+      "section": "ConfigMaps",
+      "prompt": "Create the file with\n\n```bash\necho -e \"foo3=lili\\nfoo4=lele\" > config.txt\n```",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create cm configmap2 --from-file=config.txt\nkubectl get cm configmap2 -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L51"
+    },
+    {
+      "id": "configuration-0b3877bf80d8",
+      "topic": "configuration",
+      "title": "Create and display a configmap from a .env file",
+      "section": "ConfigMaps",
+      "prompt": "Create the file with the command\n\n```bash\necho -e \"var1=val1\\n# this is a comment\\n\\nvar2=val2\\n#anothercomment\" > config.env\n```",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create cm configmap3 --from-env-file=config.env\nkubectl get cm configmap3 -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L70"
+    },
+    {
+      "id": "configuration-552fe2c83f71",
+      "topic": "configuration",
+      "title": "Create and display a configmap from a file, giving the key 'special'",
+      "section": "ConfigMaps",
+      "prompt": "Create the file with\n\n```bash\necho -e \"var3=val3\\nvar4=val4\" > config4.txt\n```",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create cm configmap4 --from-file=special=config4.txt\nkubectl describe cm configmap4\nkubectl get cm configmap4 -o yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L89"
+    },
+    {
+      "id": "configuration-c167ab2b2c47",
+      "topic": "configuration",
+      "title": "Create a configMap called 'options' with the value var5=val5. Create a new nginx pod that loads the value from variable 'var5' in an env variable called 'option'",
+      "section": "ConfigMaps",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create cm options --from-literal=var5=val5\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    env:\n    - name: option # name of the env variable\n      valueFrom:\n        configMapKeyRef:\n          name: options # name of config map\n          key: var5 # name of the entity in config map\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl exec -it nginx -- env | grep option # will show 'option=val5'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L109"
+    },
+    {
+      "id": "configuration-0716914d43a8",
+      "topic": "configuration",
+      "title": "Create a configMap 'anotherone' with values 'var6=val6', 'var7=val7'. Load this configMap as env variables into a new nginx pod",
+      "section": "ConfigMaps",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create configmap anotherone --from-literal=var6=val6 --from-literal=var7=val7\nkubectl run --restart=Never nginx --image=nginx -o yaml --dry-run=client > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    envFrom: # different than previous one, that was 'env'\n    - configMapRef: # different from the previous one, was 'configMapKeyRef'\n        name: anotherone # the name of the config map\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl exec -it nginx -- env \n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L153"
+    },
+    {
+      "id": "configuration-1f0362c12877",
+      "topic": "configuration",
+      "title": "Create a configMap 'cmvolume' with values 'var8=val8', 'var9=val9'. Load this as a volume inside an nginx pod on path '/etc/lala'. Create the pod and 'ls' into the '/etc/lala' directory.",
+      "section": "ConfigMaps",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Pod to Use a ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)",
+      "solution": "```bash\nkubectl create configmap cmvolume --from-literal=var8=val8 --from-literal=var9=val9\nkubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  volumes: # add a volumes list\n  - name: myvolume # just a name, you'll reference this in the pods\n    configMap:\n      name: cmvolume # name of your configmap\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    volumeMounts: # your volume mounts are listed here\n    - name: myvolume # the name that you specified in pod.spec.volumes.name\n      mountPath: /etc/lala # the path inside your container\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl exec -it nginx -- /bin/sh\ncd /etc/lala\nls # will show var8 var9\ncat var8 # will show val8\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L194"
+    },
+    {
+      "id": "configuration-18ba5b39bc81",
+      "topic": "configuration",
+      "title": "Create the YAML for an nginx pod that runs with the user ID 101. No need to create the pod",
+      "section": "SecurityContext",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  securityContext: # insert this line\n    runAsUser: 101 # UID for the user\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L246"
+    },
+    {
+      "id": "configuration-30413a9484f7",
+      "topic": "configuration",
+      "title": "Create the YAML for an nginx pod that has the capabilities \"NET_ADMIN\", \"SYS_TIME\" added to its single container",
+      "section": "SecurityContext",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    securityContext: # insert this line\n      capabilities: # and this\n        add: [\"NET_ADMIN\", \"SYS_TIME\"] # this as well\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L281"
+    },
+    {
+      "id": "configuration-80be07de3cde",
+      "topic": "configuration",
+      "title": "Create an nginx pod with requests cpu=100m,memory=256Mi and limits cpu=200m,memory=512Mi",
+      "section": "Resource requests and limits",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Assign CPU Resources to Containers and Pods](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    name: nginx\n    resources:\n      requests:\n        memory: \"256Mi\"\n        cpu: \"100m\"\n      limits:    \n        memory: \"512Mi\"\n        cpu: \"200m\"\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L320"
+    },
+    {
+      "id": "configuration-82621d7ef845",
+      "topic": "configuration",
+      "title": "Create a namespace named limitrange with a LimitRange that limits pod memory to a max of 500Mi and min of 100Mi",
+      "section": "Limit Ranges",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)",
+      "solution": "```bash\nkubectl create ns limitrange\n```\n\nvi 1.yaml\n```YAML\napiVersion: v1\nkind: LimitRange\nmetadata:\n  name: ns-memory-limit\n  namespace: limitrange\nspec:\n  limits:\n  - max: # max and min define the limit range\n      memory: \"500Mi\"\n    min:\n      memory: \"100Mi\"\n    type: Pod\n```\n\n```bash\nkubectl apply -f 1.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L360"
+    },
+    {
+      "id": "configuration-23863970ab48",
+      "topic": "configuration",
+      "title": "Describe the namespace limitrange",
+      "section": "Limit Ranges",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)",
+      "solution": "```bash\nkubectl describe limitrange ns-memory-limit -n limitrange\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L391"
+    },
+    {
+      "id": "configuration-b2ff37e4abbf",
+      "topic": "configuration",
+      "title": "Create an nginx pod that requests 250Mi of memory in the limitrange namespace",
+      "section": "Limit Ranges",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Limit Ranges (https://kubernetes.io/docs/concepts/policy/limit-range/)",
+      "solution": "vi 2.yaml\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\n  namespace: limitrange\nspec:\n  containers:\n  - image: nginx\n    name: nginx\n    resources:\n      requests:\n        memory: \"250Mi\"\n      limits:\n        memory: \"500Mi\" # limit has to be specified and be <= limitrange\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n``` \n\n```bash\nkubectl apply -f 2.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L402"
+    },
+    {
+      "id": "configuration-240625f4e44a",
+      "topic": "configuration",
+      "title": "Create ResourceQuota in namespace `one` with hard requests `cpu=1`, `memory=1Gi` and hard limits `cpu=2`, `memory=2Gi`.",
+      "section": "Resource Quotas",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Resource Quotas (https://kubernetes.io/docs/concepts/policy/resource-quotas/)",
+      "solution": "Create the namespace:\n```bash\nkubectl create ns one\n```\n\nCreate the ResourceQuota\n```bash\nvi rq-one.yaml\n```\n\n```YAML\napiVersion: v1\nkind: ResourceQuota\nmetadata:\n  name: my-rq\n  namespace: one\nspec:\n  hard:\n    requests.cpu: \"1\"\n    requests.memory: 1Gi\n    limits.cpu: \"2\"\n    limits.memory: 2Gi\n```\n\n```bash\nkubectl apply -f rq-one.yaml\n```\n\nor\n```bash\nkubectl create quota my-rq --namespace=one --hard=requests.cpu=1,requests.memory=1Gi,limits.cpu=2,limits.memory=2Gi\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L441"
+    },
+    {
+      "id": "configuration-d318edcc44b9",
+      "topic": "configuration",
+      "title": "Attempt to create a pod with resource requests `cpu=2`, `memory=3Gi` and limits `cpu=3`, `memory=4Gi` in namespace `one`",
+      "section": "Resource Quotas",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Resource Quotas (https://kubernetes.io/docs/concepts/policy/resource-quotas/)",
+      "solution": "```bash\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\n  namespace: one\nspec:\n  containers:\n  - image: nginx\n    name: nginx\n    resources:\n      requests:\n        memory: \"3Gi\"\n        cpu: \"2\"\n      limits:\n        memory: \"4Gi\"\n        cpu: \"3\"\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\n```\n\nExpected error message:\n```bash\nError from server (Forbidden): error when creating \"pod.yaml\": pods \"nginx\" is forbidden: exceeded quota: my-rq, requested: limits.cpu=3,limits.memory=4Gi,requests.cpu=2,requests.memory=3Gi, used: limits.cpu=0,limits.memory=0,requests.cpu=0,requests.memory=0, limited: limits.cpu=2,limits.memory=2Gi,requests.cpu=1,requests.memory=1Gi\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L481"
+    },
+    {
+      "id": "configuration-93c607239c96",
+      "topic": "configuration",
+      "title": "Create a pod with resource requests `cpu=0.5`, `memory=1Gi` and limits `cpu=1`, `memory=2Gi` in namespace `one`",
+      "section": "Resource Quotas",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Policies > Resource Quotas (https://kubernetes.io/docs/concepts/policy/resource-quotas/)",
+      "solution": "```bash\nvi pod2.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\n  namespace: one\nspec:\n  containers:\n  - image: nginx\n    name: nginx\n    resources:\n      requests:\n        memory: \"1Gi\"\n        cpu: \"0.5\"\n      limits:\n        memory: \"2Gi\"\n        cpu: \"1\"\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n```\n\n```bash\nkubectl create -f pod2.yaml\n```\n\nShow the ResourceQuota usage in namespace `one`\n```bash\nkubectl get resourcequota -n one\n```\n\n```\nNAME    AGE   REQUEST                                          LIMIT\nmy-rq   10m   requests.cpu: 500m/1, requests.memory: 1Gi/1Gi   limits.cpu: 1/2, limits.memory: 2Gi/2Gi\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L526"
+    },
+    {
+      "id": "configuration-facb0bc27a56",
+      "topic": "configuration",
+      "title": "Create a secret called mysecret with the values password=mypass",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nkubectl create secret generic mysecret --from-literal=password=mypass\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L583"
+    },
+    {
+      "id": "configuration-800020510cb6",
+      "topic": "configuration",
+      "title": "Create a secret called mysecret2 that gets key/value from a file",
+      "section": "Secrets",
+      "prompt": "Create a file called username with the value admin:\n\n```bash\necho -n admin > username\n```",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nkubectl create secret generic mysecret2 --from-file=username\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L595"
+    },
+    {
+      "id": "configuration-cbda172d940d",
+      "topic": "configuration",
+      "title": "Get the value of mysecret2",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nkubectl get secret mysecret2 -o yaml\necho -n YWRtaW4= | base64 -d # on MAC it is -D, which decodes the value and shows 'admin'\n```\n\nAlternative using `--jsonpath`:\n\n```bash\nkubectl get secret mysecret2 -o jsonpath='{.data.username}' | base64 -d  # on MAC it is -D\n```\n\nAlternative using `--template`:\n\n```bash\nkubectl get secret mysecret2 --template '{{.data.username}}' | base64 -d  # on MAC it is -D\n```\n\nAlternative using `jq`:\n\n```bash\nkubectl get secret mysecret2 -o json | jq -r .data.username | base64 -d  # on MAC it is -D\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L613"
+    },
+    {
+      "id": "configuration-76840b9115ac",
+      "topic": "configuration",
+      "title": "Create an nginx pod that mounts the secret mysecret2 in a volume on path /etc/foo",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  volumes: # specify the volumes\n  - name: foo # this name will be used for reference inside the container\n    secret: # we want a secret\n      secretName: mysecret2 # name of the secret - this must already exist on pod creation\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    volumeMounts: # our volume mounts\n    - name: foo # name on pod.spec.volumes\n      mountPath: /etc/foo #our mount path\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl exec -it nginx -- /bin/bash\nls /etc/foo  # shows username\ncat /etc/foo/username # shows admin\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L644"
+    },
+    {
+      "id": "configuration-5c1870eb99ab",
+      "topic": "configuration",
+      "title": "Delete the pod you just created and mount the variable 'username' from secret mysecret2 onto a new nginx pod in env variable called 'USERNAME'",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nkubectl delete po nginx\nkubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    env: # our env variables\n    - name: USERNAME # asked name\n      valueFrom:\n        secretKeyRef: # secret reference\n          name: mysecret2 # our secret's name\n          key: username # the key of the data in the secret\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl exec -it nginx -- env | grep USERNAME | cut -d '=' -f 2 # will show 'admin'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L690"
+    },
+    {
+      "id": "configuration-efc409e4f8dd",
+      "topic": "configuration",
+      "title": "Create a Secret named 'ext-service-secret' in the namespace 'secret-ops'. Then, provide the key-value pair API_KEY=LmLHbYhsgWZwNifiqaRorH8T as literal.",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nexport ns=\"-n secret-ops\"\nexport do=\"--dry-run=client -oyaml\"\nk create secret generic ext-service-secret --from-literal=API_KEY=LmLHbYhsgWZwNifiqaRorH8T $ns $do > sc.yaml\nk apply -f sc.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L734"
+    },
+    {
+      "id": "configuration-29300ee8ebe5",
+      "topic": "configuration",
+      "title": "Consuming the Secret. Create a Pod named 'consumer' with the image 'nginx' in the namespace 'secret-ops' and consume the Secret as an environment variable. Then, open an interactive shell to the Pod, and print all environment variables.",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\nexport ns=\"-n secret-ops\"\nexport do=\"--dry-run=client -oyaml\"\nk run consumer --image=nginx $ns $do > nginx.yaml\nvi nginx.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: consumer\n  name: consumer\n  namespace: secret-ops\nspec:\n  containers:\n  - image: nginx\n    name: consumer\n    resources: {}\n    env:\n    - name: API_KEY\n      valueFrom:\n        secretKeyRef:\n          name: ext-service-secret\n          key: API_KEY\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n```\n\n```bash\nk create $ns -f nginx.yaml\nk exec -it $ns consumer -- /bin/sh\n#env\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L749"
+    },
+    {
+      "id": "configuration-8f029585a7e8",
+      "topic": "configuration",
+      "title": "Create a Secret named 'my-secret' of type 'kubernetes.io/ssh-auth' in the namespace 'secret-ops'. Define a single key named 'ssh-privatekey', and point it to the file 'id_rsa' in this directory.",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\n#Tips, export to variable\nexport do=\"--dry-run=client -oyaml\"\nexport ns=\"-n secret-ops\"\n\n#if id_rsa file didn't exist.\nssh-keygen\n\nk create secret generic my-secret $ns --type=\"kubernetes.io/ssh-auth\" --from-file=ssh-privatekey=id_rsa $do > sc.yaml\nk apply -f sc.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L793"
+    },
+    {
+      "id": "configuration-48e7cab49f7c",
+      "topic": "configuration",
+      "title": "Create a Pod named 'consumer' with the image 'nginx' in the namespace 'secret-ops', and consume the Secret as Volume. Mount the Secret as Volume to the path /var/app with read-only access. Open an interactive shell to the Pod, and render the contents of the file.",
+      "section": "Secrets",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Concepts > Configuration > [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)\n\nkubernetes.io > Documentation > Tasks > Inject Data Into Applications > [Distribute Credentials Securely Using Secrets](https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/)",
+      "solution": "```bash\n#Tips, export to variable\nexport ns=\"-n secret-ops\"\nexport do=\"--dry-run=client -oyaml\"\nk run consumer --image=nginx $ns $do > nginx.yaml\nvi nginx.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: consumer\n  name: consumer\n  namespace: secret-ops\nspec:\n  containers:\n    - image: nginx\n      name: consumer\n      resources: {}\n      volumeMounts:\n        - name: foo\n          mountPath: \"/var/app\"\n          readOnly: true\n  volumes:\n    - name: foo\n      secret:\n        secretName: my-secret\n        optional: true\n  dnsPolicy: ClusterFirst\n  restartPolicy: Always\nstatus: {}\n```\n\n```bash\nk exec -it $ns consumer -- /bin/sh\n# cat /var/app/ssh-privatekey\n# exit\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L811"
+    },
+    {
+      "id": "configuration-3bc403c2d6b6",
+      "topic": "configuration",
+      "title": "See all the service accounts of the cluster in all namespaces",
+      "section": "ServiceAccounts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)",
+      "solution": "```bash\nkubectl get sa --all-namespaces\n```\nAlternatively \n\n```bash\nkubectl get sa -A\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L863"
+    },
+    {
+      "id": "configuration-b6a5c8dfd561",
+      "topic": "configuration",
+      "title": "Create a new serviceaccount called 'myuser'",
+      "section": "ServiceAccounts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)",
+      "solution": "```bash\nkubectl create sa myuser\n```\n\nAlternatively:\n\n```bash\n# let's get a template easily\nkubectl get sa default -o yaml > sa.yaml\nvim sa.yaml\n```\n\n```YAML\napiVersion: v1\nkind: ServiceAccount\nmetadata:\n  name: myuser\n```\n\n```bash\nkubectl create -f sa.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L880"
+    },
+    {
+      "id": "configuration-5829be3df80e",
+      "topic": "configuration",
+      "title": "Create an nginx pod that uses 'myuser' as a service account",
+      "section": "ServiceAccounts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never -o yaml --dry-run=client > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  serviceAccountName: myuser # we use pod.spec.serviceAccountName\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\nor\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  serviceAccount: myuser # we use pod.spec.serviceAccount\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl get pod nginx -o jsonpath='{.spec.serviceAccountName}' # output: myuser\n\nkubectl exec -it nginx -- cat /var/run/secrets/kubernetes.io/serviceaccount/token # to check if the ServiceAccount token is mounted inside the Pod. Starting from Kubernetes 1.24+, the token is dynamically projected into the Pod\n\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L911"
+    },
+    {
+      "id": "configuration-b1bad0cd91e1",
+      "topic": "configuration",
+      "title": "Generate an API token for the service account 'myuser'",
+      "section": "ServiceAccounts",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Service Accounts for Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/)",
+      "solution": "```bash\nkubectl create token myuser\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/d.configuration.md#L974"
+    },
+    {
+      "id": "observability-dfe4918a2044",
+      "topic": "observability",
+      "title": "Create an nginx pod with a liveness probe that just runs the command 'ls'. Save its YAML in pod.yaml. Run it, check its probe status, delete it.",
+      "section": "Liveness, readiness and startup probes",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    livenessProbe: # our probe\n      exec: # add this line\n        command: # command definition\n        - ls # ls command\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl describe pod nginx | grep -i liveness # run this to see that liveness probe works\nkubectl delete -f pod.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L8"
+    },
+    {
+      "id": "observability-80cd6dcef6bc",
+      "topic": "observability",
+      "title": "Modify the pod.yaml file so that liveness probe starts kicking in after 5 seconds whereas the interval between probes would be 5 seconds. Run it, check the probe, delete it.",
+      "section": "Liveness, readiness and startup probes",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+      "solution": "```bash\nkubectl explain pod.spec.containers.livenessProbe # get the exact names\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    livenessProbe:\n      initialDelaySeconds: 5 # add this line\n      periodSeconds: 5 # add this line as well\n      exec:\n        command:\n        - ls\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl describe po nginx | grep -i liveness\nkubectl delete -f pod.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L50"
+    },
+    {
+      "id": "observability-533bdca201e2",
+      "topic": "observability",
+      "title": "Create an nginx pod (that includes port 80) with an HTTP readinessProbe on path '/' on port 80. Again, run it, check the readinessProbe, delete it.",
+      "section": "Liveness, readiness and startup probes",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+      "solution": "```bash\nkubectl run nginx --image=nginx --dry-run=client -o yaml --restart=Never --port=80 > pod.yaml\nvi pod.yaml\n```\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: nginx\n  name: nginx\nspec:\n  containers:\n  - image: nginx\n    imagePullPolicy: IfNotPresent\n    name: nginx\n    resources: {}\n    ports:\n    - containerPort: 80 # Note: Readiness probes runs on the container during its whole lifecycle. Since nginx exposes 80, containerPort: 80 is not required for readiness to work.\n    readinessProbe: # declare the readiness probe\n      httpGet: # add this line\n        path: / #\n        port: 80 #\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\nstatus: {}\n```\n\n```bash\nkubectl create -f pod.yaml\nkubectl describe pod nginx | grep -i readiness # to see the pod readiness details\nkubectl delete -f pod.yaml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L93"
+    },
+    {
+      "id": "observability-cc9dcedee601",
+      "topic": "observability",
+      "title": "Lots of pods are running in `qa`,`alan`,`test`,`production` namespaces.  All of these pods are configured with liveness probe.  Please list all pods whose liveness probe are failed in the format of `<namespace>/<pod name>` per line.",
+      "section": "Liveness, readiness and startup probes",
+      "prompt": "",
+      "context": "kubernetes.io > Documentation > Tasks > Configure Pods and Containers > [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)",
+      "solution": "A typical liveness probe failure event\n```\nLAST SEEN   TYPE      REASON      OBJECT              MESSAGE\n22m         Warning   Unhealthy   pod/liveness-exec   Liveness probe failed: cat: can't open '/tmp/healthy': No such file or directory\n```\n\ncollect failed pods namespace by namespace\n\n```sh\nkubectl get events -o json | jq -r '.items[] | select(.message | contains(\"Liveness probe failed\")).involvedObject | .namespace + \"/\" + .name'\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L137"
+    },
+    {
+      "id": "observability-e3ecade1e2ea",
+      "topic": "observability",
+      "title": "Create a busybox pod that runs `i=0; while true; do echo \"$i: $(date)\"; i=$((i+1)); sleep 1; done`. Check its logs",
+      "section": "Logging",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl run busybox --image=busybox --restart=Never -- /bin/sh -c 'i=0; while true; do echo \"$i: $(date)\"; i=$((i+1)); sleep 1; done'\nkubectl logs busybox -f # follow the logs\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L159"
+    },
+    {
+      "id": "observability-bd666beda2cb",
+      "topic": "observability",
+      "title": "Create a busybox pod that runs 'ls /notexist'. Determine if there's an error (of course there is), see it. In the end, delete the pod",
+      "section": "Debugging",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl run busybox --restart=Never --image=busybox -- /bin/sh -c 'ls /notexist'\n# show that there's an error\nkubectl logs busybox\nkubectl describe po busybox\nkubectl delete po busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L174"
+    },
+    {
+      "id": "observability-e9b29e7f92d6",
+      "topic": "observability",
+      "title": "Create a busybox pod that runs 'notexist'. Determine if there's an error (of course there is), see it. In the end, delete the pod forcefully with a 0 grace period",
+      "section": "Debugging",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl run busybox --restart=Never --image=busybox -- notexist\nkubectl logs busybox # will bring nothing! container never started\nkubectl describe po busybox # in the events section, you'll see the error\n# also...\nkubectl get events | grep -i error # you'll see the error here as well\nkubectl delete po busybox --force --grace-period=0\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L190"
+    },
+    {
+      "id": "observability-81c0ce5fbdb0",
+      "topic": "observability",
+      "title": "Get CPU/memory utilization for nodes ([metrics-server](https://github.com/kubernetes-incubator/metrics-server) must be running)",
+      "section": "Debugging",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl top nodes\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/e.observability.md#L208"
+    },
+    {
+      "id": "services-networking-7cd99a0ac81c",
+      "topic": "services-networking",
+      "title": "Create a pod with image nginx called nginx and expose its port 80",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl run nginx --image=nginx --restart=Never --port=80 --expose\n# observe that a pod as well as a service are created\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L4"
+    },
+    {
+      "id": "services-networking-a9071e9af8b1",
+      "topic": "services-networking",
+      "title": "Confirm that ClusterIP has been created. Also check endpoints",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get svc nginx # services\nkubectl get ep # endpoints\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L18"
+    },
+    {
+      "id": "services-networking-bda0945b807f",
+      "topic": "services-networking",
+      "title": "Get service's ClusterIP, create a temp busybox pod and 'hit' that IP with wget",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get svc nginx # get the IP (something like 10.108.93.130)\nkubectl run busybox --rm --image=busybox -it --restart=Never --\nwget -O- [PUT THE POD'S IP ADDRESS HERE]:80\nexit\n```\n\n\nor\n\n\n```bash\nIP=$(kubectl get svc nginx --template={{.spec.clusterIP}}) # get the IP (something like 10.108.93.130)\nkubectl run busybox --rm --image=busybox -it --restart=Never --env=\"IP=$IP\" -- wget -O- $IP:80 --timeout 2\n# Tip: --timeout is optional, but it helps to get answer more quickly when connection fails (in seconds vs minutes)\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L31"
+    },
+    {
+      "id": "services-networking-3c8f38af34c6",
+      "topic": "services-networking",
+      "title": "Convert the ClusterIP to NodePort for the same service and find the NodePort port. Hit service using Node's IP. Delete the service and the pod at the end.",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl edit svc nginx\n```\n\n```yaml\napiVersion: v1\nkind: Service\nmetadata:\n  creationTimestamp: 2018-06-25T07:55:16Z\n  name: nginx\n  namespace: default\n  resourceVersion: \"93442\"\n  selfLink: /api/v1/namespaces/default/services/nginx\n  uid: 191e3dac-784d-11e8-86b1-00155d9f663c\nspec:\n  clusterIP: 10.97.242.220\n  ports:\n  - port: 80\n    protocol: TCP\n    targetPort: 80\n  selector:\n    run: nginx\n  sessionAffinity: None\n  type: NodePort # change cluster IP to nodeport\nstatus:\n  loadBalancer: {}\n```\n\nor\n\n```bash\nkubectl patch svc nginx -p '{\"spec\":{\"type\":\"NodePort\"}}' \n```\n\n```bash\nkubectl get svc\n```\n\n```\n# result:\nNAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE\nkubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        1d\nnginx        NodePort    10.107.253.138   <none>        80:31931/TCP   3m\n```\n\n```bash\nwget -O- NODE_IP:31931 # if you're using Kubernetes with Docker for Windows/Mac, try 127.0.0.1\n#if you're using minikube, try minikube ip, then get the node ip such as 192.168.99.117\n```\n\n```bash\nkubectl delete svc nginx # Deletes the service\nkubectl delete pod nginx # Deletes the pod\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L56"
+    },
+    {
+      "id": "services-networking-dbfc0999ebba",
+      "topic": "services-networking",
+      "title": "Create a deployment called foo using image 'dgkanatsios/simpleapp' (a simple server that returns hostname) and 3 replicas. Label it as 'app=foo'. Declare that containers in this pod will accept traffic on port 8080 (do NOT create a service yet)",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl create deploy foo --image=dgkanatsios/simpleapp --port=8080 --replicas=3\nkubectl label deployment foo --overwrite app=foo #This is optional since kubectl create deploy foo will create label app=foo by default\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L118"
+    },
+    {
+      "id": "services-networking-7b4bb0108f61",
+      "topic": "services-networking",
+      "title": "Get the pod IPs. Create a temp busybox pod and try hitting them on port 8080",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get pods -l app=foo -o wide # 'wide' will show pod IPs\nkubectl run busybox --image=busybox --restart=Never -it --rm -- sh\nwget -O- <POD_IP>:8080 # do not try with pod name, will not work\n# try hitting all IPs generated after running 1st command to confirm that hostname is different\nexit\n# or\nkubectl get po -o wide -l app=foo | awk '{print $6}' | grep -v IP | xargs -L1 -I '{}' kubectl run --rm -ti tmp --restart=Never --image=busybox -- wget -O- http://\\{\\}:8080\n# or\nkubectl get po -l app=foo -o jsonpath='{range .items[*]}{.status.podIP}{\"\\n\"}{end}' | xargs -L1 -I '{}' kubectl run --rm -ti tmp --restart=Never --image=busybox -- wget -O- http://\\{\\}:8080\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L130"
+    },
+    {
+      "id": "services-networking-4bf5b692c64c",
+      "topic": "services-networking",
+      "title": "Create a service that exposes the deployment on port 6262. Verify its existence, check the endpoints",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl expose deploy foo --port=6262 --target-port=8080\nkubectl get service foo # you will see ClusterIP as well as port 6262\nkubectl get endpoints foo # you will see the IPs of the three replica pods, listening on port 8080\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L151"
+    },
+    {
+      "id": "services-networking-e847f2f1491a",
+      "topic": "services-networking",
+      "title": "Create a temp busybox pod and connect via wget to foo service. Verify that each time there's a different hostname returned. Delete deployment and services to cleanup the cluster",
+      "section": "Services and networking",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl get svc # get the foo service ClusterIP\nkubectl run busybox --image=busybox -it --rm --restart=Never -- sh\nwget -O- foo:6262 # DNS works! run it many times, you'll see different pods responding\nwget -O- <SERVICE_CLUSTER_IP>:6262 # ClusterIP works as well\n# you can also kubectl logs on deployment pods to see the container logs\nkubectl delete svc foo\nkubectl delete deploy foo\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L166"
+    },
+    {
+      "id": "services-networking-a3056a84e7d8",
+      "topic": "services-networking",
+      "title": "Create an nginx deployment of 2 replicas, expose it via a ClusterIP service on port 80. Create a NetworkPolicy so that only pods with labels 'access: granted' can access the pods in this deployment and apply it",
+      "section": "Services and networking",
+      "prompt": "kubernetes.io > Documentation > Concepts > Services, Load Balancing, and Networking > [Network Policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)\n\n> Note that network policies may not be enforced by default, depending on your k8s implementation. E.g. Azure AKS by default won't have policy enforcement, the cluster must be created with an explicit support for `netpol` https://docs.microsoft.com/en-us/azure/aks/use-network-policies#overview-of-network-policy",
+      "context": "",
+      "solution": "```bash\nkubectl create deployment nginx --image=nginx --replicas=2\nkubectl expose deployment nginx --port=80\n\nkubectl describe svc nginx # see the 'app=nginx' selector for the pods\n# or\nkubectl get svc nginx -o yaml\n\nvi policy.yaml\n```\n\n```YAML\nkind: NetworkPolicy\napiVersion: networking.k8s.io/v1\nmetadata:\n  name: access-nginx # pick a name\nspec:\n  podSelector:\n    matchLabels:\n      app: nginx # selector for the pods\n  ingress: # allow ingress traffic\n  - from:\n    - podSelector: # from pods\n        matchLabels: # with this label\n          access: granted\n```\n\n```bash\n# Create the NetworkPolicy\nkubectl create -f policy.yaml\n\n# Check if the Network Policy has been created correctly\n# make sure that your cluster's network provider supports Network Policy (https://kubernetes.io/docs/tasks/administer-cluster/declare-network-policy/#before-you-begin)\nkubectl run busybox --image=busybox --rm -it --restart=Never -- wget -O- http://nginx:80 --timeout 2                          # This should not work. --timeout is optional here. But it helps to get answer more quickly (in seconds vs minutes)\nkubectl run busybox --image=busybox --rm -it --restart=Never --labels=access=granted -- wget -O- http://nginx:80 --timeout 2  # This should be fine\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L184"
+    },
+    {
+      "id": "services-networking-220b10897573",
+      "topic": "services-networking",
+      "title": "Create an Ingress resource to expose an existing service using HTTP path routing",
+      "section": "Services and networking",
+      "prompt": "You already have:\n- a Deployment nginx\n- a Service nginx exposing port 80\n\nYou want to expose it externally using an Ingress rule.\n> Note that in CKAD, you are not required to install an Ingress Controller, but you must know how to define and troubleshoot an Ingress resource and understand how it connects to a Service.",
+      "context": "",
+      "solution": "Verify the service exists:\n  \n```bash\nkubectl get svc nginx\n```\nExpected:\n- Type: ClusterIP\n- Port: 80\n\nIf the Deployment and Service do not already exist in your practice environment, you can create them using the following commands:\n```bash\nkubectl create deployment nginx --image=nginx --port=80\nkubectl expose deployment nginx --port=80 --name=nginx\n```\n\nCreate an Ingress resource:\n```bash\nvi ingress.yaml\n```\n```bash\napiVersion: networking.k8s.io/v1\nkind: Ingress\nmetadata:\n  name: nginx-ingress\nspec:\n  rules:\n  - host: nginx.example.com\n    http:\n      paths:\n      - path: /\n        pathType: Prefix\n        backend:\n          service:\n            name: nginx\n            port:\n              number: 80\n```\nApply it:\n```bash\nkubectl apply -f ingress.yaml\n```\n\nVerify the Ingress:\n```bash\nkubectl get ingress\nkubectl describe ingress nginx-ingress\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/f.services.md#L233"
+    },
+    {
+      "id": "state-persistence-f14ded9c4d31",
+      "topic": "state-persistence",
+      "title": "Create busybox pod with two containers, each one will have the image busybox and will run the 'sleep 3600' command. Make both containers mount an emptyDir at '/etc/foo'. Connect to the second busybox, write the first column of '/etc/passwd' file to '/etc/foo/passwd'. Connect to the first busybox and write '/etc/foo/passwd' file to standard output. Delete pod.",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "*This question is probably a better fit for the 'Multi-container-pods' section but I'm keeping it here as it will help you get acquainted with state*\n\nThe easiest way to do this is to create a template pod with:\n\n```bash\nkubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml\nvi pod.yaml\n```\nCopy paste the container definition and type the lines that have a comment in the end:\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\n  containers:\n  - args:\n    - /bin/sh\n    - -c\n    - sleep 3600\n    image: busybox\n    imagePullPolicy: IfNotPresent\n    name: busybox\n    resources: {}\n    volumeMounts: #\n    - name: myvolume #\n      mountPath: /etc/foo #\n  - args:\n    - /bin/sh\n    - -c\n    - sleep 3600\n    image: busybox\n    name: busybox2 # don't forget to change the name during copy paste, must be different from the first container's name!\n    volumeMounts: #\n    - name: myvolume #\n      mountPath: /etc/foo #\n  volumes: #\n  - name: myvolume #\n    emptyDir: {} #\n```\nIn case you forget to add ```bash -- /bin/sh -c 'sleep 3600'``` in template pod create command, you can include command field in config file\n\n```YAML\nspec:\n  containers:\n  - image: busybox\n    name: busybox\n    command: [\"/bin/sh\", \"-c\", \"sleep 3600\"]\n```\n\nConnect to the second container:\n\n```bash\nkubectl exec -it busybox -c busybox2 -- /bin/sh\ncat /etc/passwd | cut -f 1 -d ':' > /etc/foo/passwd # instead of cut command you can use awk -F \":\" '{print $1}'\ncat /etc/foo/passwd # confirm that stuff has been written successfully\nexit\n```\n\nConnect to the first container:\n\n```bash\nkubectl exec -it busybox -c busybox -- /bin/sh\nmount | grep foo # confirm the mounting\ncat /etc/foo/passwd\nexit\nkubectl delete po busybox\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L10"
+    },
+    {
+      "id": "state-persistence-62c5b08b6401",
+      "topic": "state-persistence",
+      "title": "Create a PersistentVolume of 10Gi, called 'myvolume'. Make it have accessMode of 'ReadWriteOnce' and 'ReadWriteMany', storageClassName 'normal', mounted on hostPath '/etc/foo'. Save it on pv.yaml, add it to the cluster. Show the PersistentVolumes that exist on the cluster",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nvi pv.yaml\n```\n\n```YAML\nkind: PersistentVolume\napiVersion: v1\nmetadata:\n  name: myvolume\nspec:\n  storageClassName: normal\n  capacity:\n    storage: 10Gi\n  accessModes:\n    - ReadWriteOnce\n    - ReadWriteMany\n  hostPath:\n    path: /etc/foo\n```\n\nShow the PersistentVolumes:\n\n```bash\nkubectl create -f pv.yaml\n# will have status 'Available'\nkubectl get pv\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L94"
+    },
+    {
+      "id": "state-persistence-6e4927ffaf92",
+      "topic": "state-persistence",
+      "title": "Create a PersistentVolumeClaim for this PersistentVolume, called 'mypvc', a request of 4Gi and an accessMode of ReadWriteOnce, with the storageClassName of normal, and save it on pvc.yaml. Create it on the cluster. Show the PersistentVolumeClaims of the cluster. Show the PersistentVolumes of the cluster",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nvi pvc.yaml\n```\n\n```YAML\nkind: PersistentVolumeClaim\napiVersion: v1\nmetadata:\n  name: mypvc\nspec:\n  storageClassName: normal\n  accessModes:\n    - ReadWriteOnce\n  resources:\n    requests:\n      storage: 4Gi\n```\n\nCreate it on the cluster:\n\n```bash\nkubectl create -f pvc.yaml\n```\n\nShow the PersistentVolumeClaims and PersistentVolumes:\n\n```bash\nkubectl get pvc # will show as 'Bound'\nkubectl get pv # will show as 'Bound' as well\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L130"
+    },
+    {
+      "id": "state-persistence-9b5571617d59",
+      "topic": "state-persistence",
+      "title": "Create a busybox pod with command 'sleep 3600', save it on pod.yaml. Mount the PersistentVolumeClaim to '/etc/foo'. Connect to the 'busybox' pod, and copy the '/etc/passwd' file to '/etc/foo/passwd'",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "Create a skeleton pod:\n\n```bash\nkubectl run busybox --image=busybox --restart=Never -o yaml --dry-run=client -- /bin/sh -c 'sleep 3600' > pod.yaml\nvi pod.yaml\n```\n\nAdd the lines that finish with a comment:\n\n```YAML\napiVersion: v1\nkind: Pod\nmetadata:\n  creationTimestamp: null\n  labels:\n    run: busybox\n  name: busybox\nspec:\n  containers:\n  - args:\n    - /bin/sh\n    - -c\n    - sleep 3600\n    image: busybox\n    imagePullPolicy: IfNotPresent\n    name: busybox\n    resources: {}\n    volumeMounts: #\n    - name: myvolume #\n      mountPath: /etc/foo #\n  dnsPolicy: ClusterFirst\n  restartPolicy: Never\n  volumes: #\n  - name: myvolume #\n    persistentVolumeClaim: #\n      claimName: mypvc #\nstatus: {}\n```\n\nCreate the pod:\n\n```bash\nkubectl create -f pod.yaml\n```\n\nConnect to the pod and copy '/etc/passwd' to '/etc/foo/passwd':\n\n```bash\nkubectl exec busybox -it -- cp /etc/passwd /etc/foo/passwd\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L169"
+    },
+    {
+      "id": "state-persistence-557b44434396",
+      "topic": "state-persistence",
+      "title": "Create a second pod which is identical with the one you just created (you can easily do it by changing the 'name' property on pod.yaml). Connect to it and verify that '/etc/foo' contains the 'passwd' file. Delete pods to cleanup. Note: If you can't see the file from the second pod, can you figure out why? What would you do to fix that?",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "Create the second pod, called busybox2:\n\n```bash\nvim pod.yaml\n# change 'metadata.name: busybox' to 'metadata.name: busybox2'\nkubectl create -f pod.yaml\nkubectl exec busybox2 -- ls /etc/foo # will show 'passwd'\n# cleanup\nkubectl delete po busybox busybox2\nkubectl delete pvc mypvc\nkubectl delete pv myvolume\n```\n\nIf the file doesn't show on the second pod but it shows on the first, it has most likely been scheduled on a different node.\n\n```bash\n# check which nodes the pods are on\nkubectl get po busybox -o wide\nkubectl get po busybox2 -o wide\n```\n\nIf they are on different nodes, you won't see the file, because we used the `hostPath` volume type.\nIf you need to access the same files in a multi-node cluster, you need a volume type that is independent of a specific node.\nThere are lots of different types per cloud provider [(see here)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes), a general solution could be to use NFS.",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L228"
+    },
+    {
+      "id": "state-persistence-d11d90dc5f93",
+      "topic": "state-persistence",
+      "title": "Create a busybox pod with 'sleep 3600' as arguments. Copy '/etc/passwd' from the pod to your local folder",
+      "section": "Define volumes",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl run busybox --image=busybox --restart=Never -- sleep 3600\nkubectl cp busybox:/etc/passwd ./passwd # kubectl cp command\n# previous command might report an error, feel free to ignore it since copy command works\ncat passwd\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/g.state.md#L263"
+    },
+    {
+      "id": "helm-e2c42ac9f9fa",
+      "topic": "helm",
+      "title": "Creating a basic Helm chart",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm create chart-test ## this would create a helm \n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L7"
+    },
+    {
+      "id": "helm-f0e0d766e5cc",
+      "topic": "helm",
+      "title": "Running a Helm chart",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm install -f myvalues.yaml myredis ./redis\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L19"
+    },
+    {
+      "id": "helm-549a8e435eba",
+      "topic": "helm",
+      "title": "Find pending Helm deployments on all namespaces",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm list --pending -A\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L31"
+    },
+    {
+      "id": "helm-49c8f3a48a65",
+      "topic": "helm",
+      "title": "Uninstall a Helm release",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm uninstall -n namespace release_name\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L43"
+    },
+    {
+      "id": "helm-1577f597a0bd",
+      "topic": "helm",
+      "title": "Upgrading a Helm chart",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm upgrade -f myvalues.yaml -f override.yaml redis ./redis\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L55"
+    },
+    {
+      "id": "helm-f6b7be3f958c",
+      "topic": "helm",
+      "title": "Using Helm repo",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "Add, list, remove, update and index chart repos\n\n```bash\nhelm repo add [NAME] [URL]  [flags]\n\nhelm repo list / helm repo ls\n\nhelm repo remove [REPO1] [flags]\n\nhelm repo update / helm repo up\n\nhelm repo update [REPO1] [flags]\n\nhelm repo index [DIR] [flags]\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L67"
+    },
+    {
+      "id": "helm-bbba15a6304b",
+      "topic": "helm",
+      "title": "Download a Helm chart from a repository",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm pull [chart URL | repo/chartname] [...] [flags] ## this would download a helm, not install \nhelm pull --untar [rep/chartname] # untar the chart after downloading it \n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L91"
+    },
+    {
+      "id": "helm-f92cbe0a5a34",
+      "topic": "helm",
+      "title": "Add the Bitnami repo at https://charts.bitnami.com/bitnami to Helm",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm repo add bitnami https://charts.bitnami.com/bitnami\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L104"
+    },
+    {
+      "id": "helm-94840f9d566c",
+      "topic": "helm",
+      "title": "Write the contents of the values.yaml file of the `bitnami/node` chart to standard output",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nhelm show values bitnami/node\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L115"
+    },
+    {
+      "id": "helm-0b7d0c5d4101",
+      "topic": "helm",
+      "title": "Install the `bitnami/node` chart setting the number of replicas to 5",
+      "section": "Helm in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "To achieve this, we need two key pieces of information:\n- The name of the attribute in values.yaml which controls replica count\n- A simple way to set the value of this attribute during installation\n\nTo identify the name of the attribute in the values.yaml file, we could get all the values, as in the previous task, and then grep to find attributes matching the pattern `replica`\n```bash\nhelm show values bitnami/node | grep -i replica\n```\nwhich returns\n```bash\n## @param replicaCount Specify the number of replicas for the application\nreplicaCount: 1\n```\n \nWe can use the `--set` argument during installation to override attribute values. Hence, to set the replica count to 5, we need to run\n```bash\nhelm install mynode bitnami/node --set replicaCount=5\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/h.helm.md#L126"
+    },
+    {
+      "id": "custom-resources-b854e760ce17",
+      "topic": "custom-resources",
+      "title": "Create a CustomResourceDefinition manifest file for an Operator with the following specifications :",
+      "section": "CRD in K8s",
+      "prompt": "* *Name* : `operators.stable.example.com`\n* *Group* : `stable.example.com`\n* *Schema*: `<email: string><name: string><age: integer>`\n* *Scope*: `Namespaced`\n* *Names*: `<plural: operators><singular: operator><shortNames: op>`\n* *Kind*: `Operator`",
+      "context": "",
+      "solution": "```yaml\napiVersion: apiextensions.k8s.io/v1\nkind: CustomResourceDefinition\nmetadata:\n  # name must match the spec fields below, and be in the form: <plural>.<group>\n  name: operators.stable.example.com\nspec:\n  group: stable.example.com\n  versions:\n    - name: v1\n      served: true\n      # One and only one version must be marked as the storage version.\n      storage: true\n      schema:\n        openAPIV3Schema:\n          type: object\n          properties:\n            spec:\n              type: object\n              properties:\n                email:\n                  type: string\n                name:\n                  type: string\n                age:\n                  type: integer\n  scope: Namespaced\n  names:\n    plural: operators\n    singular: operator\n    # kind is normally the CamelCased singular type. Your resource manifests use this.\n    kind: Operator\n    shortNames:\n    - op\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/i.crd.md#L7"
+    },
+    {
+      "id": "custom-resources-6e678c4dd728",
+      "topic": "custom-resources",
+      "title": "Create the CRD resource in the K8S API",
+      "section": "CRD in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\nkubectl apply -f operator-crd.yml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/i.crd.md#L57"
+    },
+    {
+      "id": "custom-resources-62a9622546dd",
+      "topic": "custom-resources",
+      "title": "Create custom object from the CRD",
+      "section": "CRD in K8s",
+      "prompt": "* *Name* : `operator-sample`\n* *Kind*: `Operator`\n* Spec:\n  * email: `operator-sample@stable.example.com`\n  * name: `operator sample`\n  * age: `30`",
+      "context": "",
+      "solution": "```yaml\napiVersion: stable.example.com/v1\nkind: Operator\nmetadata:\n  name: operator-sample\nspec:\n  email: operator-sample@stable.example.com\n  name: \"operator sample\"\n  age: 30\n```\n\n```bash\nkubectl apply -f operator.yml\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/i.crd.md#L69"
+    },
+    {
+      "id": "custom-resources-48e4ec121f3f",
+      "topic": "custom-resources",
+      "title": "Listing operator",
+      "section": "CRD in K8s",
+      "prompt": "",
+      "context": "",
+      "solution": "Use singular, plural and short forms\n\n```bash\nkubectl get operators\nor\nkubectl get operator\nor\nkubectl get op\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/i.crd.md#L99"
+    },
+    {
+      "id": "container-images-d43ab80e8740",
+      "topic": "container-images",
+      "title": "Create a Dockerfile to deploy an Apache HTTP Server which hosts a custom main page",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```Dockerfile\nFROM docker.io/httpd:2.4\nRUN echo \"Hello, World!\" > /usr/local/apache2/htdocs/index.html\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L7"
+    },
+    {
+      "id": "container-images-1f9d206bd6b7",
+      "topic": "container-images",
+      "title": "Build and see how many layers the image consists of",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman build -t simpleapp .\nSTEP 1/2: FROM httpd:2.4\nSTEP 2/2: RUN echo \"Hello, World!\" > /usr/local/apache2/htdocs/index.html\nCOMMIT simpleapp\n--> ef4b14a72d0\nSuccessfully tagged localhost/simpleapp:latest\nef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b\n\n:~$ podman images\nREPOSITORY               TAG         IMAGE ID      CREATED        SIZE\nlocalhost/simpleapp      latest      ef4b14a72d02  8 seconds ago  148 MB\ndocker.io/library/httpd  2.4         98f93cd0ec3b  7 days ago     148 MB\n\n:~$ podman image tree localhost/simpleapp:latest\nImage ID: ef4b14a72d02\nTags:     [localhost/simpleapp:latest]\nSize:     147.8MB\nImage Layers\n├── ID: ad6562704f37 Size:  83.9MB\n├── ID: c234616e1912 Size: 3.072kB\n├── ID: c23a797b2d04 Size: 2.721MB\n├── ID: ede2e092faf0 Size: 61.11MB\n├── ID: 971c2cdf3872 Size: 3.584kB Top Layer of: [docker.io/library/httpd:2.4]\n└── ID: 61644e82ef1f Size: 6.144kB Top Layer of: [localhost/simpleapp:latest]\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L20"
+    },
+    {
+      "id": "container-images-52068ec01497",
+      "topic": "container-images",
+      "title": "Run the image locally, inspect its status and logs, finally test that it responds as expected",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman run -d --name test -p 8080:80 localhost/simpleapp\n2f3d7d613ea6ba19703811d30704d4025123c7302ff6fa295affc9bd30e532f8\n\n:~$ podman ps\nCONTAINER ID  IMAGE                       COMMAND           CREATED        STATUS            PORTS                 NAMES\n2f3d7d613ea6  localhost/simpleapp:latest  httpd-foreground  5 seconds ago  Up 6 seconds ago  0.0.0.0:8080->80/tcp  test\n\n:~$ podman logs test\nAH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.0.2.100. Set the 'ServerName' directive globally to suppress this message\nAH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.0.2.100. Set the 'ServerName' directive globally to suppress this message\n[Sat Jun 04 16:15:38.071377 2022] [mpm_event:notice] [pid 1:tid 139756978220352] AH00489: Apache/2.4.53 (Unix) configured -- resuming normal operations\n[Sat Jun 04 16:15:38.073570 2022] [core:notice] [pid 1:tid 139756978220352] AH00094: Command line: 'httpd -D FOREGROUND'\n\n:~$ curl 0.0.0.0:8080\nHello, World!\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L55"
+    },
+    {
+      "id": "container-images-ac5001169e7a",
+      "topic": "container-images",
+      "title": "Run a command inside the pod to print out the index.html file",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman exec -it test cat /usr/local/apache2/htdocs/index.html\nHello, World!\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L81"
+    },
+    {
+      "id": "container-images-1f8a476cb71a",
+      "topic": "container-images",
+      "title": "Tag the image with ip and port of a private local registry and then push the image to this registry",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "> Note: Some small distributions of Kubernetes (such as [microk8s](https://microk8s.io/docs/registry-built-in)) have a built-in registry you can use for this exercise. If this is not your case, you'll have to setup it on your own.\n\n```bash\n:~$ podman tag localhost/simpleapp $registry_ip:5000/simpleapp\n\n:~$ podman push $registry_ip:5000/simpleapp\n```\n\n\n\n\n Verify that the registry contains the pushed image and that you can pull it\n\n\n\n\n```bash\n:~$ curl http://$registry_ip:5000/v2/_catalog\n{\"repositories\":[\"simpleapp\"]}\n\n# remove the image already present\n:~$ podman rmi $registry_ip:5000/simpleapp\n\n:~$ podman pull $registry_ip:5000/simpleapp\nTrying to pull 10.152.183.13:5000/simpleapp:latest...\nGetting image source signatures\nCopying blob 643ea8c2c185 skipped: already exists\nCopying blob 972107ece720 skipped: already exists\nCopying blob 9857eeea6120 skipped: already exists\nCopying blob 93859aa62dbd skipped: already exists\nCopying blob 8e47efbf2b7e skipped: already exists\nCopying blob 42e0f5a91e40 skipped: already exists\nCopying config ef4b14a72d done\nWriting manifest to image destination\nStoring signatures\nef4b14a72d02ae0577eb0632d084c057777725c279e12ccf5b0c6e4ff5fd598b\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L93"
+    },
+    {
+      "id": "container-images-e3eb6e9b9907",
+      "topic": "container-images",
+      "title": "Create a container without running/starting it",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman create busybox # create\nResolved \"busybox\" as an alias (/etc/containers/registries.conf.d/000-shortnames.conf)\nTrying to pull docker.io/library/busybox:latest...\nGetting image source signatures\nCopying blob sha256:213a27df5921cd9ae24732504c590bb6408911c20fb50a597f2a40896d554a8f\nCopying config sha256:3fba0c87fcc8ba126bf99e4ee205b43c91ffc6b15bb052315312e71bc6296551\nWriting manifest to image destination\n51b613406e8889213c176523e1c430e4bd00047965b0c22cff5b1c9badfbc452\n\n:~$ podman container ls -a\nCONTAINER ID  IMAGE                             COMMAND     CREATED        STATUS      PORTS       NAMES\n51b613406e88  docker.io/library/busybox:latest  sh          2 minutes ago  Created                 adoring_almeida\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L139"
+    },
+    {
+      "id": "container-images-a8392159fb28",
+      "topic": "container-images",
+      "title": "Export a container to output.tar file",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman container ls -a # pick the container id\nCONTAINER ID  IMAGE                             COMMAND     CREATED        STATUS      PORTS       NAMES\n51b613406e88  docker.io/library/busybox:latest  sh          2 minutes ago  Created                 adoring_almeida\n\n:~$ podman export <container id> --output=output.tar\n\n:~$ ls -al output.tar\n-rw-r--r--@ 1 limistah  wheel  4272640 28 Aug 13:48 output.tar\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L162"
+    },
+    {
+      "id": "container-images-6e1079117d58",
+      "topic": "container-images",
+      "title": "Run a pod with the image pushed to the registry",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ kubectl run simpleapp --image=$registry_ip:5000/simpleapp --port=80\n\n:~$ curl ${kubectl get pods simpleapp -o jsonpath='{.status.podIP}'}\nHello, World!\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L181"
+    },
+    {
+      "id": "container-images-43b95a3170bf",
+      "topic": "container-images",
+      "title": "Log into a remote registry server and then read the credentials from the default file",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "> Note: The two most used container registry servers with a free plan are [DockerHub](https://hub.docker.com/) and [Quay.io](https://quay.io/).\n\n```bash\n:~$ podman login --username $YOUR_USER --password $YOUR_PWD docker.io\n:~$ cat ${XDG_RUNTIME_DIR}/containers/auth.json\n{\n        \"auths\": {\n                \"docker.io\": {\n                        \"auth\": \"Z2l1bGl0JLSGtvbkxCcX1xb617251xh0x3zaUd4QW45Q3JuV3RDOTc=\"\n                }\n        }\n}\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L196"
+    },
+    {
+      "id": "container-images-b4f392c395d5",
+      "topic": "container-images",
+      "title": "Create a secret both from existing login credentials and from the CLI",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ kubectl create secret generic mysecret --from-file=.dockerconfigjson=${XDG_RUNTIME_DIR}/containers/auth.json --type=kubernetes.io/dockeconfigjson\nsecret/mysecret created\n:~$ kubectl create secret docker-registry mysecret2 --docker-server=https://index.docker.io/v1/ --docker-username=$YOUR_USR --docker-password=$YOUR_PWD\nsecret/mysecret2 created\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L218"
+    },
+    {
+      "id": "container-images-0442ba5ba29b",
+      "topic": "container-images",
+      "title": "Create the manifest for a Pod that uses one of the two secrets just created to pull an image hosted on the relative private remote registry",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```yaml\napiVersion: v1\nkind: Pod\nmetadata:\n  name: private-reg\nspec:\n  containers:\n  - name: private-reg-container\n    image: $YOUR_PRIVATE_IMAGE\n  imagePullSecrets:\n  - name: mysecret\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L233"
+    },
+    {
+      "id": "container-images-5dbe478b1ac2",
+      "topic": "container-images",
+      "title": "Clean up all the images and containers",
+      "section": "Podman basics",
+      "prompt": "",
+      "context": "",
+      "solution": "```bash\n:~$ podman rm --all --force\n:~$ podman rmi --all\n:~$ kubectl delete pod simpleapp\n```",
+      "sourceUrl": "https://github.com/dgkanatsios/CKAD-exercises/blob/d7b9a5c28b2ff2d8a8fab5524569956f21aaa1b4/j.podman.md#L254"
+    }
+  ]
+}

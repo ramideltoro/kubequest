@@ -28,6 +28,14 @@ import {
   ShieldCheck,
   LogOut,
 } from "lucide-react";
+import exerciseIndex from "../content/ckad-index.json";
+import { useExerciseProgress } from "./exercise-progress";
+const ExerciseLibrary = lazy(() =>
+  import("./Exercises").then((m) => ({ default: m.ExerciseLibrary })),
+);
+const ExerciseRoute = lazy(() =>
+  import("./Exercises").then((m) => ({ default: m.ExerciseRoute })),
+);
 import { lessons } from "../content/lessons";
 import { foundations } from "../content/foundations";
 import { TopicIcon, Playground } from "./Playgrounds";
@@ -141,6 +149,26 @@ function App() {
           <Route path="/basics" element={<Basics />} />
           <Route path="/basics/:id" element={<Lesson />} />
           <Route path="/ckad" element={<CKAD />} />
+          <Route
+            path="/ckad/exercises"
+            element={
+              <Suspense
+                fallback={<main className="page">Loading exercises…</main>}
+              >
+                <ExerciseLibrary />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/ckad/exercises/:id"
+            element={
+              <Suspense
+                fallback={<main className="page">Loading exercise…</main>}
+              >
+                <ExerciseRoute />
+              </Suspense>
+            }
+          />
           <Route path="/ckad/:id" element={<MissionRoute />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/progress" element={<Progress />} />
@@ -871,6 +899,20 @@ function CKAD() {
           </small>
         </div>
       </div>
+      <section className="exercise-banner">
+        <div>
+          <span className="eyebrow">PUBLIC EXERCISE LIBRARY</span>
+          <h2>{exerciseIndex.exercises.length} ways to sharpen your skills.</h2>
+          <p>
+            Work through community exercises across{" "}
+            {exerciseIndex.topics.length} topics, reveal solutions when you’re
+            ready, and save your progress. From dgkanatsios/CKAD-exercises.
+          </p>
+        </div>
+        <Link className="button primary" to="/ckad/exercises">
+          Browse exercises <ArrowRight size={17} />
+        </Link>
+      </section>
       <VisualStory id="path-ckad" />
       <div className="mission-grid">
         {missions.map((m, i) => (
@@ -899,7 +941,7 @@ function CKAD() {
         <div className="section-heading">
           <div>
             <span className="eyebrow">KNOW WHAT YOU’RE PRACTICING</span>
-            <h2>Your curriculum map</h2>
+            <h2>Your live-mission curriculum map</h2>
           </div>
           <a
             className="text-link"
@@ -911,8 +953,9 @@ function CKAD() {
           </a>
         </div>
         <p>
-          This pilot practices selected skills across all five domains. It is
-          not a complete preparation course or a prediction of your exam score.
+          These eight live missions practice selected skills across all five
+          domains. This is not a complete preparation course or a prediction of
+          your exam score.
         </p>
         <CurriculumChart domains={domains} />
         <div className="coverage-table">
@@ -992,6 +1035,13 @@ function SignIn() {
 }
 function Progress() {
   const me = useIdentity();
+  const { progress: exerciseProgress } = useExerciseProgress();
+  const practicedExercises = Object.values(exerciseProgress).filter(
+    (s) => s === "practiced",
+  ).length;
+  const reviewExercises = Object.values(exerciseProgress).filter(
+    (s) => s === "review",
+  ).length;
   const [done, setDone] = useState(completedLessons()),
     [attempts, setAttempts] = useState<any[]>([]);
   useEffect(() => {
@@ -1052,6 +1102,28 @@ function Progress() {
           </section>
         );
       })}
+      <section className="path-progress">
+        <ProgressVisual
+          count={practicedExercises}
+          total={exerciseIndex.exercises.length}
+          title="Community exercises"
+          itemLabel="exercises practiced"
+          statusLabel="practiced"
+          showTiles={false}
+        />
+        <p>
+          Self-reported practice on this device · {reviewExercises} saved for
+          review. Separate from graded live-lab attempts.
+        </p>
+        <div className="exercise-actions">
+          <Link className="button primary" to="/ckad/exercises">
+            Browse exercises
+          </Link>
+          <Link className="button secondary" to="/ckad/exercises?status=review">
+            Review saved exercises
+          </Link>
+        </div>
+      </section>
       <h2 className="history-title">Practice history</h2>
       {!me.user ? (
         <p>
@@ -1110,12 +1182,12 @@ function About() {
       <a href="/icons/sources.json">Asset sources and checksums</a>
       <h2 id="privacy">What happens to your data?</h2>
       <p>
-        Anonymous lesson progress stays in your browser’s local storage. Google
-        sign-in is restricted to the owner; private lesson completion and
-        mission results are stored on the hosting server. Tutor questions are
-        processed by the local model. The app does not persist terminal
-        transcripts or tutor conversations. Lesson examples use practice-only
-        credentials.
+        Anonymous lesson and community exercise progress stays in your browser’s
+        local storage. Google sign-in is restricted to the owner; private lesson
+        completion and mission results are stored on the hosting server. Tutor
+        questions are processed by the local model. The app does not persist
+        terminal transcripts or tutor conversations. Lesson examples use
+        practice-only credentials.
       </p>
       <VisualStory id="site-privacy" />
       <h2>Lab limits</h2>

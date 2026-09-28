@@ -317,15 +317,21 @@ export function ProgressVisual({
   count,
   total,
   title,
+  itemLabel = "lessons completed",
+  statusLabel = "completed",
+  showTiles = true,
 }: {
   count: number;
   total: number;
   title: string;
+  itemLabel?: string;
+  statusLabel?: string;
+  showTiles?: boolean;
 }) {
   return (
     <figure
       className="progress-visual"
-      aria-label={`${title}: ${count} of ${total} lessons completed`}
+      aria-label={`${title}: ${count} of ${total} ${itemLabel}`}
     >
       <div
         className="progress-dial"
@@ -343,10 +349,10 @@ export function ProgressVisual({
         <span className="eyebrow">YOUR LEARNING, TAKING SHAPE</span>
         <h2>{title}</h2>
         <p>
-          {count} completed · {total - count} still to explore
+          {count} {statusLabel} · {total - count} still to explore
         </p>
-        <div className="progress-tiles" aria-hidden="true">
-          {Array.from({ length: total }, (_, i) => (
+        <div className="progress-tiles" aria-hidden="true" hidden={!showTiles}>
+          {Array.from({ length: showTiles ? total : 0 }, (_, i) => (
             <span key={i} className={i < count ? "is-complete" : ""}>
               {i < count ? <Check size={11} /> : null}
             </span>

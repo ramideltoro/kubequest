@@ -145,7 +145,7 @@ try {
     console.log(`PASS all ${routes.length} visual routes at ${width}px`);
   }
   await page.goto(origin + "/progress");
-  assert.equal(await page.locator(".progress-visual").count(), 2);
+  assert.equal(await page.locator(".progress-visual").count(), 3);
   assert.equal(await page.locator(".progress-tiles > span").count(), 30);
   if (!process.env.ORIGIN) {
     let mode = "timed";

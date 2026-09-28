@@ -1,4 +1,5 @@
 {
-  "revision": "2b114cfa58f4a2d6e5df9dd2927cee0fc85c5245",
-  "summary": "Documented comparison-state label and status changes so HTTP errors, missing or unready Pods, blocked traffic and stalled delivery agree with their visual explanations and text equivalents."
+  "repository": "https://github.com/ramideltoro/kubequest-wiki",
+  "revision": "a3c6380e6d7401d6b8dae6812e75669e287896c8",
+  "summary": "Document all 152 imported community exercises, MIT provenance, public self-guided access, local progress, maintenance and validation; update source-package and access UML diagrams and generated release reference."
 }

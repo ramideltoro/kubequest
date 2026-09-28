@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Settings2, X, ArrowUpRight } from "lucide-react";
 import { lessons } from "../content/lessons";
 import { foundations } from "../content/foundations";
+import exerciseIndex from "../content/ckad-index.json";
 import { missions } from "../content/missions";
 
 export const repository = "https://github.com/ramideltoro/kubequest";
@@ -61,6 +62,12 @@ export function SiteFooter() {
       kind: "CKAD Practice",
       url: "/ckad/" + mission.id,
     })),
+    ...exerciseIndex.exercises.map((e) => ({
+      title: e.title,
+      description: e.section,
+      kind: "Community exercise",
+      url: "/ckad/exercises/" + e.id,
+    })),
   ].filter((item) =>
     `${item.title} ${item.description} ${item.kind}`
       .toLowerCase()
@@ -99,6 +106,7 @@ export function SiteFooter() {
               <Link to="/foundations">Foundations</Link>
               <Link to="/basics">Basics</Link>
               <Link to="/ckad">CKAD</Link>
+              <Link to="/ckad/exercises">Exercises</Link>
               <Link to="/about">About</Link>
               <Link to="/readme">Readme</Link>
               <Link to="/about#privacy">Privacy</Link>
@@ -108,7 +116,8 @@ export function SiteFooter() {
           <p className="footer-copyright">
             © {new Date().getFullYear()}{" "}
             <a href="https://www.ramideltoro.com">Rami Del Toro</a> · All Rights
-            Reserved.
+            Reserved. <Link to="/ckad/exercises">Community exercises</Link>{" "}
+            retain their MIT license.
           </p>
         </div>
       </footer>
@@ -158,14 +167,16 @@ export function SiteFooter() {
             <X size={20} />
           </button>
         </div>
-        <label htmlFor="site-search">Search lessons and missions</label>
+        <label htmlFor="site-search">
+          Search lessons, missions, and exercises
+        </label>
         <input
           id="site-search"
           type="search"
           autoFocus
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Try Pods, routing, or containers"
+          placeholder="Try Pods, routing, or exercises"
         />
         <p aria-live="polite">
           {items.length} {items.length === 1 ? "result" : "results"}
@@ -182,7 +193,7 @@ export function SiteFooter() {
               <span>{item.description}</span>
             </Link>
           ))}
-          {!items.length && <p>No matching lessons. Try a different word.</p>}
+          {!items.length && <p>No matches. Try a different word.</p>}
         </div>
       </dialog>
     </>
@@ -240,6 +251,13 @@ export function Readme() {
             simulator.
           </p>
           <Link to="/ckad">Explore the missions</Link>
+          <p>
+            {exerciseIndex.exercises.length} public community exercises cover{" "}
+            {exerciseIndex.topics.length} topics with solutions and local
+            progress. Practice in your own environment; these exercises are
+            self-guided and not graded.
+          </p>
+          <Link to="/ckad/exercises">Browse the exercise library</Link>
         </section>
       </div>
       <h2>Real practice, private access</h2>
