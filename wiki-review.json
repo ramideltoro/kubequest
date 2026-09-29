@@ -1,5 +1,5 @@
 {
   "repository": "https://github.com/ramideltoro/kubequest-wiki",
-  "revision": "6ebf688ddf751f0e9d10c1b95135347b2937a27e",
-  "summary": "Document all 156 exercise/guided missions, shared public pages and recorded solutions, owner-only real labs, offline Helm/Podman fixtures, grading and media qualification, safe template activation, preserved source attribution and progress; update deployment/package UML and generated release references."
+  "revision": "37457a99a8698ec8ecd668e143bb13c75e081b58",
+  "summary": "Document consistent lab source attribution: muted sidebar typography, amber source and license links, wrapping and visible keyboard focus; update workspace composition UML."
 }
